@@ -102,8 +102,6 @@ final class CameraService: NSObject, ObservableObject,
                 self.session.startRunning()
             }
 
-            self.enableTorchForRunningSession()
-
             DispatchQueue.main.async {
                 self.isReady = true
                 self.status = "Camera ready"
@@ -120,6 +118,9 @@ final class CameraService: NSObject, ObservableObject,
 
             self.capturing = true
             let settings = AVCapturePhotoSettings()
+            if self.photoOutput.supportedFlashModes.contains(.on) {
+                settings.flashMode = .on
+            }
             self.photoOutput.capturePhoto(
                 with: settings,
                 delegate: self
@@ -149,15 +150,6 @@ final class CameraService: NSObject, ObservableObject,
 
         DispatchQueue.main.async {
             self.capturedImage = image
-        }
-    }
-
-    private func enableTorchForRunningSession() {
-        guard session.isRunning else { return }
-
-        queue.asyncAfter(deadline: .now() + 0.45) { [weak self] in
-            guard let self, self.session.isRunning else { return }
-            self.setTorchOnQueue(enabled: true)
         }
     }
 

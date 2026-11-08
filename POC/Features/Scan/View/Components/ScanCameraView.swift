@@ -10,6 +10,7 @@ struct ScanCameraView: View {
     @ObservedObject var camera: CameraService
     let selectedEye: EyeSide
     let tint: Color
+    let isAnalyzing: Bool
     let onCapturedImage: (UIImage) -> Void
 
     @State private var focusPoint: CGPoint?
@@ -69,7 +70,8 @@ struct ScanCameraView: View {
 
             CameraStatusView(
                 status: camera.status,
-                errorMessage: camera.errorMessage
+                errorMessage: camera.errorMessage,
+                isAnalyzing: isAnalyzing
             )
 
             CameraZoomControl(camera: camera)
@@ -87,6 +89,8 @@ struct ScanCameraView: View {
                     }
             }
             .buttonStyle(.plain)
+            .disabled(isAnalyzing)
+            .opacity(isAnalyzing ? 0.5 : 1)
             .accessibilityLabel(
                 selectedEye == .left
                 ? "Capture left eye"
@@ -153,10 +157,15 @@ private struct ScanAlignmentHint: View {
 private struct CameraStatusView: View {
     let status: String
     let errorMessage: String?
+    let isAnalyzing: Bool
 
     var body: some View {
         VStack(spacing: 4) {
-            if !status.isEmpty {
+            if isAnalyzing {
+                Text("Analyzing image...")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.primary)
+            } else if !status.isEmpty {
                 Text(status)
                     .font(.caption)
                     .foregroundStyle(.secondary)

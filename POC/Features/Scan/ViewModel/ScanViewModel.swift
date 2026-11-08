@@ -1,8 +1,3 @@
-//
-//  ScanViewModel.swift
-//  POC
-//
-
 import PhotosUI
 import SwiftUI
 import UIKit
@@ -20,19 +15,22 @@ final class ScanViewModel: ObservableObject {
     @Published private(set) var rightResult: SegmentationResult?
     @Published private(set) var isReviewing = false
     @Published private(set) var isAnalyzing = false
+    @Published private(set) var analysisErrorMessage: String?
     @Published private(set) var completedSession: ScreeningSession?
     @Published var showReport = false
     @Published var errorMessage: String?
+
+    private var analysisTask: Task<Void, Never>?
+    private var analysisID = UUID()
 
     var isLastEye: Bool {
         selectedEye == .right ? leftImage != nil : rightImage != nil
     }
 
     func handleCapturedImage(_ image: UIImage) {
-        selectedImage = image
-        selectedItem = nil
-        isReviewing = true
         camera.setTorch(enabled: false)
+        camera.stop()
+        prepareReview(with: image)
     }
 
     func loadGalleryImage(_ item: PhotosPickerItem) async {
@@ -46,22 +44,29 @@ final class ScanViewModel: ObservableObject {
             }
 
             camera.stop()
-            selectedImage = image
-            isReviewing = true
+            prepareReview(with: image)
         } catch {
             errorMessage = "Couldn't load the selected image: \(error.localizedDescription)"
         }
     }
 
     func retakeCurrentEye() {
+        analysisTask?.cancel()
+        analysisTask = nil
+        analysisID = UUID()
+
         if selectedEye == .right {
             rightImage = nil
+            rightResult = nil
         } else {
             leftImage = nil
+            leftResult = nil
         }
 
         selectedImage = nil
         selectedItem = nil
+        analysisErrorMessage = nil
+        isAnalyzing = false
         isReviewing = false
         camera.start()
     }
@@ -71,42 +76,47 @@ final class ScanViewModel: ObservableObject {
     }
 
     func useEditedImage(_ image: UIImage) {
-        selectedImage = image
-        isReviewing = true
+        guard selectedImage != nil, analysisErrorMessage == nil else { return }
+        commitCurrentImage()
     }
 
-    func analyzeCurrentImage() async {
-        guard let image = selectedImage, !isAnalyzing else { return }
+    func commitCurrentImage() {
+        guard
+            let image = selectedImage,
+            !isAnalyzing,
+            analysisErrorMessage == nil
+        else {
+            return
+        }
 
-        isAnalyzing = true
-        defer { isAnalyzing = false }
+        let result: SegmentationResult?
+        if selectedEye == .left {
+            result = leftResult
+            leftImage = image
+        } else {
+            result = rightResult
+            rightImage = image
+        }
 
-        do {
-            let service = try ImageInferenceService()
-            let result = try service.predict(image: image)
+        guard result != nil else {
+            return
+        }
 
-            if selectedEye == .left {
-                leftImage = image
-                leftResult = result
-            } else {
-                rightImage = image
-                rightResult = result
-            }
-
-            if isLastEye {
-                saveCurrentSession()
-            } else {
-                selectedEye = selectedEye == .right ? .left : .right
-                selectedImage = nil
-                isReviewing = false
-                camera.start()
-            }
-        } catch {
-            errorMessage = modelErrorMessage(error, eye: selectedEye)
+        if isLastEye {
+            saveCurrentSession()
+        } else {
+            selectedEye = selectedEye == .right ? .left : .right
+            selectedImage = nil
+            analysisErrorMessage = nil
+            isReviewing = false
+            camera.start()
         }
     }
 
     func resetScan() {
+        analysisTask?.cancel()
+        analysisTask = nil
+        analysisID = UUID()
         selectedImage = nil
         selectedItem = nil
         isReviewing = false
@@ -116,6 +126,7 @@ final class ScanViewModel: ObservableObject {
         rightResult = nil
         selectedEye = .left
         isAnalyzing = false
+        analysisErrorMessage = nil
         completedSession = nil
         showReport = false
         camera.start()
@@ -126,9 +137,62 @@ final class ScanViewModel: ObservableObject {
     }
 
     func dismissError() {
-        // Defer the published mutation until SwiftUI has finished updating the alert.
         Task { @MainActor [weak self] in
             self?.errorMessage = nil
+        }
+    }
+
+    private func prepareReview(with image: UIImage) {
+        analysisTask?.cancel()
+        let newAnalysisID = UUID()
+        analysisID = newAnalysisID
+        selectedImage = image
+        selectedItem = nil
+        analysisErrorMessage = nil
+        isReviewing = false
+        isAnalyzing = true
+
+        analysisTask = Task { [weak self] in
+            await self?.analyzeCapturedImage(image, analysisID: newAnalysisID)
+        }
+    }
+
+    private func analyzeCapturedImage(
+        _ image: UIImage,
+        analysisID: UUID
+    ) async {
+        defer {
+            if self.analysisID == analysisID {
+                isAnalyzing = false
+                isReviewing = true
+                analysisTask = nil
+            }
+        }
+
+        do {
+            let gatekeeper = try GatekeeperService()
+            let gatekeeperResult = try gatekeeper.evaluate(image: image)
+            guard !Task.isCancelled, self.analysisID == analysisID else { return }
+
+            if let issue = gatekeeperResult.issue {
+                analysisErrorMessage = issue.message
+                return
+            }
+
+            let segmentation = try ImageInferenceService()
+            let result = try segmentation.predict(image: image)
+            guard !Task.isCancelled, self.analysisID == analysisID else { return }
+
+            if selectedEye == .left {
+                leftResult = result
+            } else {
+                rightResult = result
+            }
+        } catch is CancellationError {
+            return
+        } catch {
+            guard self.analysisID == analysisID else { return }
+            analysisErrorMessage = modelErrorMessage(error, eye: selectedEye)
         }
     }
 

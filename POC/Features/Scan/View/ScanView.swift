@@ -52,17 +52,10 @@ struct ScanView: View {
         if viewModel.isReviewing, let image = viewModel.selectedImage {
             ImageReviewView(
                 image: image,
-                selectedItem: $viewModel.selectedItem,
                 onUseImage: viewModel.useEditedImage,
                 onRetake: viewModel.retakeCurrentEye,
-                onChooseAnother: viewModel.chooseAnotherImage,
-                onAnalyze: {
-                    Task {
-                        await viewModel.analyzeCurrentImage()
-                    }
-                },
                 isAnalyzing: viewModel.isAnalyzing,
-                mint: tint,
+                analysisErrorMessage: viewModel.analysisErrorMessage,
                 eyeSide: viewModel.selectedEye,
                 isLastEye: viewModel.isLastEye
             )
@@ -71,6 +64,7 @@ struct ScanView: View {
                 camera: viewModel.camera,
                 selectedEye: viewModel.selectedEye,
                 tint: tint,
+                isAnalyzing: viewModel.isAnalyzing,
                 onCapturedImage: viewModel.handleCapturedImage
             )
         }

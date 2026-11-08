@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import CoreML
 import CoreGraphics
+import CoreVideo
 
 struct SegmentationResult {
     let mask: [UInt8]
@@ -29,7 +30,7 @@ enum InferenceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .modelNotFound:
-            return "GlaucomaSegmentation.mlmodelc was not found."
+            return "GlaucomaSegV2.mlmodelc was not found."
         case .invalidImage:
             return "Could not convert the image to RGB."
         case .invalidInputShape:
@@ -53,7 +54,7 @@ final class ImageInferenceService {
 
     init() throws {
         guard let url = Bundle.main.url(
-            forResource: "GlaucomaSegmentation",
+            forResource: "GlaucomaSegV2",
             withExtension: "mlmodelc"
         ) else {
             throw InferenceError.modelNotFound
@@ -69,11 +70,11 @@ final class ImageInferenceService {
     }
 
     func predict(image: UIImage) throws -> SegmentationResult {
-        let input = try makeInputTensor(from: image)
+        let input = try makeInputImage(from: image)
 
         let provider = try MLDictionaryFeatureProvider(
             dictionary: [
-                "image": MLFeatureValue(multiArray: input)
+                "image": MLFeatureValue(pixelBuffer: input)
             ]
         )
 
@@ -173,15 +174,9 @@ final class ImageInferenceService {
         )
     }
 
-    private func makeInputTensor(
+    private func makeInputImage(
         from image: UIImage
-    ) throws -> MLMultiArray {
-        let tensor = try MLMultiArray(
-            shape: [1, 3, size, size] as [NSNumber],
-            dataType: .float16
-        )
-
-        // Resize to the model's expected 512 x 512 input.
+    ) throws -> CVPixelBuffer {
         let renderFormat = UIGraphicsImageRendererFormat()
         renderFormat.scale = 1
         renderFormat.opaque = true
@@ -205,65 +200,57 @@ final class ImageInferenceService {
             throw InferenceError.invalidImage
         }
 
-        let bytesPerPixel = 4
-        let bytesPerRow = size * bytesPerPixel
-        var pixels = [UInt8](
-            repeating: 0,
-            count: size * size * bytesPerPixel
+        var pixelBuffer: CVPixelBuffer?
+        let attributes = [
+            kCVPixelBufferCGImageCompatibilityKey: true,
+            kCVPixelBufferCGBitmapContextCompatibilityKey: true
+        ] as CFDictionary
+
+        let status = CVPixelBufferCreate(
+            kCFAllocatorDefault,
+            size,
+            size,
+            kCVPixelFormatType_32BGRA,
+            attributes,
+            &pixelBuffer
         )
 
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-
-        let bitmapInfo = CGBitmapInfo(
-            rawValue: CGImageAlphaInfo.premultipliedLast.rawValue
-        )
-
-        
-        let renderedSuccessfully = pixels.withUnsafeMutableBytes { buffer -> Bool in
-            guard let context = CGContext(
-                data: buffer.baseAddress,
-                width: size,
-                height: size,
-                bitsPerComponent: 8,
-                bytesPerRow: bytesPerRow,
-                space: colorSpace,
-                bitmapInfo: bitmapInfo.rawValue
-            ) else {
-                return false
-            }
-
-            context.draw(
-                cgImage,
-                in: CGRect(x: 0, y: 0, width: size, height: size)
-            )
-
-            return true
+        guard status == kCVReturnSuccess, let pixelBuffer else {
+            throw InferenceError.invalidInputShape
         }
 
-        guard renderedSuccessfully else {
+        CVPixelBufferLockBaseAddress(pixelBuffer, [])
+        defer {
+            CVPixelBufferUnlockBaseAddress(pixelBuffer, [])
+        }
+
+        guard let baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer) else {
             throw InferenceError.invalidImage
         }
 
-        // NCHW layout: [batch, RGB channel, height, width].
-        // Assumption: RGB values normalized to [0, 1].
-        // Change this if the training preprocessing differs.
-        for y in 0..<size {
-            for x in 0..<size {
-                let offset = y * bytesPerRow + x * bytesPerPixel
-                let pixel = y * size + x
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGBitmapInfo(
+            rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue
+                | CGBitmapInfo.byteOrder32Little.rawValue
+        )
 
-                for channel in 0..<3 {
-                    let value = Float(pixels[offset + channel]) / 255.0
-
-                    tensor[
-                        [0, channel, y, x] as [NSNumber]
-                    ] = NSNumber(value: value)
-                }
-
-                _ = pixel
-            }
+        guard let context = CGContext(
+            data: baseAddress,
+            width: size,
+            height: size,
+            bitsPerComponent: 8,
+            bytesPerRow: CVPixelBufferGetBytesPerRow(pixelBuffer),
+            space: colorSpace,
+            bitmapInfo: bitmapInfo.rawValue
+        ) else {
+            throw InferenceError.invalidImage
         }
 
-        return tensor
+        context.draw(
+            cgImage,
+            in: CGRect(x: 0, y: 0, width: size, height: size)
+        )
+
+        return pixelBuffer
     }
 }

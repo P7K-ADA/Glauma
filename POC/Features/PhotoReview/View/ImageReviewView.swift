@@ -5,15 +5,10 @@ import UIKit
 
 struct ImageReviewView: View {
     let image: UIImage
-    @Binding var selectedItem: PhotosPickerItem?
-
     let onUseImage: (UIImage) -> Void
     let onRetake: () -> Void
-    let onChooseAnother: () -> Void
-    let onAnalyze: () -> Void
-
     let isAnalyzing: Bool
-    let mint: Color
+    let analysisErrorMessage: String?
     let eyeSide: EyeSide
     let isLastEye: Bool
 
@@ -22,7 +17,6 @@ struct ImageReviewView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-
                 ReviewHeader(
                     eyeTitle: eyeSide == .left ? "Left eye" : "Right eye",
                     onBack: onRetake
@@ -36,11 +30,16 @@ struct ImageReviewView: View {
 
                 ReviewGuidance(isLastEye: isLastEye)
 
+                if let analysisErrorMessage {
+                    ReviewAnalysisError(message: analysisErrorMessage)
+                }
+
                 ReviewEditingActions(
+                    image: image,
                     isAnalyzing: isAnalyzing,
-                    isLastEye: isLastEye,
+                    hasError: analysisErrorMessage != nil,
                     onRetake: onRetake,
-                    onAnalyze: onAnalyze
+                    onUseImage: onUseImage
                 )
             }
             .frame(maxWidth: .infinity)
@@ -219,27 +218,52 @@ private struct ReviewGuidance: View {
     }
 }
 
+// MARK: - Analysis Message
+
+private struct ReviewAnalysisError: View {
+    let message: String
+
+    var body: some View {
+        Text(message)
+            .font(.body)
+            .foregroundStyle(.red)
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(14)
+            .background(.red.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .accessibilityLabel("Photo issue: \(message)")
+    }
+}
+
 // MARK: - Editing Actions
 
 private struct ReviewEditingActions: View {
+    let image: UIImage
     let isAnalyzing: Bool
-    let isLastEye: Bool
+    let hasError: Bool
     let onRetake: () -> Void
-    let onAnalyze: () -> Void
+    let onUseImage: (UIImage) -> Void
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
-
-            // Side-by-side buttons when there is enough room
-            HStack(spacing: 12) {
+            if hasError || isAnalyzing {
                 retakeButton
-                analyzeButton
+            } else {
+                HStack(spacing: 12) {
+                    retakeButton
+                    useImageButton
+                }
             }
 
-            // Stacked buttons when text becomes larger
-            VStack(spacing: 12) {
+            if hasError || isAnalyzing {
                 retakeButton
-                analyzeButton
+            } else {
+                VStack(spacing: 12) {
+                    retakeButton
+                    useImageButton
+                }
             }
         }
         .frame(maxWidth: .infinity)
@@ -264,42 +288,21 @@ private struct ReviewEditingActions: View {
         )
     }
 
-    private var analyzeButton: some View {
-        Button(action: onAnalyze) {
-            HStack(spacing: 8) {
-                if isAnalyzing {
-                    ProgressView()
-                        .tint(.white)
-                        .accessibilityHidden(true)
-                }
-
-                Text(
-                    isAnalyzing
-                    ? "Analyzing..."
-                    : (isLastEye ? "Analyze Both Eyes" : "Next")
-                )
+    private var useImageButton: some View {
+        Button {
+            onUseImage(image)
+        } label: {
+            Text("Use Photo")
                 .font(.body.weight(.semibold))
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-            }
-            .frame(maxWidth: .infinity)
-            .frame(minHeight: 48)
+                .frame(maxWidth: .infinity)
+                .frame(minHeight: 48)
         }
         .buttonStyle(.borderedProminent)
         .tint(Color(red: 0.28, green: 0.28, blue: 0.29))
         .foregroundStyle(.white)
-        .disabled(isAnalyzing)
-        .accessibilityLabel(
-            isAnalyzing
-            ? "Analyzing"
-            : (isLastEye ? "Analyze both eyes" : "Next")
-        )
-        .accessibilityHint(
-            isAnalyzing
-            ? "Image analysis is in progress."
-            : (isLastEye
-                ? "Analyzes the images of both eyes."
-                : "Continue to capture the other eye.")
-        )
+        .accessibilityLabel("Use photo")
+        .accessibilityHint("Accepts this image and continues the scan.")
     }
 }

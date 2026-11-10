@@ -20,7 +20,7 @@ struct EyeReport: Identifiable {
     init(
         side: EyeSide,
         cdr: Double?,
-        status: CDRStatus,
+        thresholds: CDRThresholds = .standard,
         image: UIImage? = nil,
         segmentationMask: [UInt8]? = nil,
         maskWidth: Int = 512,
@@ -28,7 +28,7 @@ struct EyeReport: Identifiable {
     ) {
         self.side = side
         self.cdr = cdr
-        self.status = status
+        self.status = CDRStatus(cdr: cdr, thresholds: thresholds)
         self.image = image
         self.segmentationMask = segmentationMask
         self.maskWidth = maskWidth
@@ -36,7 +36,7 @@ struct EyeReport: Identifiable {
     }
 
     var id: EyeSide { side }
-    var cdrText: String { cdr.map { String(format: "%.2f", $0) } ?? "N/A" }
+    var cdrText: String { cdr.map { String(format: "%.2f", $0) } ?? "—" }
 }
 
 struct ReportRecommendation: Equatable {
@@ -66,7 +66,7 @@ struct ReportData {
             return EyeReport(
                 side: side,
                 cdr: cdr,
-                status: CDRStatus(cdr: cdr, thresholds: thresholds),
+                thresholds: thresholds,
                 image: record.image,
                 segmentationMask: result?.mask,
                 maskWidth: result?.width ?? 512,
@@ -85,30 +85,31 @@ struct ReportData {
         )
     }
 
-    // MARK: - Summary of Findings
-
-    var summarySentence: String {
-        if overall == .unavailable {
-            return "No cup-to-disc ratio could be measured for either eye. Retake the photos and try again."
-        }
-        if left.status == .unavailable || right.status == .unavailable {
-            let missing = left.status == .unavailable ? "left" : "right"
-            return "A cup-to-disc ratio could not be measured for the \(missing) eye. Retake that photo for a complete report."
-        }
-        if left.status == right.status {
-            return overall == .normal
-                ? "Both eyes are in the normal CDR range on this screening."
-                : "Both eyes show an elevated vertical CDR (\(overall.label))."
-        }
-        let worse = left.status > right.status ? left : right
-        let other = left.status > right.status ? right : left
-        return "The \(worse.side.rawValue.lowercased()) has the higher CDR (\(worse.cdrText) vs \(other.cdrText)). Prioritize it in the eye-care review."
-    }
-
     // MARK: - Recommended next step (follows the worse eye)
 
     var recommendation: ReportRecommendation {
-        guard overall == .suspect else {
+        if left.status == .unavailable && right.status == .unavailable {
+            return ReportRecommendation(
+                title: "vCDR Tidak Terdeteksi",
+                message: "Ambil ulang foto kedua mata untuk mendapatkan hasil pemeriksaan."
+            )
+        }
+
+        if left.status == .unavailable || right.status == .unavailable {
+            return ReportRecommendation(
+                title: CDRStatus.unavailable.nextStepTitle,
+                message: CDRStatus.unavailable.nextStepBody
+            )
+        }
+
+        if left.status == .normal && right.status == .normal {
+            return ReportRecommendation(
+                title: "Kedua Mata dalam Batas Normal",
+                message: "Lanjutkan pemeriksaan mata secara rutin."
+            )
+        }
+
+        guard overall == .suspect || overall == .highRisk else {
             return ReportRecommendation(
                 title: overall.nextStepTitle,
                 message: overall.nextStepBody
@@ -116,16 +117,11 @@ struct ReportData {
         }
         let flagged = [left, right].filter { $0.status == overall }
         let title: String
-        if flagged.count == 2 {
-            title = "Review both eyes"
-        } else if flagged.first?.side == .left {
-            title = "Review left-eye result"
-        } else {
-            title = "Review right-eye result"
-        }
+        let side = flagged.first?.side == .left ? "OS" : "OD"
+        title = "Indikasi Rasio vCDR Meningkat (\(side))"
         return ReportRecommendation(
             title: title,
-            message: "Arrange an eye-care review. Compare both eyes with an eye specialist."
+            message: "Jadwalkan pemeriksaan mata lebih lanjut dan konsultasikan hasil kedua mata dengan dokter spesialis."
         )
     }
 }
@@ -134,8 +130,8 @@ struct ReportData {
 extension ReportData {
     static let sample = ReportData(
         capturedLine: "Captured 17 Oct 2026, 9:38 AM",
-        left: EyeReport(side: .left, cdr: 0.66, status: CDRStatus(cdr: 0.66)),
-        right: EyeReport(side: .right, cdr: 0.42, status: CDRStatus(cdr: 0.42))
+        left: EyeReport(side: .left, cdr: 0.30),
+        right: EyeReport(side: .right, cdr: 0.42)
     )
 }
 #endif

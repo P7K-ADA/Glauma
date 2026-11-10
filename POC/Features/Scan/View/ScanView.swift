@@ -8,8 +8,8 @@ import SwiftUI
 struct ScanView: View {
     @StateObject private var viewModel = ScanViewModel()
 
-    private let pageBackground = Color(uiColor: .systemGroupedBackground)
-    private let tint = Color.white
+    private let pageBackground = AppColors.backgroundSecondary
+    private let tint = AppColors.white
 
     var body: some View {
         NavigationStack {
@@ -18,6 +18,44 @@ struct ScanView: View {
                     .ignoresSafeArea()
 
                 content
+
+                if viewModel.isAnalyzing {
+                    Color.black
+                        .opacity(0.18)
+                        .ignoresSafeArea()
+                        .transition(.opacity)
+
+                    HStack(spacing: 12) {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .controlSize(.regular)
+                            .tint(AppColors.labelSecondary)
+
+                        Text("Menganalisa foto")
+                            .font(.body.weight(.semibold))
+                            .foregroundStyle(AppColors.labelPrimary)
+                    }
+                    .padding(.horizontal, 28)
+                    .frame(maxWidth: 326, minHeight: 72)
+                    .analysisGlassCard()
+                    .overlay {
+                        RoundedRectangle(
+                            cornerRadius: 16,
+                            style: .continuous
+                        )
+                        .stroke(
+                            AppColors.white.opacity(0.55),
+                            lineWidth: 0.75
+                        )
+                    }
+                    .shadow(
+                        color: AppColors.labelPrimary.opacity(0.12),
+                        radius: 18,
+                        y: 8
+                    )
+                    .accessibilityLabel("Menganalisa foto")
+                    .transition(.opacity.combined(with: .scale(scale: 0.96)))
+                }
             }
             .toolbar(.hidden, for: .navigationBar)
             .navigationDestination(isPresented: $viewModel.showReport) {
@@ -60,7 +98,7 @@ struct ScanView: View {
                 isLastEye: viewModel.isLastEye
             )
         } else {
-            ScanCameraView(
+            ScanCameraContent(
                 camera: viewModel.camera,
                 selectedEye: viewModel.selectedEye,
                 tint: tint,
@@ -92,6 +130,26 @@ struct ScanView: View {
     }
 }
 
+private extension View {
+    @ViewBuilder
+    func analysisGlassCard() -> some View {
+        let shape = RoundedRectangle(
+            cornerRadius: 16,
+            style: .continuous
+        )
+
+        if #available(iOS 26.0, *) {
+            glassEffect(
+                .regular
+                    .tint(AppColors.white.opacity(0.2)),
+                in: shape
+            )
+        } else {
+            background(.regularMaterial, in: shape)
+        }
+    }
+}
+
 #Preview {
-    ContentView()
+    ScanView()
 }

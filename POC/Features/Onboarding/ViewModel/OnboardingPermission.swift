@@ -13,7 +13,7 @@ enum OnboardingPermission: CaseIterable {
 
     var title: String {
         switch self {
-        case .camera: return "Enable Camera"
+        case .camera: return "Pasang Lensa Optik"
         case .photos: return "Enable Photos"
         }
     }
@@ -21,7 +21,7 @@ enum OnboardingPermission: CaseIterable {
     var message: String {
         switch self {
         case .camera:
-            return "Please provide us access to your camera, which is required to capture eye images for screening."
+            return "Pasang lensa optik pada modul kamera utama smartphone. Pastikan lensa terpasang dengan benar menggunakan konektor MagSafe."
         case .photos:
             return "Allow us to save captured or processed eye images and reports to your Photos library."
         }
@@ -90,11 +90,6 @@ final class OnboardingViewModel: ObservableObject {
             }
         }
 
-        advance()
-    }
-
-    /// “Maybe later” – skip without asking.
-    func skip() {
         advance()
     }
 

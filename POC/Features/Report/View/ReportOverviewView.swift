@@ -5,7 +5,6 @@
 //  Created by Harley Ganisson on 20/10/26.
 //
 
-
 import SwiftUI
 
 struct ReportOverviewView: View {
@@ -25,15 +24,8 @@ struct ReportOverviewView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("Report Overview")
-                    .font(.title.bold())
-                    .accessibilityAddTraits(.isHeader)
-
-                ReportHeaderView(capturedLine: report.capturedLine)
 
                 ReportEyeScansSection(report: report)
-
-                //SummaryOfFindingsCard(report: report)
 
                 RecommendationCard(
                     title: report.recommendation.title,
@@ -42,42 +34,73 @@ struct ReportOverviewView: View {
 
                 AIDisclaimerView()
             }
-            .padding()
+            .padding(.horizontal, Layout.horizontalPadding)
+            .padding(.top, Layout.topPadding)
+            .padding(.bottom, Layout.reviewBottomPadding)
         }
-        .background(ReportPalette.page)
+        .background(AppColors.backgroundSecondary)
         .preferredColorScheme(.light)
-        .navigationTitle("Report")
+        .navigationTitle("Overview")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Done", action: finishReport)
+                Button("Done", action: handleDone)
                 .accessibilityHint("Closes the report.")
             }
         }
         .safeAreaInset(edge: .bottom) {
-            Button {
-                viewModel.showingExport = true
-            } label: {
-                Text("Export")
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity)
-                    .frame(minHeight: 44)
-                    .padding(.vertical, 6)
-            }
-            .buttonStyle(.borderedProminent)
+            AppButton(
+                title: viewModel.isExporting ? "Menyimpan..." : "Ekspor Foto",
+                tint: AppColors.accentBlue,
+                action: viewModel.exportReport
+            )
+            .disabled(viewModel.isExporting)
             .accessibilityHint("Export report as images.")
-            .padding(.horizontal)
-            .padding(.vertical, 8)
-            .background(ReportPalette.page)
+            .padding(.horizontal, Layout.horizontalPadding)
+            .padding(.vertical, Layout.reviewBottomPadding)
+            .background(AppColors.backgroundSecondary)
         }
-        .sheet(isPresented: $viewModel.showingExport) {
-            ExportJPGsSheet(report: report)
-                .presentationDetents([.large])
+        .fullScreenCover(isPresented: $viewModel.showingExportSuccess) {
+            ReportExportSuccessView(
+                onBack: { viewModel.showingExportSuccess = false },
+                onStartNew: {
+                    viewModel.showingExportSuccess = false
+                    finishReport()
+                }
+            )
+        }
+        .alert("Ekspor gagal", isPresented: Binding(
+            get: { viewModel.exportError != nil },
+            set: { if !$0 { viewModel.exportError = nil } }
+        )) {
+            Button("OK", role: .cancel) { viewModel.exportError = nil }
+        } message: {
+            Text(viewModel.exportError ?? "Coba lagi.")
+        }
+        .alert("Hasil Pemeriksaan Akan Dihapus", isPresented: $viewModel.showingUnsavedExportAlert) {
+            Button("Ekspor Foto") {
+                viewModel.exportReport()
+            }
+            Button("Hapus", role: .destructive) {
+                finishReport()
+            }
+            Button("Batal", role: .cancel) { }
+        } message: {
+            Text("Foto belum diekspor. Apakah Anda ingin mengekspor foto terlebih dahulu?")
         }
     }
 
     private func finishReport() {
         onDone()
+    }
+
+    private func handleDone() {
+        if viewModel.hasExported {
+            finishReport()
+        } else {
+            viewModel.showingUnsavedExportAlert = true
+        }
     }
 }
 

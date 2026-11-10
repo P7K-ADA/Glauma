@@ -9,76 +9,52 @@ struct OnboardingPermissionPage: View {
     let permission: OnboardingPermission
     let isAllowEnabled: Bool
     let onAllow: () -> Void
-    let onSkip: () -> Void
 
     var body: some View {
         VStack(spacing: 0) {
-            Spacer()
+            OnboardingHeader(
+                title: permission.title,
+                message: permission.message
+            )
 
-            ZStack {
-                Circle()
-                    .fill(Color.gray.opacity(0.15))
-                    .frame(width: 200, height: 200)
+            OnboardingIllustration()
 
-                Image(systemName: permission.systemImage)
-                    .font(.system(size: 72))
-                    .foregroundStyle(Color.gray)
-            }
-            .accessibilityHidden(true)
+            Color.clear
+                .frame(height: Layout.paginationAreaHeight)
 
-            Spacer().frame(height: 48)
-
-            Text(permission.title)
-                .font(.title3.weight(.bold))
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 40)
-                .accessibilityAddTraits(.isHeader)
-
-            Text(permission.message)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 40)
-                .padding(.top, 12)
-
-            Spacer()
-
-            Button(action: onAllow) {
-                Text("Allow")
-                    .font(.headline)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 52)
-                    .background(
-                        Capsule()
-                            .fill(isAllowEnabled ? Color.accentColor : Color.gray)
-                    )
-            }
-            .accessibilityLabel("Allow permission to access camera.")
-            .padding(.horizontal, 32)
-
-            Button("Maybe later", action: onSkip)
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity)
-                    .contentShape(Rectangle())
-                    .padding(.vertical, 20)
-                    .padding(.horizontal, 32)
-                    .padding(.bottom, 20)
-            
-                .accessibilityLabel("Deny permission to access camera.")
+            AppButton(
+                title: permission == .camera ? "Next" : "Allow",
+                tint: buttonTint,
+                width: Layout.buttonWidth,
+                height: Layout.buttonHeight,
+                accessibilityLabel: permission == .camera
+                    ? "Continue after attaching the optical lens."
+                    : "Allow permission.",
+                action: onAllow
+            )
+            .padding(.bottom, Layout.onboardingBottomPadding)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(AppColors.white)
+    }
+
+    private var buttonTint: Color {
+        isAllowEnabled ? AppColors.accentBlue : AppColors.fillsSecondary
     }
 }
 
-#Preview {
+#Preview("NFC belum terdeteksi") {
     OnboardingPermissionPage(
         permission: .camera,
         isAllowEnabled: false,
-        onAllow: {},
-        onSkip: {}
+        onAllow: {}
+    )
+}
+
+#Preview("NFC terdeteksi") {
+    OnboardingPermissionPage(
+        permission: .camera,
+        isAllowEnabled: true,
+        onAllow: {}
     )
 }

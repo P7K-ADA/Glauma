@@ -24,6 +24,7 @@ targets:
 
     dependencies:
       - sdk: AVFoundation.framework
+      - sdk: CoreNFC.framework
       - sdk: Photos.framework
       - sdk: PhotosUI.framework
       - sdk: Vision.framework
@@ -38,10 +39,12 @@ targets:
         SUPPORTS_MACCATALYST: NO
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: W9AZH37T99
+        CODE_SIGN_ENTITLEMENTS: POC/POC.entitlements
 
         INFOPLIST_KEY_CFBundleDisplayName: POC
         INFOPLIST_KEY_CFBundleVersion: "1"
         INFOPLIST_KEY_CFBundleShortVersionString: "1.0"
         INFOPLIST_KEY_NSCameraUsageDescription: "Camera access is needed to capture eye images for glaucoma screening research."
+        INFOPLIST_KEY_NFCReaderUsageDescription: "POC uses NFC to detect the attached frame."
         INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription: "Allow POC to save captured or processed eye images to your Photos library."
         INFOPLIST_KEY_UILaunchScreen_Generation: YES

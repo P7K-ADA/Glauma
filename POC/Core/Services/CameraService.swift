@@ -22,6 +22,7 @@ final class CameraService: NSObject, ObservableObject,
     let minZoom: CGFloat = 1.0
     let maxZoom: CGFloat = 4.0
     private var currentDevice: AVCaptureDevice?
+    private var captureZoomFactor: CGFloat = 1.0
     
     private let photoOutput = AVCapturePhotoOutput()
 
@@ -117,6 +118,7 @@ final class CameraService: NSObject, ObservableObject,
                   !self.capturing else { return }
 
             self.capturing = true
+            self.captureZoomFactor = self.currentZoomFactor
             let settings = AVCapturePhotoSettings()
             if self.photoOutput.supportedFlashModes.contains(.on) {
                 settings.flashMode = .on
@@ -133,24 +135,59 @@ final class CameraService: NSObject, ObservableObject,
         didFinishProcessingPhoto photo: AVCapturePhoto,
         error: Error?
     ) {
-        defer {
-            queue.async {
-                self.capturing = false
-            }
-        }
-
         guard error == nil,
               let data = photo.fileDataRepresentation(),
               let image = UIImage(data: data) else {
+            queue.async {
+                self.capturing = false
+            }
             DispatchQueue.main.async {
                 self.errorMessage = "Photo capture failed."
             }
             return
         }
 
-        DispatchQueue.main.async {
-            self.capturedImage = image
+        queue.async {
+            let processedImage = self.imageApplyingZoom(
+                image,
+                factor: self.captureZoomFactor
+            )
+            self.capturing = false
+
+            DispatchQueue.main.async {
+                self.capturedImage = processedImage
+            }
         }
+    }
+
+    private func imageApplyingZoom(
+        _ image: UIImage,
+        factor: CGFloat
+    ) -> UIImage {
+        guard factor > 1.0, let source = image.cgImage else {
+            return image
+        }
+
+        let sourceWidth = CGFloat(source.width)
+        let sourceHeight = CGFloat(source.height)
+        let cropWidth = sourceWidth / factor
+        let cropHeight = sourceHeight / factor
+        let cropRect = CGRect(
+            x: (sourceWidth - cropWidth) / 2,
+            y: (sourceHeight - cropHeight) / 2,
+            width: cropWidth,
+            height: cropHeight
+        ).integral
+
+        guard let croppedSource = source.cropping(to: cropRect) else {
+            return image
+        }
+
+        return UIImage(
+            cgImage: croppedSource,
+            scale: image.scale,
+            orientation: image.imageOrientation
+        )
     }
 
     func setTorch(enabled: Bool) {
@@ -196,21 +233,29 @@ final class CameraService: NSObject, ObservableObject,
         }
     }
     
-    func setZoom(factor: CGFloat){
-        guard let device = currentDevice else {return}
-        let targetZoom = max(minZoom, min(factor, maxZoom))
-        
-        do {
-            try device.lockForConfiguration()
-            device.videoZoomFactor = targetZoom
-            device.unlockForConfiguration()
-            DispatchQueue.main.async{
-                self.currentZoomFactor = targetZoom
+    func setZoom(factor: CGFloat) {
+        queue.async {
+            guard let device = self.currentDevice else { return }
+            let targetZoom = max(
+                self.minZoom,
+                min(factor, self.maxZoom)
+            )
+
+            do {
+                try device.lockForConfiguration()
+                device.videoZoomFactor = targetZoom
+                device.unlockForConfiguration()
+
+                self.captureZoomFactor = targetZoom
+                DispatchQueue.main.async {
+                    self.currentZoomFactor = targetZoom
+                }
+            } catch {
+                print(
+                    "Zoom configuration failed: \(error.localizedDescription)"
+                )
             }
         }
-        catch {
-                    print("Zoom configuration failed: \(error.localizedDescription)")
-                }
     }
     
     func focus(at devicePoint: CGPoint) {

@@ -30,7 +30,7 @@ final class ScanViewModel: ObservableObject {
     func handleCapturedImage(_ image: UIImage) {
         camera.setTorch(enabled: false)
         camera.stop()
-        prepareReview(with: image)
+        prepareReview(with: image.croppedToThreeByFour())
     }
 
     func loadGalleryImage(_ item: PhotosPickerItem) async {
@@ -76,30 +76,22 @@ final class ScanViewModel: ObservableObject {
     }
 
     func useEditedImage(_ image: UIImage) {
-        guard selectedImage != nil, analysisErrorMessage == nil else { return }
+        guard selectedImage != nil, !isAnalyzing else { return }
         commitCurrentImage()
     }
 
     func commitCurrentImage() {
         guard
             let image = selectedImage,
-            !isAnalyzing,
-            analysisErrorMessage == nil
+            !isAnalyzing
         else {
             return
         }
 
-        let result: SegmentationResult?
         if selectedEye == .left {
-            result = leftResult
             leftImage = image
         } else {
-            result = rightResult
             rightImage = image
-        }
-
-        guard result != nil else {
-            return
         }
 
         if isLastEye {
@@ -228,5 +220,55 @@ final class ScanViewModel: ObservableObject {
     private func modelErrorMessage(_ error: Error, eye: EyeSide) -> String {
         let eyeName = eye == .left ? "left eye" : "right eye"
         return "The model was unable to analyze the \(eyeName): \(error.localizedDescription)"
+    }
+}
+
+private extension UIImage {
+    func croppedToThreeByFour() -> UIImage {
+        let normalized = normalizedForCropping()
+        guard let source = normalized.cgImage else { return normalized }
+
+        let sourceWidth = CGFloat(source.width)
+        let sourceHeight = CGFloat(source.height)
+        let sourceRatio = sourceWidth / sourceHeight
+        let targetRatio: CGFloat = 3.0 / 4.0
+
+        let cropRect: CGRect
+        if sourceRatio > targetRatio {
+            let cropWidth = sourceHeight * targetRatio
+            cropRect = CGRect(
+                x: (sourceWidth - cropWidth) / 2,
+                y: 0,
+                width: cropWidth,
+                height: sourceHeight
+            )
+        } else {
+            let cropHeight = sourceWidth / targetRatio
+            cropRect = CGRect(
+                x: 0,
+                y: (sourceHeight - cropHeight) / 2,
+                width: sourceWidth,
+                height: cropHeight
+            )
+        }
+
+        guard let cropped = source.cropping(to: cropRect.integral) else {
+            return normalized
+        }
+
+        return UIImage(
+            cgImage: cropped,
+            scale: normalized.scale,
+            orientation: .up
+        )
+    }
+
+    func normalizedForCropping() -> UIImage {
+        guard imageOrientation != .up else { return self }
+
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { _ in
+            draw(in: CGRect(origin: .zero, size: size))
+        }
     }
 }

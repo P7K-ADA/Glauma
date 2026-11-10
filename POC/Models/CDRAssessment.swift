@@ -42,41 +42,38 @@ enum CDRStatus: Int, Comparable {
 
     var label: String {
         switch self {
-        case .unavailable: return "Not measured"
-        case .normal: return "Normal"
-        case .suspect: return "Glaucoma Suspect"
-        case .highRisk: return "High Risk Glaucoma"
+        case .unavailable: return "Tidak tersedia"
+        case .normal: return "Dalam batas"
+        case .suspect, .highRisk: return "Perlu perhatian"
         }
     }
 
     var tint: Color {
         switch self {
-        case .unavailable: return Color(white: 0.45)
-        case .normal: return Color(red: 0.13, green: 0.58, blue: 0.36)
-        case .suspect: return Color(red: 0.80, green: 0.47, blue: 0.05)
-        case .highRisk: return Color(red: 0.84, green: 0.20, blue: 0.20)
+        case .unavailable: return AppColors.labelSecondary
+        case .normal: return AppColors.normal
+        case .suspect, .highRisk: return AppColors.suspect
         }
     }
 
     var nextStepTitle: String {
         switch self {
-        case .unavailable: return "Repeat the scan"
-        case .normal: return "Continue routine eye checks"
-        case .suspect: return "Arrange a comprehensive eye exam"
-        case .highRisk: return "Prompt ophthalmology review"
+        case .unavailable: return "Hasil Belum Tersedia"
+        case .normal: return "Pemeriksaan Rutin"
+        case .suspect, .highRisk: return "Indikasi Rasio vCDR Meningkat"
         }
     }
 
     var nextStepBody: String {
         switch self {
         case .unavailable:
-            return "A cup-to-disc ratio could not be measured. Retake the photo and try again."
+            return "Ambil ulang foto mata untuk mendapatkan hasil pemeriksaan."
         case .normal:
-            return "No enlarged cup-to-disc ratio was found. A normal screening does not rule out glaucoma, so keep up regular eye exams."
+            return "Lanjutkan pemeriksaan mata secara rutin sesuai anjuran dokter."
         case .suspect:
-            return "An ophthalmologist can check eye pressure, the optic nerve, and visual fields. Suspect does not mean confirmed glaucoma."
+            return "Jadwalkan pemeriksaan mata lebih lanjut dan konsultasikan hasil kedua mata dengan dokter spesialis."
         case .highRisk:
-            return "Contact an ophthalmologist promptly to check eye pressure, visual fields, and the optic nerve. Seek urgent care for sudden eye pain or vision loss."
+            return "Jadwalkan pemeriksaan mata lebih lanjut dan konsultasikan hasil kedua mata dengan dokter spesialis."
         }
     }
 }

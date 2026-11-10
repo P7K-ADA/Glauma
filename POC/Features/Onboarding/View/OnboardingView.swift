@@ -11,14 +11,13 @@ struct OnboardingView: View {
 
     var body: some View {
         ZStack {
-            Color(uiColor: .systemGroupedBackground)
+            AppColors.white
                 .ignoresSafeArea()
 
             OnboardingPermissionPage(
                 permission: viewModel.currentPage,
                 isAllowEnabled: viewModel.canAllowCurrentPermission,
-                onAllow: { Task { await viewModel.allow() } },
-                onSkip: viewModel.skip
+                onAllow: { Task { await viewModel.allow() } }
             )
             .id(viewModel.currentIndex)
             .transition(.opacity)

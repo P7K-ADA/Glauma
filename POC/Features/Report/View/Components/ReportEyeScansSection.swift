@@ -38,8 +38,8 @@ private struct ReportEyeNavigationLink: View {
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("\(eye.side.rawValue)")
-        .accessibilityValue("CDR \(eye.cdrText),  \(eye.status.label)")
-        .accessibilityHint("Opens details for this eye.")
+        .accessibilityLabel(eye.side == .left ? "Mata Kiri" : "Mata Kanan")
+        .accessibilityValue("vCDR \(eye.cdrText), \(eye.status.label)")
+        .accessibilityHint("Buka detail mata ini.")
     }
 }

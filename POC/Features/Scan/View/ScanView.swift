@@ -31,7 +31,7 @@ struct ScanView: View {
                             .controlSize(.regular)
                             .tint(AppColors.labelSecondary)
 
-                        Text("Menganalisa foto")
+                        Text("Analyzing photo")
                             .font(.body.weight(.semibold))
                             .foregroundStyle(AppColors.labelPrimary)
                     }
@@ -53,7 +53,7 @@ struct ScanView: View {
                         radius: 18,
                         y: 8
                     )
-                    .accessibilityLabel("Menganalisa foto")
+                    .accessibilityLabel("Analyzing photo")
                     .transition(.opacity.combined(with: .scale(scale: 0.96)))
                 }
             }

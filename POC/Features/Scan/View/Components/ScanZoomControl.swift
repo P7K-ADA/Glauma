@@ -23,7 +23,7 @@ struct ScanZoomControl: View {
                             .font(.caption.weight(.medium))
                             .foregroundStyle(
                                 zoom - 1 == selectedIndex
-                                    ? AppColors.suspect
+                                    ? AppColors.zoomButtons
                                     : AppColors.white.opacity(0.62)
                             )
                             .frame(maxWidth: .infinity)
@@ -62,7 +62,7 @@ struct ScanZoomControl: View {
         }
         .frame(width: 154, height: 44)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Camera zoom")
+        .accessibilityLabel("Camera zoom. Adjustable.")
         .accessibilityValue("\(camera.currentZoomFactor, specifier: "%.1f") times magnification")
         .accessibilityHint("Drag horizontally to change zoom.")
     }

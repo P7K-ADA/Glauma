@@ -51,18 +51,18 @@ struct ImageReviewView: View {
         .background(AppColors.backgroundSecondary)
         .preferredColorScheme(.light)
         .alert(
-            "Foto mungkin tidak terbaca",
+            "Image may be unclear",
             isPresented: $isShowingQualityAlert
         ) {
-            Button("Kembali", role: .cancel) {}
+            Button("Retake", role: .cancel) {}
 
-            Button("Tetap Lanjut") {
+            Button("Continue") {
                 onUseImage(image)
             }
         } message: {
             Text(
                 analysisErrorMessage
-                    ?? "Foto ini mungkin tidak dapat dikenali oleh model. Apakah kamu tetap ingin menggunakannya?"
+                    ?? "The model may not be able to identify the vCDR from the image. Are you sure you want to continue?"
             )
         }
     }

@@ -18,7 +18,7 @@ enum Layout {
     static let reviewHeaderControlSize: CGFloat = 44
     static let reviewImageAspectRatio: CGFloat = 3.0 / 4.0
     static let reviewImageCornerRadius: CGFloat = 24
-    static let reviewEyeOverlayBottomPadding: CGFloat = 16
+    static let reviewEyeOverlayTopPadding: CGFloat = 16
     static let reviewStatusCardPadding: CGFloat = 20
     static let reviewStatusCardCornerRadius: CGFloat = 24
     static let reviewStatusIconSize: CGFloat = 40
@@ -26,5 +26,5 @@ enum Layout {
     static let reviewStatusContentSpacing: CGFloat = 12
     static let reviewStatusTextSpacing: CGFloat = 4
     static let reviewButtonSpacing: CGFloat = 16
-    static let reviewButtonHeight: CGFloat = 52
+    static let reviewButtonHeight: CGFloat = 44
 }

@@ -9,16 +9,16 @@ struct ReviewEditingActions: View {
 
     private var primaryTitle: String {
         if hasError {
-            return "Tetap Lanjut"
+            return "Continue"
         }
 
-        return isLastEye ? "Lihat Laporan" : "Lanjut ke OD"
+        return isLastEye ? "View Report" : "Continue"
     }
 
     var body: some View {
         HStack(spacing: Layout.reviewButtonSpacing) {
             AppButton(
-                title: "Foto Ulang",
+                title: "Retake",
                 tint: AppColors.fillsSecondary,
                 titleColor: AppColors.labelSecondary,
                 height: Layout.reviewButtonHeight,

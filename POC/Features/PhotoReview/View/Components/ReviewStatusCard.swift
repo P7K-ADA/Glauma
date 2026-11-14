@@ -9,14 +9,14 @@ struct ReviewStatusCard: View {
 
     private var title: String {
         guard analysisErrorMessage != nil else {
-            return "Kualitas Gambar Baik"
+            return "Good image quality"
         }
 
-        return "Foto mungkin tidak terbaca"
+        return "Image may be unclear"
     }
 
     private var subtitle: String {
-        analysisErrorMessage ?? "Siap dianalisis untuk laporan akhir."
+        analysisErrorMessage ?? "Ready to be analyzed."
     }
 
     private var tint: Color {
@@ -26,8 +26,10 @@ struct ReviewStatusCard: View {
     var body: some View {
         HStack(alignment: .top, spacing: Layout.reviewStatusContentSpacing) {
             ReviewStatusIcon(
-                systemName: isError ? "exclamationmark" : "checkmark",
-                tint: tint
+                systemName: isError
+                    ? "exclamationmark.circle.fill"
+                    : "checkmark.circle.fill",
+                isError: isError
             )
 
             VStack(alignment: .leading, spacing: Layout.reviewStatusTextSpacing) {
@@ -57,25 +59,17 @@ struct ReviewStatusCard: View {
     }
 }
 
+
 private struct ReviewStatusIcon: View {
+
     let systemName: String
-    let tint: Color
+    let isError: Bool
 
     var body: some View {
-        RoundedRectangle(
-            cornerRadius: Layout.reviewStatusIconCornerRadius,
-            style: .continuous
-        )
-        .fill(tint.opacity(0.12))
-        .frame(
-            width: Layout.reviewStatusIconSize,
-            height: Layout.reviewStatusIconSize
-        )
-        .overlay {
-            Image(systemName: systemName)
-                .font(.headline.weight(.bold))
-                .foregroundStyle(tint)
-        }
-        .accessibilityHidden(true)
+        Image(systemName: systemName)
+            .font(.title)
+            .foregroundStyle(isError ? .red : .green)
+            .accessibilityHidden(true)
     }
 }
+

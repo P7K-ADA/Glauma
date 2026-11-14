@@ -11,9 +11,6 @@ struct OnboardingView: View {
 
     var body: some View {
         ZStack {
-            AppColors.white
-                .ignoresSafeArea()
-
             OnboardingPermissionPage(
                 permission: viewModel.currentPage,
                 isAllowEnabled: viewModel.canAllowCurrentPermission,
@@ -42,5 +39,5 @@ struct OnboardingView: View {
 }
 
 #Preview {
-    OnboardingView(onFinish: {})
+    OnboardingView(onFinish: {}).preferredColorScheme(.dark)
 }

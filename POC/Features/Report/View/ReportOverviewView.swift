@@ -39,7 +39,6 @@ struct ReportOverviewView: View {
             .padding(.bottom, Layout.reviewBottomPadding)
         }
         .background(AppColors.backgroundSecondary)
-        .preferredColorScheme(.light)
         .navigationTitle("Overview")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

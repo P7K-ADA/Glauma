@@ -35,7 +35,7 @@ struct OnboardingPermissionPage: View {
             .padding(.bottom, Layout.onboardingBottomPadding)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(AppColors.white)
+        .background(AppColors.background)
     }
 
     private var buttonTint: Color {

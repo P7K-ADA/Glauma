@@ -49,7 +49,6 @@ struct ReportExportSuccessView: View {
         .padding(.top, Layout.topPadding)
         .padding(.bottom, Layout.reviewBottomPadding)
         .background(AppColors.backgroundSecondary)
-        .preferredColorScheme(.light)
     }
 }
 

@@ -22,19 +22,26 @@ struct EyeDetailView: View {
     }
 
     var body: some View {
-        ScrollView {
-            EyeDetailContent(
-                eye: eye,
-                onExpandImage: { isImageExpanded = true }
-            )
-            .padding(.horizontal, Layout.horizontalPadding)
-            .padding(.top, Layout.topPadding)
-            .padding(.bottom, Layout.reviewBottomPadding)
-        }
-        .background(AppColors.backgroundSecondary)
-        .preferredColorScheme(.light)
+        EyeDetailContent(
+            eye: eye,
+            onExpandImage: { isImageExpanded = true }
+        )
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: .top
+        )
+        .padding(.horizontal, Layout.horizontalPadding)
+        .padding(.top, Layout.topPadding)
+        .padding(.bottom, Layout.reviewBottomPadding)
+        .background(
+            AppColors.backgroundSecondary
+                .ignoresSafeArea()
+        )
         .navigationTitle("Detail Mata")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(AppColors.backgroundSecondary, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .fullScreenCover(isPresented: $isImageExpanded) {
             EyeDetailExpandedImageView(
                 eye: eye,

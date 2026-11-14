@@ -82,7 +82,6 @@ struct ScanView: View {
                 Text(viewModel.errorMessage ?? "Please try again.")
             }
         }
-        .preferredColorScheme(.light)
     }
 
     @ViewBuilder

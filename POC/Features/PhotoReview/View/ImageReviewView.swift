@@ -14,42 +14,40 @@ struct ImageReviewView: View {
 
     var body: some View {
         ZStack {
-            ScrollView {
-                VStack(spacing: Layout.reviewSectionSpacing) {
-                    ReviewHeader(onBack: onRetake)
+            VStack(spacing: Layout.reviewSectionSpacing) {
+                ReviewHeader(onBack: onRetake)
 
-                    ReviewImageCanvas(
-                        image: image,
-                        eyeSide: eyeSide
-                    )
+                ReviewImageCanvas(
+                    image: image,
+                    eyeSide: eyeSide
+                )
 
-                    ReviewStatusCard(
-                        analysisErrorMessage: analysisErrorMessage
-                    )
+                ReviewStatusCard(
+                    analysisErrorMessage: analysisErrorMessage
+                )
 
-                    ReviewEditingActions(
-                        isAnalyzing: isAnalyzing,
-                        hasError: analysisErrorMessage != nil,
-                        isLastEye: isLastEye,
-                        onRetake: onRetake,
-                        onContinue: {
-                            if analysisErrorMessage != nil {
-                                isShowingQualityAlert = true
-                            } else {
-                                onUseImage(image)
-                            }
+                ReviewEditingActions(
+                    isAnalyzing: isAnalyzing,
+                    hasError: analysisErrorMessage != nil,
+                    isLastEye: isLastEye,
+                    onRetake: onRetake,
+                    onContinue: {
+                        if analysisErrorMessage != nil {
+                            isShowingQualityAlert = true
+                        } else {
+                            onUseImage(image)
                         }
-                    )
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, Layout.horizontalPadding)
-                .padding(.top, Layout.topPadding)
-                .padding(.bottom, Layout.reviewBottomPadding)
+                    }
+                )
+
+                Spacer(minLength: 0)
             }
-            .scrollIndicators(.hidden)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.horizontal, Layout.horizontalPadding)
+            .padding(.top, Layout.topPadding)
+            .padding(.bottom, Layout.reviewBottomPadding)
         }
         .background(AppColors.backgroundSecondary)
-        .preferredColorScheme(.light)
         .alert(
             "Foto mungkin tidak terbaca",
             isPresented: $isShowingQualityAlert
@@ -77,7 +75,7 @@ struct ImageReviewView: View {
         analysisErrorMessage: nil,
         eyeSide: .left,
         isLastEye: false
-    )
+    ).preferredColorScheme(.dark)
 }
 
 #Preview("Review - Error") {

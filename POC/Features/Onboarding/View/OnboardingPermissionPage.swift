@@ -6,32 +6,58 @@
 import SwiftUI
 
 struct OnboardingPermissionPage: View {
+
     let permission: OnboardingPermission
+    let pageIndex: Int
+    let pageCount: Int
     let isAllowEnabled: Bool
     let onAllow: () -> Void
+    let onSkip: () -> Void
 
     var body: some View {
-        VStack(spacing: 0) {
-            OnboardingHeader(
-                title: permission.title,
-                message: permission.message
-            )
+        ScrollView {
+            VStack(spacing: 0) {
 
-            OnboardingIllustration()
+                OnboardingHeader(
+                    title: permission.title,
+                    message: permission.message
+                )
+                .padding(.top, 12)
+                .padding(.bottom, 12)
 
-            Color.clear
-                .frame(height: Layout.paginationAreaHeight)
+                OnboardingIllustration(permission: permission)
 
-            AppButton(
-                title: permission == .camera ? "Next" : "Allow",
-                tint: buttonTint,
-                width: Layout.buttonWidth,
-                height: Layout.buttonHeight,
-                accessibilityLabel: permission == .camera
-                    ? "Continue after attaching the optical lens."
-                    : "Allow permission.",
-                action: onAllow
-            )
+                OnboardingPageIndicator(
+                    count: pageCount,
+                    currentIndex: pageIndex
+                )
+                .padding(.top, 12)
+                .padding(.bottom, 12)
+
+                AppButton(
+                    title: "Continue",
+                    tint: buttonTint,
+                    width: Layout.buttonWidth,
+                    height: Layout.buttonHeight,
+                    accessibilityLabel: permission == .attachLens
+                        ? "Continue after attaching the optical lens."
+                        : "Continue to the permission request.",
+                    action: onAllow
+                )
+                .padding(.top, 24)
+                .padding(.bottom, 12)
+
+                if permission.isSkippable {
+                    Button("Not now", action: onSkip)
+                        .font(.body)
+                        .foregroundStyle(AppColors.labelSecondary)
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .contentShape(Rectangle())
+                        .accessibilityHint("Skip this step for now.")
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, Layout.horizontalPadding)
             .padding(.bottom, Layout.onboardingBottomPadding)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -39,22 +65,73 @@ struct OnboardingPermissionPage: View {
     }
 
     private var buttonTint: Color {
-        isAllowEnabled ? AppColors.accentBlue : AppColors.fillsSecondary
+        isAllowEnabled ? AppColors.primaryButtons : AppColors.fillsSecondary
     }
 }
 
-#Preview("NFC belum terdeteksi") {
+private struct OnboardingPageIndicator: View {
+
+    let count: Int
+    let currentIndex: Int
+
+    var body: some View {
+        HStack(spacing: 8) {
+            ForEach(0..<count, id: \.self) { index in
+                Circle()
+                    .fill(
+                        index == currentIndex
+                            ? AppColors.primaryButtons
+                            : AppColors.fillsSecondary
+                    )
+                    .frame(width: 8, height: 8)
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Step \(currentIndex + 1) of \(count)")
+    }
+}
+
+
+#Preview("Camera") {
     OnboardingPermissionPage(
         permission: .camera,
-        isAllowEnabled: false,
-        onAllow: {}
+        pageIndex: 0,
+        pageCount: 3,
+        isAllowEnabled: true,
+        onAllow: {},
+        onSkip: {}
     )
 }
 
-#Preview("NFC terdeteksi") {
+#Preview("Photos (skippable)") {
     OnboardingPermissionPage(
-        permission: .camera,
+        permission: .photos,
+        pageIndex: 1,
+        pageCount: 3,
         isAllowEnabled: true,
-        onAllow: {}
+        onAllow: {},
+        onSkip: {}
+    )
+}
+
+#Preview("Attach lens - NFC not detected") {
+    OnboardingPermissionPage(
+        permission: .attachLens,
+        pageIndex: 2,
+        pageCount: 3,
+        isAllowEnabled: false,
+        onAllow: {},
+        onSkip: {}
+    )
+}
+
+#Preview("Attach lens - NFC detected") {
+    OnboardingPermissionPage(
+        permission: .attachLens,
+        pageIndex: 2,
+        pageCount: 3,
+        isAllowEnabled: true,
+        onAllow: {},
+        onSkip: {}
     )
 }

@@ -8,7 +8,7 @@ import SwiftUI
 enum AppColors {
     static let labelPrimary = Color("LabelPrimary")
     static let white = Color("White")
-    static let accentBlue = Color("AccentBlue")
+    static let primaryButtons = Color("PrimaryColors")
     static let normal = Color("Normal")
     static let suspect = Color("Suspect")
     static let accentRed = Color("AccentRed")

@@ -6,8 +6,8 @@ enum Layout {
     static let illustrationSize: CGFloat = 300
     static let illustrationCornerRadius: CGFloat = 16
     static let paginationAreaHeight: CGFloat = 89
-    static let buttonWidth: CGFloat = 287
-    static let buttonHeight: CGFloat = 50
+    static let buttonWidth: CGFloat? = nil
+    static let buttonHeight: CGFloat = 44
     static let horizontalPadding: CGFloat = 24
     static let topPadding: CGFloat = 8
     static let onboardingBottomPadding: CGFloat = 68

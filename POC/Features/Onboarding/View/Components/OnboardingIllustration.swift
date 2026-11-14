@@ -6,6 +6,8 @@
 import SwiftUI
 
 struct OnboardingIllustration: View {
+    let permission: OnboardingPermission
+    
     var body: some View {
         RoundedRectangle(cornerRadius: Layout.illustrationCornerRadius)
             .fill(AppColors.fillsSecondary)
@@ -18,7 +20,7 @@ struct OnboardingIllustration: View {
                     .font(.subheadline)
                     .foregroundStyle(AppColors.labelSecondary)
             }
-            .accessibilityLabel("Optical lens illustration placeholder.")
+            .accessibilityLabel(permission.illustrationLabel)
             .frame(maxWidth: .infinity)
             .frame(height: Layout.illustrationAreaHeight)
     }

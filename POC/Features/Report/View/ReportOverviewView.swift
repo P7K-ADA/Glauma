@@ -52,7 +52,7 @@ struct ReportOverviewView: View {
         .safeAreaInset(edge: .bottom) {
             AppButton(
                 title: viewModel.isExporting ? "Menyimpan..." : "Ekspor Foto",
-                tint: AppColors.accentBlue,
+                tint: AppColors.primaryButtons,
                 action: viewModel.exportReport
             )
             .disabled(viewModel.isExporting)

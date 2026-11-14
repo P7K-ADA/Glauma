@@ -7,21 +7,21 @@ import SwiftUI
 
 // Shared Liquid Glass button component.
 struct AppButton: View {
-    let title: String
+    let title: LocalizedStringKey
     let tint: Color
     let titleColor: Color
     let width: CGFloat?
     let height: CGFloat
-    let accessibilityLabel: String?
+    let accessibilityLabel: LocalizedStringKey?
     let action: () -> Void
 
     init(
-        title: String,
+        title: LocalizedStringKey,
         tint: Color,
         titleColor: Color = AppColors.white,
         width: CGFloat? = nil,
-        height: CGFloat = 50,
-        accessibilityLabel: String? = nil,
+        height: CGFloat = 44,
+        accessibilityLabel: LocalizedStringKey? = nil,
         action: @escaping () -> Void
     ) {
         self.title = title
@@ -73,12 +73,13 @@ struct AppButton: View {
         }
     }
 }
+    
 
 #Preview {
     VStack(spacing: 16) {
         AppButton(
             title: "Primary",
-            tint: AppColors.accentBlue,
+            tint: AppColors.primaryButtons,
             width: 287,
             action: {}
         )

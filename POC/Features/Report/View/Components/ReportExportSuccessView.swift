@@ -40,7 +40,7 @@ struct ReportExportSuccessView: View {
 
                 AppButton(
                     title: "Mulai Baru",
-                    tint: AppColors.accentBlue,
+                    tint: AppColors.primaryButtons,
                     action: onStartNew
                 )
             }

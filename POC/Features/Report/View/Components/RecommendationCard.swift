@@ -18,7 +18,7 @@ struct RecommendationCard: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline, spacing: 4) {
                 Text("[AI]")
-                    .foregroundStyle(AppColors.accentBlue)
+                    .foregroundStyle(AppColors.primaryButtons)
 
                 Text(title)
             }

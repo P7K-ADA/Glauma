@@ -29,10 +29,10 @@ struct ReviewEditingActions: View {
             .disabled(isAnalyzing)
 
             AppButton(
-                title: primaryTitle,
-                tint: AppColors.accentBlue,
+                title: LocalizedStringKey(primaryTitle),
+                tint: AppColors.primaryButtons,
                 height: Layout.reviewButtonHeight,
-                accessibilityLabel: primaryTitle,
+                accessibilityLabel: LocalizedStringKey(primaryTitle),
                 action: onContinue
             )
             .frame(maxWidth: .infinity)

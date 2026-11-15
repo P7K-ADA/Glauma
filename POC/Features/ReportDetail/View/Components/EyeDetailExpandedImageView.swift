@@ -14,7 +14,7 @@ struct EyeDetailExpandedImageView: View {
             ZStack {
                 Color.black.ignoresSafeArea()
 
-                if let image = eye.segmentationReferenceImage ?? eye.image {
+                if let image = eye.image {
                     GeometryReader { geometry in
                         ZStack {
                             Image(uiImage: image)

@@ -10,7 +10,8 @@ import SwiftUI
 struct EyeDetailView: View {
     let report: ReportData
     let side: EyeSide
-    @State private var isImageExpanded: Bool = false
+
+    @State private var isImageExpanded = false
 
     init(report: ReportData, initialSide: EyeSide) {
         self.report = report
@@ -24,7 +25,11 @@ struct EyeDetailView: View {
     var body: some View {
         EyeDetailContent(
             eye: eye,
-            onExpandImage: { isImageExpanded = true }
+            onExpandImage: {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    isImageExpanded = true
+                }
+            }
         )
         .frame(
             maxWidth: .infinity,
@@ -38,23 +43,41 @@ struct EyeDetailView: View {
             AppColors.backgroundSecondary
                 .ignoresSafeArea()
         )
+        .overlay {
+            if isImageExpanded {
+                ZoomableSegmentationOverlay(
+                    eye: eye,
+                    onDismiss: {
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            isImageExpanded = false
+                        }
+                    }
+                )
+                .transition(.opacity)
+                .zIndex(10)
+            }
+        }
         .navigationTitle("Detail Mata")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(AppColors.backgroundSecondary, for: .navigationBar)
+        .toolbarBackground(
+            AppColors.backgroundSecondary,
+            for: .navigationBar
+        )
         .toolbarBackground(.visible, for: .navigationBar)
-        .fullScreenCover(isPresented: $isImageExpanded) {
-            EyeDetailExpandedImageView(
-                eye: eye,
-                onDismiss: { isImageExpanded = false }
-            )
-        }
+        .toolbar(
+            isImageExpanded ? .hidden : .visible,
+            for: .navigationBar
+        )
     }
 }
 
 #if DEBUG
 #Preview {
     NavigationStack {
-        EyeDetailView(report: .sample, initialSide: .left)
+        EyeDetailView(
+            report: .sample,
+            initialSide: .left
+        )
     }
 }
 #endif

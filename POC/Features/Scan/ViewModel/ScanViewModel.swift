@@ -9,7 +9,7 @@ final class ScanViewModel: ObservableObject {
 
     // MARK: - Model Configuration
 
-    private let modelResourceName = "GlaucomaSegV2_EffNetB4"
+    private let modelResourceName = "Glauma_EffNetB4"
 
     // MARK: - Scan State
 
@@ -186,11 +186,13 @@ final class ScanViewModel: ObservableObject {
     private func prepareReview(with image: UIImage) {
         analysisTask?.cancel()
 
+        let uprightImage = image.normalizedForCropping()
+
         let newAnalysisID = UUID()
         let eye = selectedEye
 
         analysisID = newAnalysisID
-        selectedImage = image
+        selectedImage = uprightImage
         selectedItem = nil
 
         clearAnalysisState()
@@ -200,7 +202,7 @@ final class ScanViewModel: ObservableObject {
 
         analysisTask = Task { [weak self] in
             await self?.analyzeCapturedImage(
-                image,
+                uprightImage,
                 eye: eye,
                 analysisID: newAnalysisID
             )

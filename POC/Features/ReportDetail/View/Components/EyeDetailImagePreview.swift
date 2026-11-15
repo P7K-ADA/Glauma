@@ -18,6 +18,7 @@ struct EyeDetailImagePreview: View {
                 segmentationMask: eye.segmentationMask,
                 maskWidth: eye.maskWidth,
                 maskHeight: eye.maskHeight,
+                roiRectNormalized: eye.roiRectNormalized,
                 aspectRatio: Layout.reviewImageAspectRatio
             )
             .clipShape(RoundedRectangle(cornerRadius: 22))
@@ -33,6 +34,9 @@ struct EyeDetailImagePreview: View {
             .buttonStyle(.plain)
             .padding(14)
             .accessibilityLabel("Perbesar foto")
+            .accessibilityHint(
+                "Membuka tampilan foto yang dapat diperbesar dan digeser."
+            )
         }
     }
 }

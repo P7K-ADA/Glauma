@@ -31,7 +31,7 @@ enum InferenceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .modelNotFound:
-            return "GlaucomaSegV2.mlmodelc was not found."
+            return "Glauma_EffNetB4.mlmodelc was not found."
         case .invalidImage:
             return "Could not convert the image to RGB."
         case .invalidInputShape:
@@ -55,7 +55,7 @@ final class ImageInferenceService {
 
     init() throws {
         guard let url = Bundle.main.url(
-            forResource: "GlaucomaSegV2",
+            forResource: "Glauma_EffNetB4",
             withExtension: "mlmodelc"
         ) else {
             throw InferenceError.modelNotFound

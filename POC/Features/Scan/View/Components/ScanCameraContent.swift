@@ -52,7 +52,7 @@ struct ScanCameraContent: View {
                         }
                         .buttonStyle(.plain)
                         .accessibilityLabel(
-                            camera.isFlashEnabled ? "Matikan flash" : "Nyalakan flash"
+                            camera.isFlashEnabled ? "on" : "off"
                         )
                         .accessibilityValue(camera.isFlashEnabled ? "Aktif" : "Nonaktif")
                     }

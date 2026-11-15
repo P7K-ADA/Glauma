@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Glauma_App Icon_TSX26.png",
+      "filename" : "icon_lightmode.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,6 +13,7 @@
           "value" : "dark"
         }
       ],
+      "filename" : "icon_darkmode.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

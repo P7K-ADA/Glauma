@@ -23,15 +23,21 @@ struct EyeDetailExpandedImageView: View {
                                 .frame(width: geometry.size.width, height: geometry.size.height)
 
                             if let mask = eye.segmentationMask,
+                               let roiRect = eye.roiRectNormalized,
                                let overlay = SegmentationOverlay.makeImage(
-                                from: mask,
-                                width: eye.maskWidth,
-                                height: eye.maskHeight
+                                   from: mask,
+                                   width: eye.maskWidth,
+                                   height: eye.maskHeight,
+                                   canvasSize: image.size,
+                                   roiRectNormalized: roiRect
                                ) {
                                 Image(uiImage: overlay)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: geometry.size.width, height: geometry.size.height)
+                                    .frame(
+                                        width: geometry.size.width,
+                                        height: geometry.size.height
+                                    )
                             }
                         }
                     }

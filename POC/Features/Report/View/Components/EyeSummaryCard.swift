@@ -23,9 +23,11 @@ struct EyeSummaryCard: View {
             SegmentationImageView(
                 side: eye.side,
                 image: eye.image,
+                segmentationReferenceImage: eye.segmentationReferenceImage,
                 segmentationMask: eye.segmentationMask,
                 maskWidth: eye.maskWidth,
-                maskHeight: eye.maskHeight
+                maskHeight: eye.maskHeight,
+                roiRectNormalized: eye.roiRectNormalized
             )
             .accessibilityHidden(true)
 

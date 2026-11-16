@@ -30,6 +30,8 @@ struct ReportOverviewView: View {
                     .foregroundStyle(AppColors.labelSecondary)
                 
                 ReportEyeScansSection(report: report)
+                
+                PreprocessingDetailsSection(report: report)
 
                 RecommendationCard(
                     title: report.recommendation.title,

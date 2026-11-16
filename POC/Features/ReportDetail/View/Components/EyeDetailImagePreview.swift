@@ -14,9 +14,11 @@ struct EyeDetailImagePreview: View {
             SegmentationImageView(
                 side: eye.side,
                 image: eye.image,
+                segmentationReferenceImage: eye.segmentationReferenceImage,
                 segmentationMask: eye.segmentationMask,
                 maskWidth: eye.maskWidth,
                 maskHeight: eye.maskHeight,
+                roiRectNormalized: eye.roiRectNormalized,
                 aspectRatio: Layout.reviewImageAspectRatio
             )
             .clipShape(RoundedRectangle(cornerRadius: 22))

@@ -57,5 +57,5 @@ struct OnboardingView: View {
 }
 
 #Preview {
-    OnboardingView(onFinish: {})
+    OnboardingView(onFinish: {}).preferredColorScheme(.dark)
 }

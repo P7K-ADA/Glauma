@@ -4,51 +4,67 @@ struct ReportExportSuccessView: View {
     let onBack: () -> Void
     let onStartNew: () -> Void
 
-    var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
+    @ScaledMetric(relativeTo: .largeTitle) private var iconSize: CGFloat = 96
+    @State private var didAppear = false
 
-            Image(systemName: "checkmark")
-                .font(.system(size: 92, weight: .bold))
+    var body: some View {
+        GeometryReader { proxy in
+            ScrollView {
+                content
+                    .frame(maxWidth: .infinity, minHeight: proxy.size.height)
+                    .padding(.horizontal, Layout.horizontalPadding)
+            }
+            .scrollBounceBehavior(.basedOnSize)
+        }
+        .background(AppColors.appBackground)
+        .safeAreaInset(edge: .bottom) { actions }
+        //.preferredColorScheme(.light)
+        .sensoryFeedback(.success, trigger: didAppear)
+        .onAppear { didAppear = true }
+    }
+    
+    private var content: some View {
+        VStack(spacing: 24) {
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: iconSize))
                 .foregroundStyle(AppColors.normal)
-                .frame(width: 220, height: 220)
-                .overlay {
-                    Circle()
-                        .stroke(AppColors.normal, lineWidth: 12)
-                }
+                .symbolEffect(.bounce, value: didAppear)
                 .accessibilityHidden(true)
 
-            VStack(spacing: 4) {
-                Text("Foto Berhasil Disimpan")
-                    .font(.title3.weight(.bold))
+            VStack(spacing: 8) {
+                Text("Scan Saved")
+                    .font(.title2.weight(.bold))
                     .foregroundStyle(AppColors.labelPrimary)
-                Text("Periksa hasil ekspor di Galeri Foto.")
+                    .accessibilityAddTraits(.isHeader)
+
+                Text("Find your exported results in the Photos app.")
                     .font(.body)
-                    .foregroundStyle(AppColors.labelPrimary)
+                    .foregroundStyle(AppColors.labelSecondary)
             }
-            .padding(.top, 36)
+            .multilineTextAlignment(.center)
+            .accessibilityElement(children: .combine)
+        }
+    }
 
-            Spacer()
+    private var actions: some View {
+        VStack(spacing: 24) {
+            AppButton(
+                title: "Start New Scan",
+                tint: AppColors.primaryButtons,
+                action: onStartNew
+            )
 
-            HStack(spacing: Layout.reviewButtonSpacing) {
-                AppButton(
-                    title: "Kembali",
-                    tint: AppColors.fillsSecondary,
-                    titleColor: AppColors.labelSecondary,
-                    action: onBack
-                )
-
-                AppButton(
-                    title: "Mulai Baru",
-                    tint: AppColors.accentBlue,
-                    action: onStartNew
-                )
-            }
+            AppButton(
+                title: "Back to Report",
+                tint: AppColors.secondaryButtons,
+                titleColor: AppColors.white,
+                action: onBack
+            )
         }
         .padding(.horizontal, Layout.horizontalPadding)
-        .padding(.top, Layout.topPadding)
+        .padding(.top, 12)
         .padding(.bottom, Layout.reviewBottomPadding)
-        .background(AppColors.backgroundSecondary)
+        .background(AppColors.appBackground)
     }
 }
 

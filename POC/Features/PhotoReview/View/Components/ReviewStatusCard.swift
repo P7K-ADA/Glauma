@@ -10,10 +10,13 @@ struct ReviewStatusCard: View {
     }
 
     private var title: String {
+        guard analysisErrorMessage != nil else {
+            return "Good image quality"
         if isAnalyzing {
             return "Menganalisis Foto"
         }
 
+        return "Image may be unclear"
         if isError {
             return "Foto mungkin tidak terbaca"
         }
@@ -22,6 +25,7 @@ struct ReviewStatusCard: View {
     }
 
     private var subtitle: String {
+        analysisErrorMessage ?? "Ready to be analyzed."
         if isAnalyzing {
             return "Memeriksa kualitas gambar dan melakukan segmentasi optic disc dan optic cup."
         }
@@ -37,6 +41,9 @@ struct ReviewStatusCard: View {
         return "Foto berhasil diproses dan siap digunakan."
     }
 
+//    private var tint: Color {
+//        isError ? AppColors.accentRed : AppColors.normal
+//    }
     private var tint: Color {
         if isAnalyzing {
             return AppColors.normal
@@ -54,6 +61,13 @@ struct ReviewStatusCard: View {
     }
 
     var body: some View {
+        HStack(alignment: .top, spacing: Layout.reviewStatusContentSpacing) {
+            ReviewStatusIcon(
+                systemName: isError
+                    ? "exclamationmark.circle.fill"
+                    : "checkmark.circle.fill",
+                isError: isError
+            )
         VStack(alignment: .leading, spacing: 10) {
             HStack(
                 alignment: .top,
@@ -72,14 +86,16 @@ struct ReviewStatusCard: View {
                         .font(.footnote.weight(.bold))
                         .foregroundStyle(AppColors.labelPrimary)
 
+                Text(subtitle)
+                    .font(.footnote.weight(.regular))
+                    .foregroundStyle(AppColors.labelSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
                     Text(subtitle)
                         .font(.footnote.weight(.regular))
                         .foregroundStyle(AppColors.labelPrimary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-
-                Spacer(minLength: 0)
-            }
 
             if !isAnalyzing && !isError && !qualityWarnings.isEmpty {
                 VStack(alignment: .leading, spacing: 5) {
@@ -95,11 +111,12 @@ struct ReviewStatusCard: View {
                 }
                 .padding(.leading, 4)
             }
+}
         }
         .padding(Layout.reviewStatusCardPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
-            AppColors.white,
+            AppColors.cardFills,
             in: RoundedRectangle(
                 cornerRadius: Layout.reviewStatusCardCornerRadius,
                 style: .continuous
@@ -110,25 +127,17 @@ struct ReviewStatusCard: View {
     }
 }
 
+
 private struct ReviewStatusIcon: View {
+
     let systemName: String
-    let tint: Color
+    let isError: Bool
 
     var body: some View {
-        RoundedRectangle(
-            cornerRadius: Layout.reviewStatusIconCornerRadius,
-            style: .continuous
-        )
-        .fill(tint.opacity(0.12))
-        .frame(
-            width: Layout.reviewStatusIconSize,
-            height: Layout.reviewStatusIconSize
-        )
-        .overlay {
-            Image(systemName: systemName)
-                .font(.headline.weight(.bold))
-                .foregroundStyle(tint)
-        }
-        .accessibilityHidden(true)
+        Image(systemName: systemName)
+            .font(.title)
+            .foregroundStyle(isError ? .red : .green)
+            .accessibilityHidden(true)
     }
 }
+

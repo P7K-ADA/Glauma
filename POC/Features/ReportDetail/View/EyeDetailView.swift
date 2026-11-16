@@ -23,6 +23,19 @@ struct EyeDetailView: View {
     }
 
     var body: some View {
+        ScrollView {
+            
+            EyeDetailContent(
+                eye: eye,
+                onExpandImage: { isImageExpanded = true }
+            )
+            .padding(.horizontal, Layout.horizontalPadding)
+            .padding(.top, Layout.topPadding)
+            .padding(.bottom, Layout.reviewBottomPadding)
+        }
+        .background(AppColors.appBackground)
+        //.preferredColorScheme(.dark)
+        .navigationTitle("Eye Details")
         EyeDetailContent(
             eye: eye,
             onExpandImage: {

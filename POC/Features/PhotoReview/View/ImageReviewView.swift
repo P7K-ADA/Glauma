@@ -5,16 +5,8 @@ struct ImageReviewView: View {
     let image: UIImage
     let onUseImage: (UIImage) -> Void
     let onRetake: () -> Void
-
     let isAnalyzing: Bool
     let analysisErrorMessage: String?
-
-    let debugStages: [String: UIImage]
-    let debugFailureMessage: String?
-    let debugVCDR: Double?
-    let debugConfidence: Double?
-    let qualityWarnings: [String]
-
     let eyeSide: EyeSide
     let isLastEye: Bool
 
@@ -22,76 +14,55 @@ struct ImageReviewView: View {
 
     var body: some View {
         ZStack {
-            VStack(spacing: Layout.reviewSectionSpacing) {
-                ReviewHeader(onBack: onRetake)
+            ScrollView {
+                VStack(spacing: Layout.reviewSectionSpacing) {
+                    ReviewHeader(onBack: onRetake)
 
-                ReviewImageCanvas(
-                    image: image,
-                    eyeSide: eyeSide
-                )
+                    ReviewImageCanvas(
+                        image: image,
+                        eyeSide: eyeSide
+                    )
 
-                ReviewStatusCard(
-                    analysisErrorMessage: analysisErrorMessage,
-                    isAnalyzing: isAnalyzing,
-                    qualityWarnings: qualityWarnings
-                )
+                    ReviewStatusCard(
+                        analysisErrorMessage: analysisErrorMessage
+                    )
 
-                if !debugStages.isEmpty {
-                    NavigationLink {
-                        GlaumaDebugGridView(
-                            stages: debugStages,
-                            failureMessage: debugFailureMessage,
-                            vCDR: debugVCDR,
-                            confidence: debugConfidence
-                        )
-                    } label: {
-                        Label(
-                            "View preprocessing details",
-                            systemImage: "square.grid.2x2"
-                        )
-                        .font(.footnote.weight(.semibold))
-                        .foregroundStyle(AppColors.normal)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                    }
-                    .disabled(isAnalyzing)
-                }
-
-                ReviewEditingActions(
-                    isAnalyzing: isAnalyzing,
-                    hasError: analysisErrorMessage != nil,
-                    isLastEye: isLastEye,
-                    onRetake: onRetake,
-                    onContinue: {
-                        if analysisErrorMessage != nil {
-                            isShowingQualityAlert = true
-                        } else {
-                            onUseImage(image)
+                    ReviewEditingActions(
+                        isAnalyzing: isAnalyzing,
+                        hasError: analysisErrorMessage != nil,
+                        isLastEye: isLastEye,
+                        onRetake: onRetake,
+                        onContinue: {
+                            if analysisErrorMessage != nil {
+                                isShowingQualityAlert = true
+                            } else {
+                                onUseImage(image)
+                            }
                         }
-                    }
-                )
-
-                Spacer(minLength: 0)
+                    )
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, Layout.horizontalPadding)
+                .padding(.top, Layout.topPadding)
+                .padding(.bottom, Layout.reviewBottomPadding)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.horizontal, Layout.horizontalPadding)
-            .padding(.top, Layout.topPadding)
-            .padding(.bottom, Layout.reviewBottomPadding)
+            .scrollIndicators(.hidden)
         }
-        .background(AppColors.backgroundSecondary)
+        .background(AppColors.appBackground)
+        //.preferredColorScheme(.dark)
         .alert(
-            "Foto mungkin tidak terbaca",
+            "Image may be unclear",
             isPresented: $isShowingQualityAlert
         ) {
-            Button("Kembali", role: .cancel) {}
+            Button("Retake", role: .cancel) {}
 
-            Button("Tetap Lanjut") {
+            Button("Continue") {
                 onUseImage(image)
             }
         } message: {
             Text(
                 analysisErrorMessage
-                    ?? "Foto ini mungkin tidak dapat dikenali oleh model. Apakah kamu tetap ingin menggunakannya?"
+                    ?? "The model may not be able to identify the vCDR from the image. Are you sure you want to continue?"
             )
         }
     }
@@ -104,15 +75,9 @@ struct ImageReviewView: View {
         onRetake: {},
         isAnalyzing: false,
         analysisErrorMessage: nil,
-        debugStages: [:],
-        debugFailureMessage: nil,
-        debugVCDR: nil,
-        debugConfidence: nil,
-        qualityWarnings: [],
         eyeSide: .left,
         isLastEye: false
     )
-    .preferredColorScheme(.dark)
 }
 
 #Preview("Review - Error") {
@@ -121,12 +86,7 @@ struct ImageReviewView: View {
         onUseImage: { _ in },
         onRetake: {},
         isAnalyzing: false,
-        analysisErrorMessage: "Hasil segmentasi belum cukup meyakinkan. Silakan ambil foto ulang.",
-        debugStages: [:],
-        debugFailureMessage: "Hasil segmentasi belum cukup meyakinkan.",
-        debugVCDR: nil,
-        debugConfidence: nil,
-        qualityWarnings: [],
+        analysisErrorMessage: "The image is blurry. Please hold the camera steady and retake the photo.",
         eyeSide: .right,
         isLastEye: true
     )

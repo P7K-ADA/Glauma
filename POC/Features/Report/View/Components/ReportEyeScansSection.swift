@@ -22,6 +22,8 @@ struct ReportEyeScansSection: View {
                 }
             }
             .foregroundStyle(.secondary)
+            //.background(AppColors.cardFills)
+            
         }
     }
 }
@@ -29,6 +31,10 @@ struct ReportEyeScansSection: View {
 private struct ReportEyeNavigationLink: View {
     let eye: EyeReport
     let report: ReportData
+
+    private var spokenCDR: String {
+        eye.cdr == nil ? "not available" : eye.cdrText
+    }
 
     var body: some View {
         NavigationLink {
@@ -38,8 +44,8 @@ private struct ReportEyeNavigationLink: View {
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(eye.side == .left ? "Mata Kiri" : "Mata Kanan")
-        .accessibilityValue("vCDR \(eye.cdrText), \(eye.status.label)")
-        .accessibilityHint("Buka detail mata ini.")
+        .accessibilityLabel(eye.side == .left ? "Left eye" : "Right eye")
+        .accessibilityValue("Vertical cup-to-disc ratio \(spokenCDR), \(eye.status.label)")
+        .accessibilityHint("Shows details for the \(eye.side == .left ? "left" : "right") eye.")
     }
 }

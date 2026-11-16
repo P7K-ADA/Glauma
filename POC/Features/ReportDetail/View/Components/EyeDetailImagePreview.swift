@@ -33,10 +33,7 @@ struct EyeDetailImagePreview: View {
             }
             .buttonStyle(.plain)
             .padding(14)
-            .accessibilityLabel("Perbesar foto")
-            .accessibilityHint(
-                "Membuka tampilan foto yang dapat diperbesar dan digeser."
-            )
+            .accessibilityLabel("Expand photo")
         }
     }
 }

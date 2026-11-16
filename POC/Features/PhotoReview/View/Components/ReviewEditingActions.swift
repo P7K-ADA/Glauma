@@ -9,18 +9,18 @@ struct ReviewEditingActions: View {
 
     private var primaryTitle: String {
         if hasError {
-            return "Tetap Lanjut"
+            return "Continue"
         }
 
-        return isLastEye ? "Lihat Laporan" : "Lanjut ke OD"
+        return isLastEye ? "View Report" : "Continue"
     }
 
     var body: some View {
         HStack(spacing: Layout.reviewButtonSpacing) {
             AppButton(
-                title: "Foto Ulang",
-                tint: AppColors.fillsSecondary,
-                titleColor: AppColors.labelSecondary,
+                title: "Retake",
+                tint: AppColors.secondaryButtons,
+                titleColor: AppColors.white,
                 height: Layout.reviewButtonHeight,
                 accessibilityLabel: "Retake photo",
                 action: onRetake
@@ -29,10 +29,10 @@ struct ReviewEditingActions: View {
             .disabled(isAnalyzing)
 
             AppButton(
-                title: primaryTitle,
-                tint: AppColors.accentBlue,
+                title: LocalizedStringKey(primaryTitle),
+                tint: AppColors.primaryButtons,
                 height: Layout.reviewButtonHeight,
-                accessibilityLabel: primaryTitle,
+                accessibilityLabel: LocalizedStringKey(primaryTitle),
                 action: onContinue
             )
             .frame(maxWidth: .infinity)

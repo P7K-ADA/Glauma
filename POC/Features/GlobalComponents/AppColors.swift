@@ -6,22 +6,19 @@
 import SwiftUI
 
 enum AppColors {
-    static let background = Color(uiColor: .systemBackground)
-    static let backgroundSecondary = Color(uiColor: .secondarySystemBackground)
+    static let primaryButtons = Color("PrimaryColors")
+    static let secondaryButtons = Color("SecondaryColors")
     
-    static let labelPrimary = Color.primary
-    static let labelSecondary = Color.secondary
+    static let appBackground = Color("AppBackground")
     
-    static let accentBlue = Color("AccentBlue")
+    static let zoomButtons = Color("ZoomColors")
+    static let white = Color("White")
+    static let normal = Color("Normal")
+    static let suspect = Color("Suspect")
+    static let accentRed = Color("AccentRed")
     
-    static let white = Color.white
-    
-    static let accentRed = Color.red
-    
-    static let normal = Color.green
-    static let normalBackground = Color.green.opacity(0.16)
-    static let suspect = Color.orange
-    static let suspectBackground = Color.orange.opacity(0.16)
-    
-    static let fillsSecondary = Color.gray.opacity(0.16)
+    static let labelPrimary = Color("LabelPrimary")
+    static let labelSecondary = Color("LabelSecondary")
+
+    static let cardFills = Color("FillsPrimary")
 }

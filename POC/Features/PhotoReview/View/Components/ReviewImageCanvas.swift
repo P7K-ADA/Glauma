@@ -17,9 +17,9 @@ struct ReviewImageCanvas: View {
                     style: .continuous
                 )
             )
-            .overlay(alignment: .bottom) {
+            .overlay(alignment: .top) {
                 EyeSideOverlay(eyeSide: eyeSide)
-                    .padding(.bottom, Layout.reviewEyeOverlayBottomPadding)
+                    .padding(.top, Layout.reviewEyeOverlayTopPadding)
             }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Captured eye image")

@@ -20,7 +20,7 @@ struct ReviewEditingActions: View {
             AppButton(
                 title: "Retake",
                 tint: AppColors.fillsSecondary,
-                titleColor: AppColors.labelSecondary,
+                titleColor: AppColors.white,
                 height: Layout.reviewButtonHeight,
                 accessibilityLabel: "Retake photo",
                 action: onRetake

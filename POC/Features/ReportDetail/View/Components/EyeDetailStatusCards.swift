@@ -22,9 +22,9 @@ struct EyeDetailStatusCards: View {
     private var statusBackgroundColor: Color {
         switch eye.status {
         case .normal:
-            return AppColors.normalBackground
+            return AppColors.white
         case .suspect, .highRisk:
-            return AppColors.suspectBackground
+            return AppColors.white
         case .unavailable:
             return AppColors.labelSecondary.opacity(0.12)
         }
@@ -32,34 +32,9 @@ struct EyeDetailStatusCards: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            // Card 1: Hasil Pemindaian
+            // Card 1: Vertical CDR
             VStack(alignment: .leading, spacing: 6) {
-                Text("Hasil Pemindaian")
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(AppColors.labelSecondary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-
-                Spacer(minLength: 0)
-
-                HStack(alignment: .center, spacing: 6) {
-                    scanStatusIcon
-
-                    scanStatusText
-                }
-
-                Spacer(minLength: 0)
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 12)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(height: 102)
-            .background(statusBackgroundColor)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-
-            // Card 2: Rasio CDR Vertikal
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Rasio CDR Vertikal")
+                Text("Vertical CDR")
                     .font(.footnote.weight(.semibold))
                     .foregroundStyle(AppColors.labelSecondary)
                     .lineLimit(1)
@@ -76,9 +51,34 @@ struct EyeDetailStatusCards: View {
                 Spacer(minLength: 0)
             }
             .padding(.horizontal, 14)
-            .padding(.vertical, 12)
+            .padding(.vertical, 14)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(height: 102)
+            //.frame(height: 80)
+            .background(statusBackgroundColor)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            
+            // Card 2: Scan Result
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Screening Assessment")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(AppColors.labelSecondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+
+                Spacer(minLength: 0)
+
+                HStack(alignment: .center, spacing: 6) {
+                    scanStatusIcon
+
+                    scanStatusText
+                }
+
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 14)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            //.frame(height: 80)
             .background(statusBackgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: 20))
         }
@@ -88,11 +88,11 @@ struct EyeDetailStatusCards: View {
     private var scanStatusIcon: some View {
         switch eye.status {
         case .normal:
-            Image(systemName: "checkmark")
+            Image(systemName: "checkmark.circle.fill")
                 .font(.title3.weight(.bold))
                 .foregroundStyle(statusColor)
         case .suspect, .highRisk:
-            Image(systemName: "arrow.up")
+            Image(systemName: "exclamationmark.triangle.fill")
                 .font(.title3.weight(.bold))
                 .foregroundStyle(statusColor)
         case .unavailable:
@@ -106,7 +106,7 @@ struct EyeDetailStatusCards: View {
     private var scanStatusText: some View {
         switch eye.status {
         case .normal:
-            Text("Batas\nNormal")
+            Text("Normal")
                 .font(.subheadline.weight(.bold))
                 .foregroundStyle(statusColor)
                 .lineLimit(2)
@@ -114,7 +114,7 @@ struct EyeDetailStatusCards: View {
                 .multilineTextAlignment(.leading)
                 .minimumScaleFactor(0.8)
         case .suspect, .highRisk:
-            Text("Suspek\nGlaukoma")
+            Text("Glaucoma\nSuspect")
                 .font(.subheadline.weight(.bold))
                 .foregroundStyle(statusColor)
                 .lineLimit(2)
@@ -122,7 +122,7 @@ struct EyeDetailStatusCards: View {
                 .multilineTextAlignment(.leading)
                 .minimumScaleFactor(0.8)
         case .unavailable:
-            Text("Tidak\nTersedia")
+            Text("Not\nAvailable")
                 .font(.subheadline.weight(.bold))
                 .foregroundStyle(statusColor)
                 .lineLimit(2)

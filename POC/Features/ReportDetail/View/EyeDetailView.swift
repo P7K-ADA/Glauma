@@ -23,6 +23,7 @@ struct EyeDetailView: View {
 
     var body: some View {
         ScrollView {
+            
             EyeDetailContent(
                 eye: eye,
                 onExpandImage: { isImageExpanded = true }
@@ -33,7 +34,7 @@ struct EyeDetailView: View {
         }
         .background(AppColors.backgroundSecondary)
         .preferredColorScheme(.light)
-        .navigationTitle("Detail Mata")
+        .navigationTitle("Eye Details")
         .navigationBarTitleDisplayMode(.inline)
         .fullScreenCover(isPresented: $isImageExpanded) {
             EyeDetailExpandedImageView(

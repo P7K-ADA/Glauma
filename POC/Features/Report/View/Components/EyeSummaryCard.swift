@@ -12,7 +12,8 @@ struct EyeSummaryCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text(eye.side == .left ? "Mata Kiri" : "Mata Kanan")
+                Text(eye.side == .left ? "Left Eye" : "Right Eye")
+                    .foregroundStyle(.primary)
                 Spacer()
                 Text(eye.side == .left ? "OS" : "OD")
                     .foregroundStyle(.secondary)
@@ -30,13 +31,13 @@ struct EyeSummaryCard: View {
 
             HStack(alignment: .firstTextBaseline) {
                 Text("vCDR")
-                    .font(.caption2)
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
 
                 Spacer()
 
                 Text(eye.cdrText)
-                    .font(.title3.monospacedDigit().weight(.semibold))
+                    .font(.title2.monospacedDigit().weight(.bold))
                     .foregroundStyle(eye.status.tint)
             }
 
@@ -45,12 +46,12 @@ struct EyeSummaryCard: View {
                     .padding(.top, 2)
 
                 HStack(spacing: 2) {
-                    Text("Lihat detail")
+                    Text("View Details")
                     Spacer()
                     Image(systemName: "chevron.right")
                 }
                 .font(.footnote)
-                .foregroundStyle(AppColors.labelSecondary)
+                .foregroundStyle(.secondary)
             }
         }
         .reportCard()

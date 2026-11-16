@@ -6,9 +6,9 @@
 import SwiftUI
 
 enum ReportCopy {
-    static let disclaimer = "CDR membandingkan ukuran optic cup dengan optic disc. Pemindaian ini bukan diagnosis medis dan harus diinterpretasikan lebih lanjut oleh dokter."
-    static let cdrExplainer = "CDR membandingkan ukuran optic cup dengan optic disc."
-    static let aiDisclaimer = "Pemindaian ini bukan diagnosis medis dan harus diinterpretasikan lebih lanjut oleh dokter."
+    static var disclaimer: String {
+        String(localized: "report.disclaimer")
+    }
 }
 
 struct AIDisclaimerView: View {

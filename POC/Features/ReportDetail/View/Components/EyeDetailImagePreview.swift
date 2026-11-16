@@ -31,7 +31,7 @@ struct EyeDetailImagePreview: View {
             }
             .buttonStyle(.plain)
             .padding(14)
-            .accessibilityLabel("Perbesar foto")
+            .accessibilityLabel("Expand photo")
         }
     }
 }

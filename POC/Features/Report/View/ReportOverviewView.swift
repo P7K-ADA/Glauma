@@ -24,7 +24,11 @@ struct ReportOverviewView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-
+                
+                Text(report.capturedLine)
+                    .font(.footnote)
+                    .foregroundStyle(AppColors.labelSecondary)
+                
                 ReportEyeScansSection(report: report)
 
                 RecommendationCard(
@@ -51,12 +55,12 @@ struct ReportOverviewView: View {
         }
         .safeAreaInset(edge: .bottom) {
             AppButton(
-                title: viewModel.isExporting ? "Menyimpan..." : "Ekspor Foto",
+                title: viewModel.isExporting ? "Saving..." : "Export Results",
                 tint: AppColors.primaryButtons,
                 action: viewModel.exportReport
             )
             .disabled(viewModel.isExporting)
-            .accessibilityHint("Export report as images.")
+            .accessibilityHint("Saves the report images to your Photos.")
             .padding(.horizontal, Layout.horizontalPadding)
             .padding(.vertical, Layout.reviewBottomPadding)
             .background(AppColors.backgroundSecondary)
@@ -70,24 +74,24 @@ struct ReportOverviewView: View {
                 }
             )
         }
-        .alert("Ekspor gagal", isPresented: Binding(
+        .alert("Export failed", isPresented: Binding(
             get: { viewModel.exportError != nil },
             set: { if !$0 { viewModel.exportError = nil } }
         )) {
             Button("OK", role: .cancel) { viewModel.exportError = nil }
         } message: {
-            Text(viewModel.exportError ?? "Coba lagi.")
+            Text(viewModel.exportError ?? "Something went wrong. Please try again.")
         }
-        .alert("Hasil Pemeriksaan Akan Dihapus", isPresented: $viewModel.showingUnsavedExportAlert) {
-            Button("Ekspor Foto") {
+        .alert("Results will be deleted.", isPresented: $viewModel.showingUnsavedExportAlert) {
+            Button("Export Results") {
                 viewModel.exportReport()
             }
-            Button("Hapus", role: .destructive) {
+            Button("Discard", role: .destructive) {
                 finishReport()
             }
-            Button("Batal", role: .cancel) { }
+            Button("Cancel", role: .cancel) { }
         } message: {
-            Text("Foto belum diekspor. Apakah Anda ingin mengekspor foto terlebih dahulu?")
+            Text("You haven't exported these results yet. If you leave now, they will be lost.")
         }
     }
 

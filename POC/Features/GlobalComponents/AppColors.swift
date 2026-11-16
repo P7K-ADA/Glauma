@@ -21,11 +21,11 @@ enum AppColors {
     static let labelVibrantPrimary = Color("LabelVibrantPrimary")
     static let labelSecondary = Color("LabelSecondary")
 
-    static let brandMain = Color("BrandMain")
-    static let accentMain = Color("AccentMain")
-    static let highRisk50 = Color("HighRisk50")
-    static let highRisk700 = Color("HighRisk700")
+//    static let brandMain = Color("BrandMain")
+//    //static let accentMain = Color("AccentMain")
+//    static let highRisk50 = Color("HighRisk50")
+//    static let highRisk700 = Color("HighRisk700")
 
-    static let suspectBackground = Color("SuspectBackground")
-    static let normalBackground = Color("NormalBackground")
+//    static let suspectBackground = Color("SuspectBackground")
+//    static let normalBackground = Color("NormalBackground")
 }

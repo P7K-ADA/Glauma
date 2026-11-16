@@ -12,12 +12,13 @@ struct SingleReportExportPage: View {
             .background(Color.black)
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("AI DISCLAIMER")
-                    .font(.system(size: 18, weight: .black))
+                Text("AI Disclaimer")
+                    .font(.system(.body, weight: .black))
                     .foregroundStyle(Color.black)
 
-                Text("\(ReportCopy.cdrExplainer) \(ReportCopy.aiDisclaimer)")
-                    .font(.system(size: 11, weight: .regular))
+//                Text("\(ReportCopy.disclaimer) \(ReportCopy.aiDisclaimer)")
+                Text("\(ReportCopy.disclaimer)")
+                    .font(.system(.caption,weight: .regular))
                     .foregroundStyle(Color.black.opacity(0.75))
                     .fixedSize(horizontal: false, vertical: true)
             }

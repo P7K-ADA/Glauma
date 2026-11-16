@@ -90,8 +90,8 @@ struct ReportData {
     var recommendation: ReportRecommendation {
         if left.status == .unavailable && right.status == .unavailable {
             return ReportRecommendation(
-                title: "vCDR Tidak Terdeteksi",
-                message: "Ambil ulang foto kedua mata untuk mendapatkan hasil pemeriksaan."
+                title: "vCDR Not Detected",
+                message: "Retake photos of both eyes to get a screening result."
             )
         }
 
@@ -104,8 +104,8 @@ struct ReportData {
 
         if left.status == .normal && right.status == .normal {
             return ReportRecommendation(
-                title: "Kedua Mata dalam Batas Normal",
-                message: "Lanjutkan pemeriksaan mata secara rutin."
+                title: "Both Eyes Within Normal Range",
+                message: "Continue with routine eye exams."
             )
         }
 
@@ -117,11 +117,12 @@ struct ReportData {
         }
         let flagged = [left, right].filter { $0.status == overall }
         let title: String
-        let side = flagged.first?.side == .left ? "OS" : "OD"
-        title = "Indikasi Rasio vCDR Meningkat (\(side))"
+        let side = flagged.first?.side == .left ? "Left Eye" : "Right Eye"
+        title = "Elevated vCDR Detected on \(side)"
         return ReportRecommendation(
             title: title,
-            message: "Jadwalkan pemeriksaan mata lebih lanjut dan konsultasikan hasil kedua mata dengan dokter spesialis."
+            message: "Schedule a more detailed eye exam and discuss follow-ups with an eye specialist."
+            //message: "Jadwalkan pemeriksaan mata lebih lanjut dan konsultasikan hasil kedua mata dengan dokter spesialis."
         )
     }
 }
@@ -130,7 +131,7 @@ struct ReportData {
 extension ReportData {
     static let sample = ReportData(
         capturedLine: "Captured 17 Oct 2026, 9:38 AM",
-        left: EyeReport(side: .left, cdr: 0.30),
+        left: EyeReport(side: .left, cdr: 0.60),
         right: EyeReport(side: .right, cdr: 0.42)
     )
 }

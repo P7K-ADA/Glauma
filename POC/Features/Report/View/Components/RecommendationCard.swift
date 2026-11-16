@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension View {
-    func reportCard(background: Color = AppColors.white) -> some View {
+    func reportCard(background: Color = AppColors.cardFills) -> some View {
         self
             .padding(14)
             .frame(maxWidth: .infinity, alignment: .leading)

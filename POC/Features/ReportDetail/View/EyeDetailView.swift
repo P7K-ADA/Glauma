@@ -32,8 +32,8 @@ struct EyeDetailView: View {
             .padding(.top, Layout.topPadding)
             .padding(.bottom, Layout.reviewBottomPadding)
         }
-        .background(AppColors.backgroundSecondary)
-        .preferredColorScheme(.light)
+        .background(AppColors.appBackground)
+        //.preferredColorScheme(.dark)
         .navigationTitle("Eye Details")
         .navigationBarTitleDisplayMode(.inline)
         .fullScreenCover(isPresented: $isImageExpanded) {

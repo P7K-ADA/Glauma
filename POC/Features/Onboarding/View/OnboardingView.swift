@@ -13,7 +13,7 @@ struct OnboardingView: View {
 
     var body: some View {
         ZStack {
-            AppColors.white
+            AppColors.appBackground
                 .ignoresSafeArea()
 
             OnboardingPermissionPage(

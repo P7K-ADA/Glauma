@@ -61,11 +61,11 @@ struct OnboardingPermissionPage: View {
             .padding(.bottom, Layout.onboardingBottomPadding)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(AppColors.white)
+        .background(AppColors.appBackground)
     }
 
     private var buttonTint: Color {
-        isAllowEnabled ? AppColors.primaryButtons : AppColors.fillsSecondary
+        isAllowEnabled ? AppColors.primaryButtons : AppColors.secondaryButtons
     }
 }
 
@@ -81,7 +81,7 @@ private struct OnboardingPageIndicator: View {
                     .fill(
                         index == currentIndex
                             ? AppColors.primaryButtons
-                            : AppColors.fillsSecondary
+                            : AppColors.secondaryButtons
                     )
                     .frame(width: 8, height: 8)
             }

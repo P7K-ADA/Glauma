@@ -42,8 +42,8 @@ struct ReportOverviewView: View {
             .padding(.top, Layout.topPadding)
             .padding(.bottom, Layout.reviewBottomPadding)
         }
-        .background(AppColors.backgroundSecondary)
-        .preferredColorScheme(.light)
+        .background(AppColors.appBackground)
+        //.preferredColorScheme(.dark)
         .navigationTitle("Overview")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -54,16 +54,7 @@ struct ReportOverviewView: View {
             }
         }
         .safeAreaInset(edge: .bottom) {
-            AppButton(
-                title: viewModel.isExporting ? "Saving..." : "Export Results",
-                tint: AppColors.primaryButtons,
-                action: viewModel.exportReport
-            )
-            .disabled(viewModel.isExporting)
-            .accessibilityHint("Saves the report images to your Photos.")
-            .padding(.horizontal, Layout.horizontalPadding)
-            .padding(.vertical, Layout.reviewBottomPadding)
-            .background(AppColors.backgroundSecondary)
+            exportButton
         }
         .fullScreenCover(isPresented: $viewModel.showingExportSuccess) {
             ReportExportSuccessView(
@@ -93,6 +84,21 @@ struct ReportOverviewView: View {
         } message: {
             Text("You haven't exported these results yet. If you leave now, they will be lost.")
         }
+    }
+
+    private var exportButton: some View {
+        let title: LocalizedStringKey = viewModel.isExporting ? "Saving..." : "Export Results"
+
+        return AppButton(
+            title: title,
+            tint: AppColors.primaryButtons,
+            action: viewModel.exportReport
+        )
+        .disabled(viewModel.isExporting)
+        .accessibilityHint("Saves the report images to your Photos.")
+        .padding(.horizontal, Layout.horizontalPadding)
+        .padding(.vertical, Layout.reviewBottomPadding)
+        .background(AppColors.appBackground)
     }
 
     private func finishReport() {

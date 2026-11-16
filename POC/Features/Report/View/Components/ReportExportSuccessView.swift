@@ -16,9 +16,9 @@ struct ReportExportSuccessView: View {
             }
             .scrollBounceBehavior(.basedOnSize)
         }
-        .background(AppColors.backgroundSecondary)
+        .background(AppColors.appBackground)
         .safeAreaInset(edge: .bottom) { actions }
-        .preferredColorScheme(.light)
+        //.preferredColorScheme(.light)
         .sensoryFeedback(.success, trigger: didAppear)
         .onAppear { didAppear = true }
     }
@@ -56,7 +56,7 @@ struct ReportExportSuccessView: View {
 
             AppButton(
                 title: "Back to Report",
-                tint: AppColors.fillsSecondary,
+                tint: AppColors.secondaryButtons,
                 titleColor: AppColors.white,
                 action: onBack
             )
@@ -64,7 +64,7 @@ struct ReportExportSuccessView: View {
         .padding(.horizontal, Layout.horizontalPadding)
         .padding(.top, 12)
         .padding(.bottom, Layout.reviewBottomPadding)
-        .background(AppColors.backgroundSecondary)
+        .background(AppColors.appBackground)
     }
 }
 

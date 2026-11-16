@@ -8,7 +8,7 @@ import SwiftUI
 struct ScanView: View {
     @StateObject private var viewModel = ScanViewModel()
 
-    private let pageBackground = AppColors.backgroundSecondary
+    private let pageBackground = AppColors.appBackground
     private let tint = AppColors.white
 
     var body: some View {
@@ -82,7 +82,7 @@ struct ScanView: View {
                 Text(viewModel.errorMessage ?? "Please try again.")
             }
         }
-        .preferredColorScheme(.light)
+        //.preferredColorScheme(.light)
     }
 
     @ViewBuilder

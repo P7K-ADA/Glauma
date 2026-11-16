@@ -19,7 +19,7 @@ struct ReviewEditingActions: View {
         HStack(spacing: Layout.reviewButtonSpacing) {
             AppButton(
                 title: "Retake",
-                tint: AppColors.fillsSecondary,
+                tint: AppColors.secondaryButtons,
                 titleColor: AppColors.white,
                 height: Layout.reviewButtonHeight,
                 accessibilityLabel: "Retake photo",

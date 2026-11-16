@@ -22,6 +22,8 @@ struct ReportEyeScansSection: View {
                 }
             }
             .foregroundStyle(.secondary)
+            //.background(AppColors.cardFills)
+            
         }
     }
 }

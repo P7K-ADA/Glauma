@@ -22,9 +22,9 @@ struct EyeDetailStatusCards: View {
     private var statusBackgroundColor: Color {
         switch eye.status {
         case .normal:
-            return AppColors.white
+            return AppColors.appBackground
         case .suspect, .highRisk:
-            return AppColors.white
+            return AppColors.appBackground
         case .unavailable:
             return AppColors.labelSecondary.opacity(0.12)
         }
@@ -54,7 +54,7 @@ struct EyeDetailStatusCards: View {
             .padding(.vertical, 14)
             .frame(maxWidth: .infinity, alignment: .leading)
             //.frame(height: 80)
-            .background(statusBackgroundColor)
+            .background(AppColors.cardFills)
             .clipShape(RoundedRectangle(cornerRadius: 20))
             
             // Card 2: Scan Result
@@ -79,7 +79,7 @@ struct EyeDetailStatusCards: View {
             .padding(.vertical, 14)
             .frame(maxWidth: .infinity, alignment: .leading)
             //.frame(height: 80)
-            .background(statusBackgroundColor)
+            .background(AppColors.cardFills)
             .clipShape(RoundedRectangle(cornerRadius: 20))
         }
     }

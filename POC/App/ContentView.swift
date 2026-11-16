@@ -18,7 +18,7 @@ struct ContentView: View {
                 ScanView()
             }
         }
-        .preferredColorScheme(.light)
+        //.preferredColorScheme(.light)
     }
 }
 

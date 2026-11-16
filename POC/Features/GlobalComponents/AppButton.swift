@@ -86,7 +86,7 @@ struct AppButton: View {
 
         AppButton(
             title: "Secondary",
-            tint: AppColors.fillsSecondary,
+            tint: AppColors.secondaryButtons,
             width: 287,
             action: {}
         )

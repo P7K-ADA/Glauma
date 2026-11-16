@@ -19,9 +19,9 @@ struct ReviewStatusCard: View {
         analysisErrorMessage ?? "Ready to be analyzed."
     }
 
-    private var tint: Color {
-        isError ? AppColors.accentRed : AppColors.normal
-    }
+//    private var tint: Color {
+//        isError ? AppColors.accentRed : AppColors.normal
+//    }
 
     var body: some View {
         HStack(alignment: .top, spacing: Layout.reviewStatusContentSpacing) {
@@ -39,7 +39,7 @@ struct ReviewStatusCard: View {
 
                 Text(subtitle)
                     .font(.footnote.weight(.regular))
-                    .foregroundStyle(AppColors.labelPrimary)
+                    .foregroundStyle(AppColors.labelSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
 
@@ -48,7 +48,7 @@ struct ReviewStatusCard: View {
         .padding(Layout.reviewStatusCardPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
-            AppColors.white,
+            AppColors.cardFills,
             in: RoundedRectangle(
                 cornerRadius: Layout.reviewStatusCardCornerRadius,
                 style: .continuous

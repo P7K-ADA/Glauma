@@ -48,8 +48,8 @@ struct ImageReviewView: View {
             }
             .scrollIndicators(.hidden)
         }
-        .background(AppColors.backgroundSecondary)
-        .preferredColorScheme(.light)
+        .background(AppColors.appBackground)
+        //.preferredColorScheme(.dark)
         .alert(
             "Image may be unclear",
             isPresented: $isShowingQualityAlert

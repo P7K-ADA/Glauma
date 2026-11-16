@@ -1,3 +1,4 @@
+
 //
 //  ReportData.swift
 //  POC
@@ -36,7 +37,10 @@ struct EyeReport: Identifiable {
     }
 
     var id: EyeSide { side }
-    var cdrText: String { cdr.map { String(format: "%.2f", $0) } ?? "—" }
+
+    var cdrText: String {
+        cdr.map { String(format: "%.2f", $0) } ?? "—"
+    }
 }
 
 struct ReportRecommendation: Equatable {
@@ -50,7 +54,9 @@ struct ReportData {
     let left: EyeReport
     let right: EyeReport
 
-    var overall: CDRStatus { max(left.status, right.status) }
+    var overall: CDRStatus {
+        max(left.status, right.status)
+    }
 
     func eye(_ side: EyeSide) -> EyeReport {
         side == .left ? left : right
@@ -60,9 +66,14 @@ struct ReportData {
         session: ScreeningSession,
         thresholds: CDRThresholds = .standard
     ) -> ReportData {
-        func report(_ side: EyeSide, _ record: EyeExaminationRecord) -> EyeReport {
+
+        func report(
+            _ side: EyeSide,
+            _ record: EyeExaminationRecord
+        ) -> EyeReport {
             let cdr = record.verticalCDR
             let result = record.segmentationResult
+
             return EyeReport(
                 side: side,
                 cdr: cdr,
@@ -75,11 +86,23 @@ struct ReportData {
         }
 
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US")
-        formatter.dateFormat = "d MMM yyyy, h:mm a"
+        formatter.locale = .autoupdatingCurrent
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+
+        let date = formatter.string(from: session.examDate)
+
+        let capturedLine = String(
+            localized: "Captured %@"
+        )
+
+        let formattedCapturedLine = String.localizedStringWithFormat(
+            capturedLine,
+            date
+        )
 
         return ReportData(
-            capturedLine: "Captured \(formatter.string(from: session.examDate))",
+            capturedLine: formattedCapturedLine,
             left: report(.left, session.leftEye),
             right: report(.right, session.rightEye)
         )
@@ -88,10 +111,11 @@ struct ReportData {
     // MARK: - Recommended next step (follows the worse eye)
 
     var recommendation: ReportRecommendation {
+
         if left.status == .unavailable && right.status == .unavailable {
             return ReportRecommendation(
-                title: "vCDR Not Detected",
-                message: "Retake photos of both eyes to get a screening result."
+                title: String(localized: "vCDR Not Detected"),
+                message: String(localized: "Retake photos of both eyes to get a screening result.")
             )
         }
 
@@ -104,8 +128,8 @@ struct ReportData {
 
         if left.status == .normal && right.status == .normal {
             return ReportRecommendation(
-                title: "Both Eyes Within Normal Range",
-                message: "Continue with routine eye exams."
+                title: String(localized: "Both Eyes Within Normal Range"),
+                message: String(localized: "Continue with routine eye exams.")
             )
         }
 
@@ -115,14 +139,25 @@ struct ReportData {
                 message: overall.nextStepBody
             )
         }
+
         let flagged = [left, right].filter { $0.status == overall }
-        let title: String
-        let side = flagged.first?.side == .left ? "Left Eye" : "Right Eye"
-        title = "Elevated vCDR Detected on \(side)"
+
+        let side = flagged.first?.side == .left
+            ? String(localized: "Left Eye")
+            : String(localized: "Right Eye")
+
+        let titleFormat = String(
+            localized: "Elevated vCDR Detected on %@"
+        )
+
+        let title = String.localizedStringWithFormat(
+            titleFormat,
+            side
+        )
+
         return ReportRecommendation(
             title: title,
-            message: "Schedule a more detailed eye exam and discuss follow-ups with an eye specialist."
-            //message: "Jadwalkan pemeriksaan mata lebih lanjut dan konsultasikan hasil kedua mata dengan dokter spesialis."
+            message: String(localized: "Schedule a more detailed eye exam and discuss follow-ups with an eye specialist.")
         )
     }
 }
@@ -130,7 +165,10 @@ struct ReportData {
 #if DEBUG
 extension ReportData {
     static let sample = ReportData(
-        capturedLine: "Captured 17 Oct 2026, 9:38 AM",
+        capturedLine: String.localizedStringWithFormat(
+            String(localized: "Captured %@"),
+            "17 Oct 2026, 9:38 AM"
+        ),
         left: EyeReport(side: .left, cdr: 0.60),
         right: EyeReport(side: .right, cdr: 0.42)
     )

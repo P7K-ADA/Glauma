@@ -10,7 +10,7 @@ struct OnboardingIllustration: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: Layout.illustrationCornerRadius)
-            .fill(AppColors.white)
+            .fill(AppColors.labelPrimary)
             .frame(
                 width: Layout.illustrationSize,
                 height: Layout.illustrationSize

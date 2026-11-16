@@ -53,7 +53,7 @@ struct EyeDetailView: View {
         .padding(.top, Layout.topPadding)
         .padding(.bottom, Layout.reviewBottomPadding)
         .background(
-            AppColors.backgroundSecondary
+            AppColors.appBackground
                 .ignoresSafeArea()
         )
         .overlay {
@@ -73,7 +73,7 @@ struct EyeDetailView: View {
         .navigationTitle("Detail Mata")
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(
-            AppColors.backgroundSecondary,
+            AppColors.appBackground,
             for: .navigationBar
         )
         .toolbarBackground(.visible, for: .navigationBar)

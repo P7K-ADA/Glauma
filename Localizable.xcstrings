@@ -650,7 +650,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mengalisis foto"
+            "value" : "Menganalisis foto"
           }
         }
       }
@@ -1171,7 +1171,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Suspect Glaukoma"
+            "value" : "Suspek Glaukoma"
           }
         }
       }

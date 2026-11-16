@@ -56,7 +56,7 @@ struct EyeDetailView: View {
             }
         }
         .navigationTitle(
-            LocalizedStringKey("navigation.eye_details")
+            LocalizedStringKey("Eye Details")
         )
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(

@@ -9,12 +9,24 @@ import UIKit
 import CoreGraphics
 
 enum SegmentationOverlay {
+
     static let discLabel: UInt8 = 1
     static let cupLabel: UInt8 = 2
 
+    // MARK: - Overlay Appearance
+
+    private static let fillAlpha: UInt8 = 38
+    private static let boundaryAlpha: UInt8 = 255
+
+    private static let discColor: (UInt8, UInt8, UInt8) = (
+        45, 220, 135
+    )
+
+    private static let cupColor: (UInt8, UInt8, UInt8) = (
+        55, 145, 255
+    )
+
     /// Creates an overlay in the original photo's coordinate space.
-    /// roiRectNormalized describes where the square 512x512 model input came
-    /// from inside the upright original photo (x, y, width, height; 0...1).
     static func makeImage(
         from mask: [UInt8],
         width: Int,
@@ -22,13 +34,21 @@ enum SegmentationOverlay {
         canvasSize: CGSize,
         roiRectNormalized: CGRect
     ) -> UIImage? {
-        guard width > 0, height > 0, mask.count == width * height,
-              canvasSize.width > 0, canvasSize.height > 0,
-              roiRectNormalized.width > 0, roiRectNormalized.height > 0 else {
+
+        guard width > 0,
+              height > 0,
+              mask.count == width * height,
+              canvasSize.width > 0,
+              canvasSize.height > 0,
+              roiRectNormalized.width > 0,
+              roiRectNormalized.height > 0 else {
             return nil
         }
 
-        var pixels = [UInt8](repeating: 0, count: width * height * 4)
+        var pixels = [UInt8](
+            repeating: 0,
+            count: width * height * 4
+        )
 
         func labelAt(_ x: Int, _ y: Int) -> UInt8 {
             mask[y * width + x]
@@ -36,33 +56,61 @@ enum SegmentationOverlay {
 
         for y in 0..<height {
             for x in 0..<width {
-                let label = labelAt(x, y)
-                guard label == discLabel || label == cupLabel else { continue }
 
+                let label = labelAt(x, y)
+
+                guard label == discLabel || label == cupLabel else {
+                    continue
+                }
+
+                // Detect segmentation boundary
                 let left = x > 0 ? labelAt(x - 1, y) : 0
                 let right = x + 1 < width ? labelAt(x + 1, y) : 0
                 let up = y > 0 ? labelAt(x, y - 1) : 0
                 let down = y + 1 < height ? labelAt(x, y + 1) : 0
-                guard left != label || right != label || up != label || down != label else {
-                    continue
-                }
+
+                let isBoundary =
+                    left != label ||
+                    right != label ||
+                    up != label ||
+                    down != label
+
+                // Select color
+                let color = label == discLabel
+                    ? discColor
+                    : cupColor
+
+                let alpha = Int(
+                    isBoundary ? boundaryAlpha : fillAlpha
+                )
 
                 let index = (y * width + x) * 4
-                if label == discLabel {
-                    pixels[index] = 45
-                    pixels[index + 1] = 220
-                    pixels[index + 2] = 135
-                } else {
-                    pixels[index] = 255
-                    pixels[index + 1] = 75
-                    pixels[index + 2] = 85
-                }
-                pixels[index + 3] = 255
+
+                // Premultiplied alpha
+                pixels[index] = UInt8(
+                    Int(color.0) * alpha / 255
+                )
+
+                pixels[index + 1] = UInt8(
+                    Int(color.1) * alpha / 255
+                )
+
+                pixels[index + 2] = UInt8(
+                    Int(color.2) * alpha / 255
+                )
+
+                pixels[index + 3] = UInt8(alpha)
             }
         }
 
+        // MARK: - Create Mask Image
+
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+
+        let bitmapInfo = CGBitmapInfo(
+            rawValue: CGImageAlphaInfo.premultipliedLast.rawValue
+        )
+
         guard let maskContext = CGContext(
             data: &pixels,
             width: width,
@@ -71,14 +119,21 @@ enum SegmentationOverlay {
             bytesPerRow: width * 4,
             space: colorSpace,
             bitmapInfo: bitmapInfo.rawValue
-        ), let maskCG = maskContext.makeImage() else {
+        ),
+        let maskCG = maskContext.makeImage() else {
             return nil
         }
+
+        // MARK: - Map to Original Image
 
         let format = UIGraphicsImageRendererFormat()
         format.scale = 1
         format.opaque = false
-        let renderer = UIGraphicsImageRenderer(size: canvasSize, format: format)
+
+        let renderer = UIGraphicsImageRenderer(
+            size: canvasSize,
+            format: format
+        )
 
         let rect = CGRect(
             x: roiRectNormalized.minX * canvasSize.width,
@@ -88,7 +143,11 @@ enum SegmentationOverlay {
         )
 
         return renderer.image { _ in
-            UIImage(cgImage: maskCG, scale: 1, orientation: .up).draw(in: rect)
+            UIImage(
+                cgImage: maskCG,
+                scale: 1,
+                orientation: .up
+            ).draw(in: rect)
         }
     }
 }

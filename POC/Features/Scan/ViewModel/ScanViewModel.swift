@@ -9,7 +9,7 @@ final class ScanViewModel: ObservableObject {
 
     // MARK: - Model Configuration
 
-    private let modelResourceName = "Glauma_EffNetB4"
+    private let modelResourceName = "Glauma_Model"
 
     // MARK: - Scan State
 

@@ -11,10 +11,12 @@ struct OnboardingHeader: View {
 
     var body: some View {
         VStack(spacing: Layout.headerSpacing) {
+
             Text(title)
                 .font(.title2.weight(.bold))
                 .foregroundStyle(AppColors.labelPrimary)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .accessibilityAddTraits(.isHeader)
                 .padding(.top, 12)
 
@@ -28,6 +30,5 @@ struct OnboardingHeader: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, Layout.horizontalPadding)
-        .frame(height: Layout.headerHeight)
     }
 }

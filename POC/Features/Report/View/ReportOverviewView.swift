@@ -20,6 +20,8 @@ struct ReportOverviewView: View {
     }
 
     private var report: ReportData { viewModel.report }
+    
+    @State private var shouldFinishAfterExportSuccess = false
 
     var body: some View {
         ScrollView {
@@ -50,20 +52,43 @@ struct ReportOverviewView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Overview")
+                    .font(.headline)
+                    .foregroundStyle(AppColors.labelPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Done", action: handleDone)
+                Button(action: handleDone) {
+                    Text("Done")
+                        .font(.body.weight(.medium))
+                        .fixedSize()
+                }
                 .accessibilityHint("Closes the report.")
             }
         }
+
         .safeAreaInset(edge: .bottom) {
             exportButton
         }
-        .fullScreenCover(isPresented: $viewModel.showingExportSuccess) {
-            ReportExportSuccessView(
-                onBack: { viewModel.showingExportSuccess = false },
-                onStartNew: {
-                    viewModel.showingExportSuccess = false
+        .fullScreenCover(
+            isPresented: $viewModel.showingExportSuccess,
+            onDismiss: {
+                if shouldFinishAfterExportSuccess {
+                    shouldFinishAfterExportSuccess = false
                     finishReport()
+                }
+            }
+        ) {
+            ReportExportSuccessView(
+                onBack: {
+                    viewModel.showingExportSuccess = false
+                },
+                onStartNew: {
+                    shouldFinishAfterExportSuccess = true
+                    viewModel.showingExportSuccess = false
                 }
             )
         }

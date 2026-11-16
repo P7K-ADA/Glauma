@@ -3,6 +3,7 @@
 //  POC
 //
 
+
 import SwiftUI
 
 struct OnboardingPermissionPage: View {
@@ -11,28 +12,42 @@ struct OnboardingPermissionPage: View {
     let pageIndex: Int
     let pageCount: Int
     let isAllowEnabled: Bool
+
     let onAllow: () -> Void
     let onSkip: () -> Void
 
     var body: some View {
-        ScrollView {
+        VStack(spacing: 0) {
+
+            // Scrollable content
+            ScrollView(.vertical) {
+                VStack(spacing: 0) {
+
+                    OnboardingHeader(
+                        title: permission.title,
+                        message: permission.message
+                    )
+                    .padding(.top, 12)
+                    .padding(.bottom, 12)
+
+                    OnboardingIllustration(permission: permission)
+
+                    OnboardingPageIndicator(
+                        count: pageCount,
+                        currentIndex: pageIndex
+                    )
+                    .padding(.top, 12)
+                    .padding(.bottom, 12)
+                }
+                .frame(maxWidth: .infinity, alignment: .top)
+                .padding(.horizontal, Layout.horizontalPadding)
+                .padding(.bottom, Layout.onboardingBottomPadding)
+            }
+            .scrollBounceBehavior(.basedOnSize)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+
+            // Fixed bottom actions
             VStack(spacing: 0) {
-
-                OnboardingHeader(
-                    title: permission.title,
-                    message: permission.message
-                )
-                .padding(.top, 12)
-                .padding(.bottom, 12)
-
-                OnboardingIllustration(permission: permission)
-
-                OnboardingPageIndicator(
-                    count: pageCount,
-                    currentIndex: pageIndex
-                )
-                .padding(.top, 12)
-                .padding(.bottom, 12)
 
                 AppButton(
                     title: "Continue",
@@ -56,7 +71,6 @@ struct OnboardingPermissionPage: View {
                         .accessibilityHint("Skip this step for now.")
                 }
             }
-            .frame(maxWidth: .infinity)
             .padding(.horizontal, Layout.horizontalPadding)
             .padding(.bottom, Layout.onboardingBottomPadding)
         }
@@ -65,7 +79,9 @@ struct OnboardingPermissionPage: View {
     }
 
     private var buttonTint: Color {
-        isAllowEnabled ? AppColors.primaryButtons : AppColors.secondaryButtons
+        isAllowEnabled
+            ? AppColors.primaryButtons
+            : AppColors.secondaryButtons
     }
 }
 
@@ -90,7 +106,6 @@ private struct OnboardingPageIndicator: View {
         .accessibilityLabel("Step \(currentIndex + 1) of \(count)")
     }
 }
-
 
 #Preview("Camera") {
     OnboardingPermissionPage(

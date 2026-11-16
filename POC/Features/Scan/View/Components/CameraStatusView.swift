@@ -15,10 +15,16 @@ struct CameraStatusView: View {
                 Text(status)
                     .font(.caption)
                     .foregroundStyle(AppColors.white.opacity(0.8))
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
             }
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
-        .background(AppColors.labelPrimary.opacity(0.72), in: Capsule())
+        .background(
+            AppColors.labelPrimary.opacity(0.72),
+            in: Capsule()
+        )
+        .fixedSize(horizontal: true, vertical: false)
     }
 }

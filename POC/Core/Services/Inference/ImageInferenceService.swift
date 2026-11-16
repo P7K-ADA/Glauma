@@ -55,7 +55,7 @@ final class ImageInferenceService {
 
     init() throws {
         guard let url = Bundle.main.url(
-            forResource: "Glauma_EffNetB4",
+            forResource: "Glauma_Model",
             withExtension: "mlmodelc"
         ) else {
             throw InferenceError.modelNotFound

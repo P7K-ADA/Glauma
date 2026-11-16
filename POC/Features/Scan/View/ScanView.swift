@@ -25,18 +25,39 @@ struct ScanView: View {
                         .ignoresSafeArea()
                         .transition(.opacity)
 
-                    HStack(spacing: 12) {
-                        ProgressView()
-                            .progressViewStyle(.circular)
-                            .controlSize(.regular)
-                            .tint(AppColors.labelSecondary)
+                    ViewThatFits(in: .horizontal) {
 
-                        Text("Analyzing photo")
-                            .font(.body.weight(.semibold))
-                            .foregroundStyle(AppColors.labelPrimary)
+                        // Horizontal layout
+                        HStack(spacing: 12) {
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                                .controlSize(.regular)
+                                .tint(AppColors.labelSecondary)
+
+                            Text("Analyzing photo")
+                                .font(.body.weight(.semibold))
+                                .foregroundStyle(AppColors.labelPrimary)
+                                .fixedSize()
+                        }
+
+                        // Vertical layout
+                        VStack(spacing: 8) {
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                                .controlSize(.regular)
+                                .tint(AppColors.labelSecondary)
+
+                            Text("Analyzing photo")
+                                .font(.body.weight(.semibold))
+                                .foregroundStyle(AppColors.labelPrimary)
+                                .multilineTextAlignment(.center)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity)
+                        }
                     }
                     .padding(.horizontal, 28)
-                    .frame(maxWidth: 326, minHeight: 72)
+                    .padding(.vertical, 16)
+                    .frame(maxWidth: 326)
                     .analysisGlassCard()
                     .overlay {
                         RoundedRectangle(
@@ -53,9 +74,13 @@ struct ScanView: View {
                         radius: 18,
                         y: 8
                     )
+                    .accessibilityElement(children: .combine)
                     .accessibilityLabel("Analyzing photo")
-                    .transition(.opacity.combined(with: .scale(scale: 0.96)))
+                    .transition(
+                        .opacity.combined(with: .scale(scale: 0.96))
+                    )
                 }
+
             }
             .toolbar(.hidden, for: .navigationBar)
             .navigationDestination(isPresented: $viewModel.showReport) {

@@ -17,6 +17,7 @@
 		290B32E4D965917B11FB752B /* SingleReportExportPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D282E2FF016EB97E5021599A /* SingleReportExportPage.swift */; };
 		2A6B74ED295EB9ED96FBAA94 /* ReviewImageCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A26DF134867C75B59454E /* ReviewImageCanvas.swift */; };
 		2C3AA0645A04D07E2A57B314 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2594AFE033FABC0FAE339D14 /* ContentView.swift */; };
+		2F013FA530AB0F9500D6D3BE /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2F013FA430AB0F9500D6D3BE /* Localizable.xcstrings */; };
 		2FA4DC5F2111AF99536FFC6B /* ScanCropMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D588F5DAF27E5123E9C8DDD /* ScanCropMask.swift */; };
 		2FBD13DB30AA0D1300A88E80 /* Glauma_EffNetB4.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD13DA30AA0D1300A88E80 /* Glauma_EffNetB4.mlpackage */; };
 		2FBD13DD30AA116F00A88E80 /* ZoomableSegmentationOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD13DC30AA116F00A88E80 /* ZoomableSegmentationOverlay.swift */; };
@@ -93,6 +94,7 @@
 		24A07D822BCFCAD65DDD8BC6 /* EyeDetailContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeDetailContent.swift; sourceTree = "<group>"; };
 		2594AFE033FABC0FAE339D14 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2B90878559EEB8517C75DF09 /* GlaumaOpenCVBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GlaumaOpenCVBridge.mm; sourceTree = "<group>"; };
+		2F013FA430AB0F9500D6D3BE /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		2FBD13DA30AA0D1300A88E80 /* Glauma_EffNetB4.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = Glauma_EffNetB4.mlpackage; sourceTree = "<group>"; };
 		2FBD13DC30AA116F00A88E80 /* ZoomableSegmentationOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomableSegmentationOverlay.swift; sourceTree = "<group>"; };
 		3103200C8A835A39D1C5A8BF /* POC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = POC.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -368,6 +370,7 @@
 		65E7E8F3D16DA619E0D0AD2F = {
 			isa = PBXGroup;
 			children = (
+				2F013FA430AB0F9500D6D3BE /* Localizable.xcstrings */,
 				6B30FB2FEF66A9AB03FA0B2F /* APIs */,
 				2D5EC636AC8C7024A867AA24 /* POC */,
 				DDBF632358F2CC7E07B11FAD /* Frameworks */,
@@ -581,6 +584,7 @@
 			knownRegions = (
 				Base,
 				en,
+				id,
 			);
 			mainGroup = 65E7E8F3D16DA619E0D0AD2F;
 			minimizedProjectReferenceProxies = 1;
@@ -600,6 +604,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5266A524E5A5F4A6A61F1E2D /* Assets.xcassets in Resources */,
+				2F013FA530AB0F9500D6D3BE /* Localizable.xcstrings in Resources */,
 				362C6F395211965851BD7E76 /* File.txt in Resources */,
 				D5CADEF0B1A93D2F60242AA5 /* glauma_error_messages_id.json in Resources */,
 				4181E40BA2AB05BDE0F26007 /* glauma_preprocessing_config.json in Resources */,

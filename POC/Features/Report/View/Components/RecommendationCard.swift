@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension View {
-    func reportCard(background: Color = AppColors.white) -> some View {
+    func reportCard(background: Color = AppColors.cardFills) -> some View {
         self
             .padding(14)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -18,7 +18,7 @@ struct RecommendationCard: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline, spacing: 4) {
                 Text("[AI]")
-                    .foregroundStyle(AppColors.accentBlue)
+                    .foregroundStyle(AppColors.primaryButtons)
 
                 Text(title)
             }

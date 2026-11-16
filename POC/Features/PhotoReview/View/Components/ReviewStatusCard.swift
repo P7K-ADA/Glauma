@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ReviewStatusCard: View {
+
     let analysisErrorMessage: String?
     let isAnalyzing: Bool
     let qualityWarnings: [String]
@@ -50,11 +51,12 @@ struct ReviewStatusCard: View {
             return "hourglass"
         }
 
-        return isError ? "exclamationmark" : "checkmark"
+        return isError ? "exclamationmark.circle.fill" : "checkmark.circle.fill"
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
+
             HStack(
                 alignment: .top,
                 spacing: Layout.reviewStatusContentSpacing
@@ -74,7 +76,7 @@ struct ReviewStatusCard: View {
 
                     Text(subtitle)
                         .font(.footnote.weight(.regular))
-                        .foregroundStyle(AppColors.labelPrimary)
+                        .foregroundStyle(AppColors.labelSecondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
@@ -99,7 +101,7 @@ struct ReviewStatusCard: View {
         .padding(Layout.reviewStatusCardPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
-            AppColors.white,
+            AppColors.cardFills,
             in: RoundedRectangle(
                 cornerRadius: Layout.reviewStatusCardCornerRadius,
                 style: .continuous
@@ -111,6 +113,7 @@ struct ReviewStatusCard: View {
 }
 
 private struct ReviewStatusIcon: View {
+
     let systemName: String
     let tint: Color
 

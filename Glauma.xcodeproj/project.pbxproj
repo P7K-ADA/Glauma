@@ -17,6 +17,7 @@
 		290B32E4D965917B11FB752B /* SingleReportExportPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D282E2FF016EB97E5021599A /* SingleReportExportPage.swift */; };
 		2A6B74ED295EB9ED96FBAA94 /* ReviewImageCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A26DF134867C75B59454E /* ReviewImageCanvas.swift */; };
 		2C3AA0645A04D07E2A57B314 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2594AFE033FABC0FAE339D14 /* ContentView.swift */; };
+		2F013FA330AB0E7400D6D3BE /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2F013FA230AB0E7400D6D3BE /* Localizable.xcstrings */; };
 		2F013FA530AB0F9500D6D3BE /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2F013FA430AB0F9500D6D3BE /* Localizable.xcstrings */; };
 		2FA4DC5F2111AF99536FFC6B /* ScanCropMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D588F5DAF27E5123E9C8DDD /* ScanCropMask.swift */; };
 		2FBD13DB30AA0D1300A88E80 /* Glauma_EffNetB4.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD13DA30AA0D1300A88E80 /* Glauma_EffNetB4.mlpackage */; };
@@ -374,6 +375,7 @@
 				6B30FB2FEF66A9AB03FA0B2F /* APIs */,
 				2D5EC636AC8C7024A867AA24 /* POC */,
 				DDBF632358F2CC7E07B11FAD /* Frameworks */,
+				2F013FA230AB0E7400D6D3BE /* Localizable.xcstrings */,
 				01DFE82F0AFE90731E50D2E5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -585,6 +587,7 @@
 				Base,
 				en,
 				id,
+				id,
 			);
 			mainGroup = 65E7E8F3D16DA619E0D0AD2F;
 			minimizedProjectReferenceProxies = 1;
@@ -606,6 +609,7 @@
 				5266A524E5A5F4A6A61F1E2D /* Assets.xcassets in Resources */,
 				2F013FA530AB0F9500D6D3BE /* Localizable.xcstrings in Resources */,
 				362C6F395211965851BD7E76 /* File.txt in Resources */,
+				2F013FA330AB0E7400D6D3BE /* Localizable.xcstrings in Resources */,
 				D5CADEF0B1A93D2F60242AA5 /* glauma_error_messages_id.json in Resources */,
 				4181E40BA2AB05BDE0F26007 /* glauma_preprocessing_config.json in Resources */,
 			);

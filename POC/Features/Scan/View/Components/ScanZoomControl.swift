@@ -20,10 +20,10 @@ struct ScanZoomControl: View {
                 HStack(spacing: 0) {
                     ForEach(1...3, id: \.self) { zoom in
                         Text("\(zoom)x")
-                            .font(.caption.weight(.medium))
+                            .font(.footnote)
                             .foregroundStyle(
                                 zoom - 1 == selectedIndex
-                                    ? AppColors.suspect
+                                    ? AppColors.zoomButtons
                                     : AppColors.white.opacity(0.62)
                             )
                             .frame(maxWidth: .infinity)
@@ -62,7 +62,7 @@ struct ScanZoomControl: View {
         }
         .frame(width: 154, height: 44)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Camera zoom")
+        .accessibilityLabel("Camera zoom. Adjustable.")
         .accessibilityValue("\(camera.currentZoomFactor, specifier: "%.1f") times magnification")
         .accessibilityHint("Drag horizontally to change zoom.")
     }

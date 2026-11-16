@@ -42,16 +42,19 @@ struct EyeDetailExpandedImageView: View {
                         }
                     }
                 } else {
-                    Text("Foto tidak tersedia")
+                    Text("No Image")
                         .foregroundStyle(.white)
                 }
             }
-            .navigationTitle(eye.side == .left ? "Mata Kiri (OS)" : "Mata Kanan (OD)")
+            .navigationTitle(eye.side == .left ? "Left Eye (OS)" : "Right Eye (OD)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Tutup", action: onDismiss)
-                        .foregroundStyle(.white)
+                    Button(action: onDismiss) {
+                        Image(systemName: "xmark")
+                            .foregroundStyle(.white)
+                    }
+                    .accessibilityLabel("Close")
                 }
             }
         }

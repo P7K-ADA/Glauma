@@ -28,8 +28,6 @@ targets:
       - sdk: Photos.framework
       - sdk: PhotosUI.framework
       - sdk: Vision.framework
-      - framework: opencv2.xcframework
-        embed: false
 
     settings:
       base:
@@ -52,8 +50,8 @@ targets:
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
 
         FRAMEWORK_SEARCH_PATHS:
-        - $(inherited)
-        - $(PROJECT_DIR)/opencv2.xcframework/ios-arm64
+          - $(inherited)
+          - $(PROJECT_DIR)/opencv2.xcframework/ios-arm64
 
         SWIFT_OBJC_BRIDGING_HEADER: POC/Core/Services/Inference/POC-Bridging-Header.h
 

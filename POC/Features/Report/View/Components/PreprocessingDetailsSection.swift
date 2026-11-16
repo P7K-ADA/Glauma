@@ -59,7 +59,7 @@ struct PreprocessingDetailsSection: View {
                 .foregroundStyle(.primary)
                 .padding()
                 .background(
-                    AppColors.white,
+                    AppColors.labelPrimary,
                     in: RoundedRectangle(cornerRadius: 14)
                 )
             }

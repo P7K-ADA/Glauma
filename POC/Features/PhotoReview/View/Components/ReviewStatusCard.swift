@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ReviewStatusCard: View {
+
     let analysisErrorMessage: String?
     let isAnalyzing: Bool
     let qualityWarnings: [String]
@@ -10,13 +11,10 @@ struct ReviewStatusCard: View {
     }
 
     private var title: String {
-        guard analysisErrorMessage != nil else {
-            return "Good image quality"
         if isAnalyzing {
             return "Menganalisis Foto"
         }
 
-        return "Image may be unclear"
         if isError {
             return "Foto mungkin tidak terbaca"
         }
@@ -25,7 +23,6 @@ struct ReviewStatusCard: View {
     }
 
     private var subtitle: String {
-        analysisErrorMessage ?? "Ready to be analyzed."
         if isAnalyzing {
             return "Memeriksa kualitas gambar dan melakukan segmentasi optic disc dan optic cup."
         }
@@ -41,9 +38,6 @@ struct ReviewStatusCard: View {
         return "Foto berhasil diproses dan siap digunakan."
     }
 
-//    private var tint: Color {
-//        isError ? AppColors.accentRed : AppColors.normal
-//    }
     private var tint: Color {
         if isAnalyzing {
             return AppColors.normal
@@ -57,18 +51,12 @@ struct ReviewStatusCard: View {
             return "hourglass"
         }
 
-        return isError ? "exclamationmark" : "checkmark"
+        return isError ? "exclamationmark.circle.fill" : "checkmark.circle.fill"
     }
 
     var body: some View {
-        HStack(alignment: .top, spacing: Layout.reviewStatusContentSpacing) {
-            ReviewStatusIcon(
-                systemName: isError
-                    ? "exclamationmark.circle.fill"
-                    : "checkmark.circle.fill",
-                isError: isError
-            )
         VStack(alignment: .leading, spacing: 10) {
+
             HStack(
                 alignment: .top,
                 spacing: Layout.reviewStatusContentSpacing
@@ -86,16 +74,14 @@ struct ReviewStatusCard: View {
                         .font(.footnote.weight(.bold))
                         .foregroundStyle(AppColors.labelPrimary)
 
-                Text(subtitle)
-                    .font(.footnote.weight(.regular))
-                    .foregroundStyle(AppColors.labelSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
                     Text(subtitle)
                         .font(.footnote.weight(.regular))
-                        .foregroundStyle(AppColors.labelPrimary)
+                        .foregroundStyle(AppColors.labelSecondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
+
+                Spacer(minLength: 0)
+            }
 
             if !isAnalyzing && !isError && !qualityWarnings.isEmpty {
                 VStack(alignment: .leading, spacing: 5) {
@@ -111,7 +97,6 @@ struct ReviewStatusCard: View {
                 }
                 .padding(.leading, 4)
             }
-}
         }
         .padding(Layout.reviewStatusCardPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -127,17 +112,26 @@ struct ReviewStatusCard: View {
     }
 }
 
-
 private struct ReviewStatusIcon: View {
 
     let systemName: String
-    let isError: Bool
+    let tint: Color
 
     var body: some View {
-        Image(systemName: systemName)
-            .font(.title)
-            .foregroundStyle(isError ? .red : .green)
-            .accessibilityHidden(true)
+        RoundedRectangle(
+            cornerRadius: Layout.reviewStatusIconCornerRadius,
+            style: .continuous
+        )
+        .fill(tint.opacity(0.12))
+        .frame(
+            width: Layout.reviewStatusIconSize,
+            height: Layout.reviewStatusIconSize
+        )
+        .overlay {
+            Image(systemName: systemName)
+                .font(.headline.weight(.bold))
+                .foregroundStyle(tint)
+        }
+        .accessibilityHidden(true)
     }
 }
-

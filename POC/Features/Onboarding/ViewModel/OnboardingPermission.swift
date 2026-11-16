@@ -14,9 +14,12 @@ enum OnboardingPermission: CaseIterable {
 
     var title: LocalizedStringKey {
         switch self {
-        case .camera: return "Enable Camera Access"
-        case .photos: return "Enable Photo Access"
-        case .attachLens: return "Attach Optical Lens"
+        case .camera:
+            return "Enable Camera Access"
+        case .photos:
+            return "Enable Photo Access"
+        case .attachLens:
+            return "Attach Optical Lens"
         }
     }
 
@@ -33,17 +36,23 @@ enum OnboardingPermission: CaseIterable {
 
     var systemImage: String {
         switch self {
-        case .camera: return "camera.fill"
-        case .photos: return "photo.on.rectangle.angled"
-        case .attachLens: return "camera.aperture"
+        case .camera:
+            return "camera.fill"
+        case .photos:
+            return "photo.on.rectangle.angled"
+        case .attachLens:
+            return "camera.aperture"
         }
     }
 
     var illustrationLabel: LocalizedStringKey {
         switch self {
-        case .camera: return "Camera illustration placeholder." //need to change
-        case .photos: return "Photos illustration placeholder."
-        case .attachLens: return "Optical lens illustration placeholder."
+        case .camera:
+            return "Camera illustration placeholder."
+        case .photos:
+            return "Photos illustration placeholder."
+        case .attachLens:
+            return "Optical lens illustration placeholder."
         }
     }
 
@@ -55,8 +64,10 @@ enum OnboardingPermission: CaseIterable {
         switch self {
         case .camera:
             return AVCaptureDevice.authorizationStatus(for: .video) != .authorized
+
         case .photos:
             return PHPhotoLibrary.authorizationStatus(for: .addOnly) == .notDetermined
+
         case .attachLens:
             return true
         }
@@ -65,9 +76,11 @@ enum OnboardingPermission: CaseIterable {
 
 @MainActor
 final class OnboardingViewModel: ObservableObject {
+
     @Published private(set) var currentIndex = 0
     @Published private(set) var isFinished = false
     @Published private(set) var isNFCDetected = false
+
     @Published var showsNFCInstruction = false
     @Published var showsCameraDenied = false
 
@@ -75,6 +88,7 @@ final class OnboardingViewModel: ObservableObject {
 
     private let nfcDetector = NFCFrameDetector()
     private let bypassNFCForTesting = true
+
     private var isRequesting = false
 
     init() {
@@ -90,7 +104,9 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     func startNFCScanning() {
-        guard currentPage == .attachLens, !isNFCDetected, !bypassNFCForTesting else {
+        guard currentPage == .attachLens,
+              !isNFCDetected,
+              !bypassNFCForTesting else {
             return
         }
 
@@ -105,9 +121,6 @@ final class OnboardingViewModel: ObservableObject {
         nfcDetector.stopScanning()
     }
 
-<<<<<<< HEAD
-    /// Handles the primary button for the current step.
-=======
     /// Bypasses the optional NFC attachment step without requesting camera access.
     func skipNFCAttachment() {
         guard currentPage == .camera else {
@@ -118,12 +131,17 @@ final class OnboardingViewModel: ObservableObject {
         advance()
     }
 
+    /// Handles the primary button for the current step.
     /// Shows the system permission prompt only after the frame has been detected.
->>>>>>> origin/hifi-chaksu-papila-baseline-clean
     func allow() async {
-        guard !isRequesting else { return }
+        guard !isRequesting else {
+            return
+        }
+
         isRequesting = true
-        defer { isRequesting = false }
+        defer {
+            isRequesting = false
+        }
 
         switch currentPage {
         case .camera:
@@ -131,11 +149,13 @@ final class OnboardingViewModel: ObservableObject {
                 showsCameraDenied = true
                 return
             }
+
         case .photos:
             // Optional: any answer (including "Don't Allow") moves on.
             if PHPhotoLibrary.authorizationStatus(for: .addOnly) == .notDetermined {
                 _ = await PHPhotoLibrary.requestAuthorization(for: .addOnly)
             }
+
         case .attachLens:
             guard isNFCDetected || bypassNFCForTesting else {
                 showsNFCInstruction = true
@@ -147,7 +167,10 @@ final class OnboardingViewModel: ObservableObject {
     }
 
     func skip() {
-        guard currentPage.isSkippable else { return }
+        guard currentPage.isSkippable else {
+            return
+        }
+
         advance()
     }
 
@@ -155,8 +178,10 @@ final class OnboardingViewModel: ObservableObject {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
             return true
+
         case .notDetermined:
             return await AVCaptureDevice.requestAccess(for: .video)
+
         default:
             return false
         }
@@ -167,6 +192,7 @@ final class OnboardingViewModel: ObservableObject {
             withAnimation {
                 currentIndex += 1
             }
+
             startNFCScanning()
         } else {
             stopNFCScanning()

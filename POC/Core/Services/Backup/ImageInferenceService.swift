@@ -31,15 +31,15 @@ enum InferenceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .modelNotFound:
-            return "Glauma_EffNetB4.mlmodelc was not found."
+            return GlaumaLocalization.message(for: "MODEL_NOT_FOUND")
         case .invalidImage:
-            return "Could not convert the image to RGB."
+            return GlaumaLocalization.message(for: "INVALID_IMAGE")
         case .invalidInputShape:
-            return "The input tensor could not be created."
+            return GlaumaLocalization.message(for: "INVALID_INPUT_SHAPE")
         case .invalidOutputShape:
-            return "The model output has an unexpected shape."
+            return GlaumaLocalization.message(for: "INVALID_OUTPUT_SHAPE")
         case .emptyMask:
-            return "The model was unable to identify the optic disc or cup."
+            return GlaumaLocalization.message(for: "EMPTY_MASK")
         }
     }
 }

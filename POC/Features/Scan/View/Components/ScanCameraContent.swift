@@ -3,6 +3,7 @@ import UIKit
 
 struct ScanCameraContent: View {
     @ObservedObject var camera: CameraService
+
     let selectedEye: EyeSide
     let tint: Color
     let isAnalyzing: Bool
@@ -22,15 +23,43 @@ struct ScanCameraContent: View {
                     session: camera.session,
                     onPreviewSizeChanged: camera.setPreviewSize
                 )
-                    .ignoresSafeArea()
+                .ignoresSafeArea()
+                .contentShape(Rectangle())
+                .onTapGesture { location in
+                    focusPoint = location
+                    focusID = UUID()
+
+                    let devicePoint = CGPoint(
+                        x: location.y / max(geometry.size.height, 1),
+                        y: 1 - (location.x / max(geometry.size.width, 1))
+                    )
+
+                    camera.focus(at: devicePoint)
+                }
+                .simultaneousGesture(
+                    MagnificationGesture()
+                        .onChanged { value in
+                            camera.setZoom(
+                                factor: min(
+                                    max(baseZoom * value, camera.minZoom),
+                                    camera.maxZoom
+                                )
+                            )
+                        }
+                        .onEnded { _ in
+                            baseZoom = camera.currentZoomFactor
+                        }
+                )
 
                 ScanCropMask()
                     .ignoresSafeArea()
+                    .allowsHitTesting(false)
 
                 if let focusPoint {
                     FocusSquareView(color: tint)
                         .position(focusPoint)
                         .id(focusID)
+                        .allowsHitTesting(false)
                 }
 
                 VStack {
@@ -45,16 +74,23 @@ struct ScanCameraContent: View {
                             )
                             .font(.headline.weight(.semibold))
                             .foregroundStyle(
-                                camera.isFlashEnabled ? Color.yellow : tint
+                                camera.isFlashEnabled
+                                    ? Color.yellow
+                                    : tint
                             )
                             .frame(width: 44, height: 44)
-                            .background(Color.black.opacity(0.45), in: Circle())
+                            .background(
+                                Color.black.opacity(0.45),
+                                in: Circle()
+                            )
                         }
                         .buttonStyle(.plain)
                         .accessibilityLabel(
                             camera.isFlashEnabled ? "on" : "off"
                         )
-                        .accessibilityValue(camera.isFlashEnabled ? "Aktif" : "Nonaktif")
+                        .accessibilityValue(
+                            camera.isFlashEnabled ? "Aktif" : "Nonaktif"
+                        )
                     }
 
                     Spacer()
@@ -74,7 +110,7 @@ struct ScanCameraContent: View {
                     Spacer()
 
                     ScanZoomControl(camera: camera)
-                    .padding(.bottom, 84)
+                        .padding(.bottom, 84)
 
                     ScanShutterButton(
                         tint: tint,
@@ -90,29 +126,17 @@ struct ScanCameraContent: View {
                 .padding(.horizontal, Layout.horizontalPadding)
                 .overlay(alignment: .top) {
                     EyeSideOverlay(eyeSide: selectedEye)
-                        .padding(.top, geometry.size.height * 0.108 + 24)
+                        .padding(
+                            .top,
+                            geometry.size.height * 0.108 + 24
+                        )
                 }
             }
-            .clipShape(RoundedRectangle(cornerRadius: 50, style: .continuous))
-            .contentShape(Rectangle())
-            .onTapGesture { location in
-                focusPoint = location
-                focusID = UUID()
-
-                let devicePoint = CGPoint(
-                    x: location.y / max(geometry.size.height, 1),
-                    y: 1 - (location.x / max(geometry.size.width, 1))
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: 50,
+                    style: .continuous
                 )
-                camera.focus(at: devicePoint)
-            }
-            .simultaneousGesture(
-                MagnificationGesture()
-                    .onChanged { value in
-                        camera.setZoom(factor: baseZoom * value)
-                    }
-                    .onEnded { _ in
-                        baseZoom = camera.currentZoomFactor
-                    }
             )
             .onAppear {
                 camera.start()

@@ -9,20 +9,6 @@
 
 using namespace cv;
 
-static NSString *GMessage(NSString *code) {
-    NSDictionary *messages = @{
-        @"NO_FUNDUS": @"Area fundus belum terlihat jelas. Posisikan lensa tepat di depan mata dan ambil foto ulang.",
-        @"OVEREXPOSED": @"Foto terlalu terang. Kurangi pencahayaan/flash, atur posisi lensa, lalu ambil ulang.",
-        @"UNDEREXPOSED": @"Foto terlalu gelap. Perbaiki pencahayaan dan ambil ulang.",
-        @"GLARE": @"Pantulan cahaya menutupi area fundus. Ubah sudut lensa atau pencahayaan, lalu ambil ulang.",
-        @"BLUR": @"Foto kurang fokus. Stabilkan HP dan lensa, fokuskan kembali, lalu ambil ulang.",
-        @"LOW_CONTRAST": @"Kontras gambar terlalu rendah. Periksa fokus dan pencahayaan, lalu ambil ulang.",
-        @"DISC_NOT_FOUND": @"Optic disc tidak berhasil ditemukan. Pastikan fundus terlihat utuh dan fokus, lalu ambil ulang.",
-        @"PREPROCESS_FAIL": @"Foto tidak dapat diproses. Silakan ambil foto fundus ulang."
-    };
-    return messages[code] ?: messages[@"PREPROCESS_FAIL"];
-}
-
 static NSData *MatRGBData(const Mat &m) {
     Mat rgb;
     if (m.channels() == 3) rgb = m.isContinuous() ? m : m.clone();
@@ -143,7 +129,7 @@ static NSDictionary *AssessQuality(const Mat &rgb) {
     if (sharpness < 22) [actions addObject:@"mild_sharpen"];
 
     NSMutableArray *warnings = [NSMutableArray array];
-    if (sharpness < 8) [warnings addObject:@"Foto tampak kurang tajam; hasil segmentasi perlu diperiksa."];
+    if (sharpness < 8) [warnings addObject:@"LOW_SHARPNESS"];
 
     return @{@"ok": @YES,
              @"status": actions.count ? @"recoverable" : @"pass",
@@ -374,7 +360,7 @@ static void Enhance(Mat &im, Mat *denoisedOut, Mat *claheOut) {
       try {
         if (width < 2 || height < 2 || rgbData.length != (NSUInteger)(width * height * 3)) {
             NSString *code = @"NO_FUNDUS";
-            return @{@"ok": @NO, @"reason": code, @"message": GMessage(code), @"metrics": @{}};
+            return @{@"ok": @NO, @"reason": code, @"metrics": @{}};
         }
 
         Mat original((int)height, (int)width, CV_8UC3, (void *)rgbData.bytes);
@@ -396,8 +382,7 @@ static void Enhance(Mat &im, Mat *denoisedOut, Mat *claheOut) {
         NSDictionary *metrics = qc[@"metrics"] ?: @{};
         if (![qc[@"ok"] boolValue]) {
             NSString *code = qc[@"reason"] ?: @"NO_FUNDUS";
-            return @{@"ok": @NO, @"status": @"reject", @"reason": code,
-                     @"message": GMessage(code), @"metrics": metrics,
+            return @{@"ok": @NO, @"status": @"reject", @"reason": code, @"metrics": metrics,
                      @"stages": stages, @"stageSizes": stageSizes};
         }
 
@@ -456,8 +441,6 @@ static void Enhance(Mat &im, Mat *denoisedOut, Mat *claheOut) {
         NSArray<NSNumber *> *fovBox = fovMeta[@"bbox"];
         int fovX = fovApplied && fovBox.count == 4 ? fovBox[0].intValue : 0;
         int fovY = fovApplied && fovBox.count == 4 ? fovBox[1].intValue : 0;
-        int fovW = fovApplied && fovBox.count == 4 ? (fovBox[2].intValue - fovBox[0].intValue) : corrected.cols;
-        int fovH = fovApplied && fovBox.count == 4 ? (fovBox[3].intValue - fovBox[1].intValue) : corrected.rows;
 
         int roiX = roiBox.count == 4 ? roiBox[0].intValue : 0;
         int roiY = roiBox.count == 4 ? roiBox[1].intValue : 0;
@@ -474,8 +457,7 @@ static void Enhance(Mat &im, Mat *denoisedOut, Mat *claheOut) {
 
         if (!chtSuccess && !fallbackUsed) {
             NSString *code = @"DISC_NOT_FOUND";
-            return @{@"ok": @NO, @"status": @"reject", @"reason": code,
-                     @"message": GMessage(code), @"metrics": metrics,
+            return @{@"ok": @NO, @"status": @"reject", @"reason": code, @"metrics": metrics,
                      @"fovMetadata": fovMeta, @"roiMetadata": roiMeta,
                      @"warnings": fovApplied ? @[] : @[@"FOV_CROP_SKIPPED"],
                      @"stages": stages, @"stageSizes": stageSizes};
@@ -513,19 +495,16 @@ static void Enhance(Mat &im, Mat *denoisedOut, Mat *claheOut) {
                  @"warnings": warnings, @"stages": stages, @"stageSizes": stageSizes};
       } catch (const cv::Exception &e) {
         NSString *code = @"PREPROCESS_FAIL";
-        return @{@"ok": @NO, @"status": @"reject", @"reason": code,
-                 @"message": GMessage(code), @"exception": [NSString stringWithUTF8String:e.what()] ?: @"OpenCV error",
+        return @{@"ok": @NO, @"status": @"reject", @"reason": code, @"exception": [NSString stringWithUTF8String:e.what()] ?: @"OpenCV error",
                  @"metrics": @{}};
       } catch (const std::exception &e) {
         NSString *code = @"PREPROCESS_FAIL";
-        return @{@"ok": @NO, @"status": @"reject", @"reason": code,
-                 @"message": GMessage(code), @"exception": [NSString stringWithUTF8String:e.what()] ?: @"C++ exception",
+        return @{@"ok": @NO, @"status": @"reject", @"reason": code, @"exception": [NSString stringWithUTF8String:e.what()] ?: @"C++ exception",
                  @"metrics": @{}};
       }
     } @catch (NSException *e) {
         NSString *code = @"PREPROCESS_FAIL";
-        return @{@"ok": @NO, @"status": @"reject", @"reason": code,
-                 @"message": GMessage(code), @"exception": e.reason ?: @"Objective-C exception",
+        return @{@"ok": @NO, @"status": @"reject", @"reason": code, @"exception": e.reason ?: @"Objective-C exception",
                  @"metrics": @{}};
     }
 }

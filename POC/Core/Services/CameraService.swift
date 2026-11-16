@@ -11,6 +11,7 @@ import UIKit
 
 final class CameraService: NSObject, ObservableObject,
                            AVCapturePhotoCaptureDelegate {
+
     let session = AVCaptureSession()
 
     @Published var isReady = false
@@ -19,19 +20,24 @@ final class CameraService: NSObject, ObservableObject,
     @Published var capturedImage: UIImage?
     @Published var currentZoomFactor: CGFloat = 1.0
     @Published var isFlashEnabled = false
-    
+    @Published private(set) var maxZoom: CGFloat = 1.0
+
     let minZoom: CGFloat = 1.0
-    let maxZoom: CGFloat = 4.0
+
+    private let zoomLimit: CGFloat = 5.0
+
     private var currentDevice: AVCaptureDevice?
     private var captureZoomFactor: CGFloat = 1.0
     private var previewAspectRatio: CGFloat = 3.0 / 4.0
     private var capturePreviewAspectRatio: CGFloat = 3.0 / 4.0
-    
+
     private let photoOutput = AVCapturePhotoOutput()
 
     private let queue = DispatchQueue(label: "glaucoscan.camera")
     private var configured = false
     private var capturing = false
+
+    // MARK: - Camera Setup
 
     func start() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
@@ -41,6 +47,7 @@ final class CameraService: NSObject, ObservableObject,
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) {
                 [weak self] granted in
+
                 guard let self else { return }
 
                 if granted {
@@ -87,6 +94,7 @@ final class CameraService: NSObject, ObservableObject,
                     self.session.canAddOutput(self.photoOutput)
                 else {
                     self.session.commitConfiguration()
+
                     DispatchQueue.main.async {
                         self.status = "Camera unavailable"
                         self.errorMessage =
@@ -97,16 +105,32 @@ final class CameraService: NSObject, ObservableObject,
 
                 self.session.addInput(input)
                 self.session.addOutput(self.photoOutput)
+
                 self.currentDevice = device
+
                 self.session.commitConfiguration()
                 self.configured = true
             }
+
+            guard let device = self.currentDevice else { return }
+
+            // Maximum zoom is limited to 5x
+            // or the maximum supported by the device.
+            let availableMaxZoom = min(
+                CGFloat(device.activeFormat.videoMaxZoomFactor),
+                self.zoomLimit
+            )
 
             if !self.session.isRunning {
                 self.session.startRunning()
             }
 
             DispatchQueue.main.async {
+                self.maxZoom = max(
+                    self.minZoom,
+                    availableMaxZoom
+                )
+
                 self.isReady = true
                 self.status = "Camera ready"
                 self.errorMessage = nil
@@ -114,22 +138,29 @@ final class CameraService: NSObject, ObservableObject,
         }
     }
 
+    // MARK: - Photo Capture
+
     func capturePhoto() {
         queue.async {
             guard self.configured,
                   self.session.isRunning,
-                  !self.capturing else { return }
+                  !self.capturing else {
+                return
+            }
 
             self.capturing = true
             self.captureZoomFactor = self.currentZoomFactor
             self.capturePreviewAspectRatio = self.previewAspectRatio
+
             let settings = AVCapturePhotoSettings()
+
             if self.isFlashEnabled,
                self.photoOutput.supportedFlashModes.contains(.on) {
                 settings.flashMode = .on
             } else if self.photoOutput.supportedFlashModes.contains(.off) {
                 settings.flashMode = .off
             }
+
             self.photoOutput.capturePhoto(
                 with: settings,
                 delegate: self
@@ -145,12 +176,15 @@ final class CameraService: NSObject, ObservableObject,
         guard error == nil,
               let data = photo.fileDataRepresentation(),
               let image = UIImage(data: data) else {
+
             queue.async {
                 self.capturing = false
             }
+
             DispatchQueue.main.async {
                 self.errorMessage = "Photo capture failed."
             }
+
             return
         }
 
@@ -159,10 +193,12 @@ final class CameraService: NSObject, ObservableObject,
                 image,
                 factor: self.captureZoomFactor
             )
+
             let processedImage = self.imageMatchingPreview(
                 zoomedImage,
                 previewAspectRatio: self.capturePreviewAspectRatio
             )
+
             self.capturing = false
 
             DispatchQueue.main.async {
@@ -171,18 +207,23 @@ final class CameraService: NSObject, ObservableObject,
         }
     }
 
+    // MARK: - Image Zoom
+
     private func imageApplyingZoom(
         _ image: UIImage,
         factor: CGFloat
     ) -> UIImage {
-        guard factor > 1.0, let source = image.cgImage else {
+        guard factor > 1.0,
+              let source = image.cgImage else {
             return image
         }
 
         let sourceWidth = CGFloat(source.width)
         let sourceHeight = CGFloat(source.height)
+
         let cropWidth = sourceWidth / factor
         let cropHeight = sourceHeight / factor
+
         let cropRect = CGRect(
             x: (sourceWidth - cropWidth) / 2,
             y: (sourceHeight - cropHeight) / 2,
@@ -201,21 +242,30 @@ final class CameraService: NSObject, ObservableObject,
         )
     }
 
-    /// Crops the 3:4 photo so its visible width matches the aspect-fill camera preview.
+    // MARK: - Preview Matching
+
+    /// Crops the 3:4 photo so its visible width matches
+    /// the aspect-fill camera preview.
     private func imageMatchingPreview(
         _ image: UIImage,
         previewAspectRatio: CGFloat
     ) -> UIImage {
         let normalized = normalizedUpright(image)
+
         guard let source = normalized.cgImage else {
             return normalized
         }
 
-        let sourceSize = CGSize(width: source.width, height: source.height)
+        let sourceSize = CGSize(
+            width: source.width,
+            height: source.height
+        )
+
         let targetAspectRatio: CGFloat = 3.0 / 4.0
         let sourceAspectRatio = sourceSize.width / sourceSize.height
 
         var cropSize: CGSize
+
         if sourceAspectRatio > targetAspectRatio {
             cropSize = CGSize(
                 width: sourceSize.height * targetAspectRatio,
@@ -234,6 +284,7 @@ final class CameraService: NSObject, ObservableObject,
             1,
             max(0.01, previewAspectRatio / targetAspectRatio)
         )
+
         cropSize.width *= previewScale
         cropSize.height *= previewScale
 
@@ -248,17 +299,26 @@ final class CameraService: NSObject, ObservableObject,
             return normalized
         }
 
-        return UIImage(cgImage: croppedSource, scale: normalized.scale, orientation: .up)
+        return UIImage(
+            cgImage: croppedSource,
+            scale: normalized.scale,
+            orientation: .up
+        )
     }
 
     private func normalizedUpright(_ image: UIImage) -> UIImage {
-        guard image.imageOrientation != .up else { return image }
+        guard image.imageOrientation != .up else {
+            return image
+        }
 
         let renderer = UIGraphicsImageRenderer(size: image.size)
+
         return renderer.image { _ in
             image.draw(in: CGRect(origin: .zero, size: image.size))
         }
     }
+
+    // MARK: - Torch
 
     func setTorch(enabled: Bool) {
         queue.async {
@@ -276,6 +336,7 @@ final class CameraService: NSObject, ObservableObject,
 
         do {
             try device.lockForConfiguration()
+
             if enabled, device.isTorchAvailable {
                 try device.setTorchModeOn(
                     level: AVCaptureDevice.maxAvailableTorchLevel
@@ -283,11 +344,17 @@ final class CameraService: NSObject, ObservableObject,
             } else {
                 device.torchMode = .off
             }
+
             device.unlockForConfiguration()
+
         } catch {
-            print("Torch configuration failed: \(error.localizedDescription)")
+            print(
+                "Torch configuration failed: \(error.localizedDescription)"
+            )
         }
     }
+
+    // MARK: - Camera Stop
 
     func stop() {
         queue.async {
@@ -302,24 +369,38 @@ final class CameraService: NSObject, ObservableObject,
             }
         }
     }
-    
+
+    // MARK: - Zoom Control
+
     func setZoom(factor: CGFloat) {
         queue.async {
-            guard let device = self.currentDevice else { return }
-            let targetZoom = max(
-                self.minZoom,
-                min(factor, self.maxZoom)
+            guard let device = self.currentDevice else {
+                return
+            }
+
+            let hardwareMaxZoom = min(
+                CGFloat(device.activeFormat.videoMaxZoomFactor),
+                self.zoomLimit
+            )
+
+            let targetZoom = min(
+                max(factor, self.minZoom),
+                hardwareMaxZoom
             )
 
             do {
                 try device.lockForConfiguration()
+
                 device.videoZoomFactor = targetZoom
+
                 device.unlockForConfiguration()
 
                 self.captureZoomFactor = targetZoom
+
                 DispatchQueue.main.async {
                     self.currentZoomFactor = targetZoom
                 }
+
             } catch {
                 print(
                     "Zoom configuration failed: \(error.localizedDescription)"
@@ -328,35 +409,54 @@ final class CameraService: NSObject, ObservableObject,
         }
     }
 
+    // MARK: - Preview Size
+
     func setPreviewSize(_ size: CGSize) {
-        guard size.width > 0, size.height > 0 else { return }
+        guard size.width > 0, size.height > 0 else {
+            return
+        }
 
         queue.async {
             self.previewAspectRatio = size.width / size.height
         }
     }
 
+    // MARK: - Flash
+
     func toggleFlash() {
         isFlashEnabled.toggle()
     }
-    
+
+    // MARK: - Focus
+
     func focus(at devicePoint: CGPoint) {
-        guard let device = currentDevice else {return}
+        guard let device = currentDevice else {
+            return
+        }
+
         do {
             try device.lockForConfiguration()
-            
-            if device.isFocusPointOfInterestSupported && device.isFocusModeSupported(.autoFocus) {
+
+            if device.isFocusPointOfInterestSupported &&
+                device.isFocusModeSupported(.autoFocus) {
+
                 device.focusPointOfInterest = devicePoint
                 device.focusMode = .autoFocus
             }
-            if device.isExposurePointOfInterestSupported && device.isFocusModeSupported(.autoFocus) {
+
+            if device.isExposurePointOfInterestSupported &&
+                device.isExposureModeSupported(.autoExpose) {
+
                 device.exposurePointOfInterest = devicePoint
-                device.focusMode = .autoFocus
+                device.exposureMode = .autoExpose
             }
+
             device.unlockForConfiguration()
-        }
-        catch{
-            print("Focus configuration failed: \(error.localizedDescription)")
+
+        } catch {
+            print(
+                "Focus configuration failed: \(error.localizedDescription)"
+            )
         }
     }
 }

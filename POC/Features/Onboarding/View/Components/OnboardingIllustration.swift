@@ -3,25 +3,25 @@
 //  POC
 //
 
+
 import SwiftUI
+import Lottie
 
 struct OnboardingIllustration: View {
+
     let permission: OnboardingPermission
-    
+
     var body: some View {
-        RoundedRectangle(cornerRadius: Layout.illustrationCornerRadius)
-            .fill(AppColors.labelPrimary)
-            .frame(
-                width: Layout.illustrationSize,
-                height: Layout.illustrationSize
-            )
-            .overlay {
-                Text("Placeholder")
-                    .font(.subheadline)
-                    .foregroundStyle(AppColors.labelSecondary)
-            }
-            .accessibilityLabel(permission.illustrationLabel)
-            .frame(maxWidth: .infinity)
-            .frame(height: Layout.illustrationAreaHeight)
+        LottieView {
+            try await DotLottieFile.named("lens_onboarding")
+        }
+        .playing(loopMode: .loop)
+        .accessibilityLabel(permission.illustrationLabel)
+        .frame(
+            width: Layout.illustrationSize,
+            height: Layout.illustrationSize
+        )
+        .frame(maxWidth: .infinity)
+        .frame(height: Layout.illustrationAreaHeight)
     }
 }

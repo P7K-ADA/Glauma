@@ -10,33 +10,58 @@ struct ReviewStatusCard: View {
         analysisErrorMessage != nil
     }
 
+    private var localizedWarnings: [String] {
+        qualityWarnings.map {
+            GlaumaLocalization.warning(for: $0)
+        }
+    }
+
     private var title: String {
         if isAnalyzing {
-            return "Menganalisis Foto"
+            return NSLocalizedString(
+                "review.status.analyzing.title",
+                comment: "Title shown while image analysis is in progress"
+            )
         }
 
         if isError {
-            return "Foto mungkin tidak terbaca"
+            return NSLocalizedString(
+                "review.status.error.title",
+                comment: "Title shown when image analysis fails"
+            )
         }
 
-        return "Kualitas Gambar Baik"
+        return NSLocalizedString(
+            "review.status.success.title",
+            comment: "Title shown when image quality is good"
+        )
     }
 
     private var subtitle: String {
         if isAnalyzing {
-            return "Memeriksa kualitas gambar dan melakukan segmentasi optic disc dan optic cup."
+            return NSLocalizedString(
+                "review.status.analyzing.subtitle",
+                comment: "Description shown while image analysis is in progress"
+            )
         }
 
         if let analysisErrorMessage {
             return analysisErrorMessage
         }
 
-        if !qualityWarnings.isEmpty {
-            return "Analisis selesai dengan beberapa catatan kualitas."
+        if !localizedWarnings.isEmpty {
+            return NSLocalizedString(
+                "review.status.warning.subtitle",
+                comment: "Description shown when analysis has quality warnings"
+            )
         }
 
-        return "Foto berhasil diproses dan siap digunakan."
+        return NSLocalizedString(
+            "review.status.success.subtitle",
+            comment: "Description shown when image analysis succeeds"
+        )
     }
+
 
     private var tint: Color {
         if isAnalyzing {
@@ -51,7 +76,9 @@ struct ReviewStatusCard: View {
             return "hourglass"
         }
 
-        return isError ? "exclamationmark.circle.fill" : "checkmark.circle.fill"
+        return isError
+            ? "exclamationmark.circle.fill"
+            : "checkmark.circle.fill"
     }
 
     var body: some View {
@@ -83,9 +110,12 @@ struct ReviewStatusCard: View {
                 Spacer(minLength: 0)
             }
 
-            if !isAnalyzing && !isError && !qualityWarnings.isEmpty {
+            if !isAnalyzing && !isError && !localizedWarnings.isEmpty {
                 VStack(alignment: .leading, spacing: 5) {
-                    ForEach(qualityWarnings, id: \.self) { warning in
+                    ForEach(
+                        Array(localizedWarnings.enumerated()),
+                        id: \.offset
+                    ) { _, warning in
                         Label(
                             warning,
                             systemImage: "info.circle"

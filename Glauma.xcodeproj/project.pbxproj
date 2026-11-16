@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0299255A79F426210213C5E7 /* GlaucomaSegV2_EffNetB4.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 4B431D9C1B122D67A443FB58 /* GlaucomaSegV2_EffNetB4.mlpackage */; };
 		09707C84F63D1D16C75F999A /* ScanZoomControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1701FC0E5A5D2D473B8FF8C /* ScanZoomControl.swift */; };
+		0A2E6446E136DC35E89462C7 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7B5342E2A4C677DAD55F7930 /* Localizable.xcstrings */; };
 		0C06388CA26A5900E5EA146B /* ScreeningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A5B75568B72681125623DD /* ScreeningSession.swift */; };
+		0C1D170D4CB7C588F804C4EC /* GlaumaLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736C7BBA777516C8D0AC4659 /* GlaumaLocalization.swift */; };
+		0DE363E3146A603D779712F1 /* ZoomableSegmentationOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F53662BCA04E5481E9D2DA /* ZoomableSegmentationOverlay.swift */; };
 		0E17A325EFD66A8C38C9D050 /* ImageInferenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B560A0AC0F32A3D5F91E4D /* ImageInferenceService.swift */; };
 		10DC5FABA387618F44A30244 /* NFCFrameDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E4D19C5DEA1744D188EFBF /* NFCFrameDetector.swift */; };
 		154791C9551DB36FC9D0808F /* EyeSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9732F31E04AB57A5A9F9A1A5 /* EyeSummaryCard.swift */; };
@@ -16,12 +20,9 @@
 		281505476EB5CAE047085614 /* AppButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A8F55EDF4F392E288A7D10 /* AppButton.swift */; };
 		290B32E4D965917B11FB752B /* SingleReportExportPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D282E2FF016EB97E5021599A /* SingleReportExportPage.swift */; };
 		2A6B74ED295EB9ED96FBAA94 /* ReviewImageCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5A26DF134867C75B59454E /* ReviewImageCanvas.swift */; };
+		2A83EDBED7021C6204A8DB7A /* GlaucomaSegV2_EffNetB4_NEW 2.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = D59967DB8745CC8BD1C41F63 /* GlaucomaSegV2_EffNetB4_NEW 2.mlpackage */; };
 		2C3AA0645A04D07E2A57B314 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2594AFE033FABC0FAE339D14 /* ContentView.swift */; };
-		2F013FA330AB0E7400D6D3BE /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2F013FA230AB0E7400D6D3BE /* Localizable.xcstrings */; };
-		2F013FA530AB0F9500D6D3BE /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 2F013FA430AB0F9500D6D3BE /* Localizable.xcstrings */; };
 		2FA4DC5F2111AF99536FFC6B /* ScanCropMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D588F5DAF27E5123E9C8DDD /* ScanCropMask.swift */; };
-		2FBD13DB30AA0D1300A88E80 /* Glauma_EffNetB4.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD13DA30AA0D1300A88E80 /* Glauma_EffNetB4.mlpackage */; };
-		2FBD13DD30AA116F00A88E80 /* ZoomableSegmentationOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBD13DC30AA116F00A88E80 /* ZoomableSegmentationOverlay.swift */; };
 		30096D4FD6D9D5F7BB15DD89 /* ReportExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0355AE24A28B7CE2ADACD875 /* ReportExportService.swift */; };
 		35ABB3A30BEB06D5E2436B87 /* ReviewEditingActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBA37FDDD081DC2514511EC /* ReviewEditingActions.swift */; };
 		362C6F395211965851BD7E76 /* File.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1B811755831632B0FFEC1253 /* File.txt */; };
@@ -43,14 +44,17 @@
 		575F222E765838398B0BACE4 /* ImageReviewPreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F91337DABAFDE5E3B6C58D /* ImageReviewPreviewData.swift */; };
 		599B5A7D9DB858BF37B3A532 /* OnboardingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACD361FE3B46B06F5040E5E /* OnboardingHeader.swift */; };
 		5F34D8ABD620340FB33B8BF6 /* GlaucomaSegmentation.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 370FF2D7710285C4FC20BA5C /* GlaucomaSegmentation.mlpackage */; };
+		6310588EB06762530F4588A3 /* GlaucomaSegV2_EffNetB4_NEW.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = F959A5CB9B056D64362E1880 /* GlaucomaSegV2_EffNetB4_NEW.mlpackage */; };
 		702D82E0ECC99FFCB0C04EE5 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02315A82EF70D9C52F556BD /* CameraPreview.swift */; };
 		7843019C6EA6C67F7885FAE3 /* CDRAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D7A48DEA7639B1AFBB8279 /* CDRAssessment.swift */; };
+		78CEA495F89FAA58629C5D9E /* GlaucomaSegV2_EffNetB4 2.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 0F6F2F40097D218F871B2D7C /* GlaucomaSegV2_EffNetB4 2.mlpackage */; };
 		7B944FBD1840416676FB2099 /* POCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134B7BC0034F1F78BFC12E00 /* POCApp.swift */; };
 		7B97AA9604DF8EE2C51BAE44 /* CameraStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40E5D9B617DC216013B5130 /* CameraStatusView.swift */; };
 		7D98B36CE9230FD05D4C4CD3 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BF7B4156B46C25A43A8C7E /* Layout.swift */; };
 		7F62AF63A785BFA0E92F56A6 /* ReportExportSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34684B39D653F9AED928F9B5 /* ReportExportSuccessView.swift */; };
 		8C80AF99A4236B7574C5C40D /* EyeSideOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C377BEA2843E3A11892B63 /* EyeSideOverlay.swift */; };
 		8DFCB43E655969B6F4C2D324 /* GlaumaInferenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044ED56833529C226543A176 /* GlaumaInferenceService.swift */; };
+		9172D483B017C47F12907A90 /* EyeDetailExpandedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E613FCA02F023F9D99A57738 /* EyeDetailExpandedImageView.swift */; };
 		93867A4544DF2EA8A79DDA77 /* MobileNetV3Gatekeeper.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = C26A9E86E281438EB04CD636 /* MobileNetV3Gatekeeper.mlpackage */; };
 		95B990F7F23B540A58E704B9 /* ReviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95FEC5C07A282A1BE1D1A5C8 /* ReviewHeader.swift */; };
 		97609ACB29578EA6BFCF347A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6773C49C2204DA705E7400 /* OnboardingView.swift */; };
@@ -61,6 +65,7 @@
 		AFAFFD14EF9537380C9AE289 /* OnboardingPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86F8A0C2D69F977B40CA9A2 /* OnboardingPermission.swift */; };
 		B401CE5488AD0049DD10BC22 /* OnboardingPermissionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D747712DDDD146C763109C32 /* OnboardingPermissionPage.swift */; };
 		B756391E7B5EADDECC4BDBB8 /* AIDisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C403154B42ED9CEF846EAC /* AIDisclaimerView.swift */; };
+		B7A6E4532F42CE4F8677486A /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 70384D37F4E0803D7D4109C1 /* Lottie */; };
 		B904D83DE89AA2D95BA0E7C4 /* SegmentationOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE98B8EA9B1B8F4BDCA81C22 /* SegmentationOverlay.swift */; };
 		B92CE3B7DC1BE7DD82FA95A0 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD30007CFD277B9B5D78AE /* AppColors.swift */; };
 		BB06373356162DE99DB2E66F /* EyeDetailImagePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC88019113EA43ABA5DE63C /* EyeDetailImagePreview.swift */; };
@@ -70,6 +75,7 @@
 		D54E58118D790B143BA72B32 /* opencv2.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35F3DDA6424C84D7E3F9CD8D /* opencv2.xcframework */; };
 		D5CADEF0B1A93D2F60242AA5 /* glauma_error_messages_id.json in Resources */ = {isa = PBXBuildFile; fileRef = ACF580780796A8418A8DBE5E /* glauma_error_messages_id.json */; };
 		D6A77D0E91B7143F0625FEE2 /* OnboardingIllustration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DC63F307864F70E87735B5 /* OnboardingIllustration.swift */; };
+		D7E7D4516387097E14D112F5 /* Glauma_EffNetB4.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 48268C80650D1C44479F39F1 /* Glauma_EffNetB4.mlpackage */; };
 		D8F5FA1CAA42F1DAECC7E6DB /* EyeDetailContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A07D822BCFCAD65DDD8BC6 /* EyeDetailContent.swift */; };
 		DED3254EA545055EB73A7D35 /* CoreNFC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D705F724F2B32DCC7076F1 /* CoreNFC.framework */; };
 		E10624E7552EB0B5CA322BA7 /* ReportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A185C6AB9F4DD3983A6242 /* ReportViewModel.swift */; };
@@ -79,6 +85,7 @@
 		EB7F5091392D736AECF91596 /* GlaumaOpenCVBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2B90878559EEB8517C75DF09 /* GlaumaOpenCVBridge.mm */; };
 		F1C5508B241BCFC12285B3D8 /* GlaumaDebugGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B69E2B960BA6BE70A15B44 /* GlaumaDebugGridView.swift */; };
 		F37A745BCEE25F91B4FE2382 /* ImageReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72716174B78827335290B4D /* ImageReviewView.swift */; };
+		F65F6DC1032BA4F0BACC8703 /* lens_onboarding.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 9C30B314F20EB7A5C3317FD8 /* lens_onboarding.lottie */; };
 		FBD135398839981820362851 /* GatekeeperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB7F990AF3AD579DA2DBAF1 /* GatekeeperService.swift */; };
 		FC633258DBA55D195E424EA0 /* EyeDetailStatusCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D46050BF6F6A438783AE21 /* EyeDetailStatusCards.swift */; };
 /* End PBXBuildFile section */
@@ -87,6 +94,7 @@
 		0355AE24A28B7CE2ADACD875 /* ReportExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportExportService.swift; sourceTree = "<group>"; };
 		044ED56833529C226543A176 /* GlaumaInferenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlaumaInferenceService.swift; sourceTree = "<group>"; };
 		0EBA37FDDD081DC2514511EC /* ReviewEditingActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewEditingActions.swift; sourceTree = "<group>"; };
+		0F6F2F40097D218F871B2D7C /* GlaucomaSegV2_EffNetB4 2.mlpackage */ = {isa = PBXFileReference; path = "GlaucomaSegV2_EffNetB4 2.mlpackage"; sourceTree = "<group>"; };
 		134B7BC0034F1F78BFC12E00 /* POCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POCApp.swift; sourceTree = "<group>"; };
 		17E4D19C5DEA1744D188EFBF /* NFCFrameDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCFrameDetector.swift; sourceTree = "<group>"; };
 		1AB7F990AF3AD579DA2DBAF1 /* GatekeeperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatekeeperService.swift; sourceTree = "<group>"; };
@@ -95,19 +103,18 @@
 		24A07D822BCFCAD65DDD8BC6 /* EyeDetailContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeDetailContent.swift; sourceTree = "<group>"; };
 		2594AFE033FABC0FAE339D14 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2B90878559EEB8517C75DF09 /* GlaumaOpenCVBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GlaumaOpenCVBridge.mm; sourceTree = "<group>"; };
-		2F013FA430AB0F9500D6D3BE /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		2FBD13DA30AA0D1300A88E80 /* Glauma_EffNetB4.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = Glauma_EffNetB4.mlpackage; sourceTree = "<group>"; };
-		2FBD13DC30AA116F00A88E80 /* ZoomableSegmentationOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomableSegmentationOverlay.swift; sourceTree = "<group>"; };
-		3103200C8A835A39D1C5A8BF /* POC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = POC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3103200C8A835A39D1C5A8BF /* POC.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = POC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3342D81A31965B911F3D084A /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
 		33E095883B56B85B3DC35AB7 /* ScanCameraContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanCameraContent.swift; sourceTree = "<group>"; };
 		34684B39D653F9AED928F9B5 /* ReportExportSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportExportSuccessView.swift; sourceTree = "<group>"; };
 		35F3DDA6424C84D7E3F9CD8D /* opencv2.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = opencv2.xcframework; sourceTree = "<group>"; };
 		36D46050BF6F6A438783AE21 /* EyeDetailStatusCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeDetailStatusCards.swift; sourceTree = "<group>"; };
-		370FF2D7710285C4FC20BA5C /* GlaucomaSegmentation.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = GlaucomaSegmentation.mlpackage; sourceTree = "<group>"; };
+		370FF2D7710285C4FC20BA5C /* GlaucomaSegmentation.mlpackage */ = {isa = PBXFileReference; path = GlaucomaSegmentation.mlpackage; sourceTree = "<group>"; };
 		3E7B059EB6E17DE0596F5526 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		459EE49A98FF9F3A0887892E /* ScanShutterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanShutterButton.swift; sourceTree = "<group>"; };
+		48268C80650D1C44479F39F1 /* Glauma_EffNetB4.mlpackage */ = {isa = PBXFileReference; path = Glauma_EffNetB4.mlpackage; sourceTree = "<group>"; };
 		4AF84A6BC1870072FD58F0AB /* FocusSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSquareView.swift; sourceTree = "<group>"; };
+		4B431D9C1B122D67A443FB58 /* GlaucomaSegV2_EffNetB4.mlpackage */ = {isa = PBXFileReference; path = GlaucomaSegV2_EffNetB4.mlpackage; sourceTree = "<group>"; };
 		541B6155DF8CDEDBADA06D83 /* ModelPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPlaceholder.swift; sourceTree = "<group>"; };
 		55DD30007CFD277B9B5D78AE /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		57B560A0AC0F32A3D5F91E4D /* ImageInferenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInferenceService.swift; sourceTree = "<group>"; };
@@ -117,11 +124,14 @@
 		61D705F724F2B32DCC7076F1 /* CoreNFC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreNFC.framework; path = System/Library/Frameworks/CoreNFC.framework; sourceTree = SDKROOT; };
 		63F2D6AB34F9869327919575 /* glauma_preprocessing_config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = glauma_preprocessing_config.json; sourceTree = "<group>"; };
 		6704A17D3B7116E0503A6C3C /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
+		67F53662BCA04E5481E9D2DA /* ZoomableSegmentationOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomableSegmentationOverlay.swift; sourceTree = "<group>"; };
 		68C403154B42ED9CEF846EAC /* AIDisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIDisclaimerView.swift; sourceTree = "<group>"; };
 		69DD1D72C3091FE2F7321E75 /* POC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = POC.entitlements; sourceTree = "<group>"; };
 		71B69E2B960BA6BE70A15B44 /* GlaumaDebugGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlaumaDebugGridView.swift; sourceTree = "<group>"; };
+		736C7BBA777516C8D0AC4659 /* GlaumaLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlaumaLocalization.swift; sourceTree = "<group>"; };
 		73F91337DABAFDE5E3B6C58D /* ImageReviewPreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageReviewPreviewData.swift; sourceTree = "<group>"; };
 		79BBBC19A2A1C1FDC998F844 /* EyeSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeSide.swift; sourceTree = "<group>"; };
+		7B5342E2A4C677DAD55F7930 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		7D588F5DAF27E5123E9C8DDD /* ScanCropMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanCropMask.swift; sourceTree = "<group>"; };
 		88D21391D35BA6C2B77A873E /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = System/Library/Frameworks/PhotosUI.framework; sourceTree = SDKROOT; };
 		90BF7B4156B46C25A43A8C7E /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
@@ -130,28 +140,32 @@
 		9732F31E04AB57A5A9F9A1A5 /* EyeSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeSummaryCard.swift; sourceTree = "<group>"; };
 		98D7A48DEA7639B1AFBB8279 /* CDRAssessment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDRAssessment.swift; sourceTree = "<group>"; };
 		9BE3B82CB36E61B327CB0E4C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		9C30B314F20EB7A5C3317FD8 /* lens_onboarding.lottie */ = {isa = PBXFileReference; path = lens_onboarding.lottie; sourceTree = "<group>"; };
 		A1701FC0E5A5D2D473B8FF8C /* ScanZoomControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanZoomControl.swift; sourceTree = "<group>"; };
 		A72716174B78827335290B4D /* ImageReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageReviewView.swift; sourceTree = "<group>"; };
-		A75A479991E8D47C520D1ECF /* GlaucomaSegV2.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = GlaucomaSegV2.mlpackage; sourceTree = "<group>"; };
+		A75A479991E8D47C520D1ECF /* GlaucomaSegV2.mlpackage */ = {isa = PBXFileReference; path = GlaucomaSegV2.mlpackage; sourceTree = "<group>"; };
 		ACF580780796A8418A8DBE5E /* glauma_error_messages_id.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = glauma_error_messages_id.json; sourceTree = "<group>"; };
 		B05677B1688D4BA9FC3397EC /* ReportOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOverviewView.swift; sourceTree = "<group>"; };
 		B9DE2E0524ECFDDE3842CA70 /* ReportEyeScansSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportEyeScansSection.swift; sourceTree = "<group>"; };
 		BE98B8EA9B1B8F4BDCA81C22 /* SegmentationOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentationOverlay.swift; sourceTree = "<group>"; };
 		BF14ADB739D2F41D3C807C92 /* ViewModelPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelPlaceholder.swift; sourceTree = "<group>"; };
-		C26A9E86E281438EB04CD636 /* MobileNetV3Gatekeeper.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = MobileNetV3Gatekeeper.mlpackage; sourceTree = "<group>"; };
+		C26A9E86E281438EB04CD636 /* MobileNetV3Gatekeeper.mlpackage */ = {isa = PBXFileReference; path = MobileNetV3Gatekeeper.mlpackage; sourceTree = "<group>"; };
 		C4A185C6AB9F4DD3983A6242 /* ReportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewModel.swift; sourceTree = "<group>"; };
+		C4FBA6B70F73F17ACAAB66C4 /* lens */ = {isa = PBXFileReference; path = lens; sourceTree = "<group>"; };
 		C6FAACCD192FA6736268E1B2 /* ScanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewModel.swift; sourceTree = "<group>"; };
 		C9A8F55EDF4F392E288A7D10 /* AppButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppButton.swift; sourceTree = "<group>"; };
 		CC9DFBF9759827361C8F1C57 /* RecommendationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationCard.swift; sourceTree = "<group>"; };
 		D0ED62FFC2B8590D5FC41789 /* EyeExaminationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeExaminationRecord.swift; sourceTree = "<group>"; };
 		D1A5B75568B72681125623DD /* ScreeningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreeningSession.swift; sourceTree = "<group>"; };
 		D282E2FF016EB97E5021599A /* SingleReportExportPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleReportExportPage.swift; sourceTree = "<group>"; };
+		D59967DB8745CC8BD1C41F63 /* GlaucomaSegV2_EffNetB4_NEW 2.mlpackage */ = {isa = PBXFileReference; path = "GlaucomaSegV2_EffNetB4_NEW 2.mlpackage"; sourceTree = "<group>"; };
 		D675957D0C1FF48945CED0EE /* POC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "POC-Bridging-Header.h"; sourceTree = "<group>"; };
 		D747712DDDD146C763109C32 /* OnboardingPermissionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionPage.swift; sourceTree = "<group>"; };
 		DA472FF1752892929EB048CD /* SegmentationImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentationImageView.swift; sourceTree = "<group>"; };
 		DAB1AFB5D3E8B0C0C4B68324 /* GlaumaOpenCVBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlaumaOpenCVBridge.h; sourceTree = "<group>"; };
 		DF97A983110B0AA056DA0C94 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		E40E5D9B617DC216013B5130 /* CameraStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraStatusView.swift; sourceTree = "<group>"; };
+		E613FCA02F023F9D99A57738 /* EyeDetailExpandedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeDetailExpandedImageView.swift; sourceTree = "<group>"; };
 		EA04302575712E0C5921E338 /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 		ECE1459935C639ECD82265D7 /* PreprocessingDetailsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreprocessingDetailsSection.swift; sourceTree = "<group>"; };
 		EEC88019113EA43ABA5DE63C /* EyeDetailImagePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeDetailImagePreview.swift; sourceTree = "<group>"; };
@@ -160,6 +174,7 @@
 		F7DC63F307864F70E87735B5 /* OnboardingIllustration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingIllustration.swift; sourceTree = "<group>"; };
 		F86F8A0C2D69F977B40CA9A2 /* OnboardingPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermission.swift; sourceTree = "<group>"; };
 		F91A381E4726809E5443C5FB /* ReviewStatusCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewStatusCard.swift; sourceTree = "<group>"; };
+		F959A5CB9B056D64362E1880 /* GlaucomaSegV2_EffNetB4_NEW.mlpackage */ = {isa = PBXFileReference; path = GlaucomaSegV2_EffNetB4_NEW.mlpackage; sourceTree = "<group>"; };
 		FE0992180D3C70434BFAC80F /* ReportData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,12 +183,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7A6E4532F42CE4F8677486A /* Lottie in Frameworks */,
+				D54E58118D790B143BA72B32 /* opencv2.xcframework in Frameworks */,
 				4724FBC6B94C54FFAE1D5735 /* AVFoundation.framework in Frameworks */,
 				DED3254EA545055EB73A7D35 /* CoreNFC.framework in Frameworks */,
 				3924849F14AACCDBE94EF1A2 /* Photos.framework in Frameworks */,
 				EB4D7C194BDCD1EE4C51B353 /* PhotosUI.framework in Frameworks */,
 				C29570055CCBBC8A18FFA972 /* Vision.framework in Frameworks */,
-				D54E58118D790B143BA72B32 /* opencv2.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,10 +229,11 @@
 		02C10B40CCCADCF15CB4B27D /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				2FBD13DC30AA116F00A88E80 /* ZoomableSegmentationOverlay.swift */,
 				24A07D822BCFCAD65DDD8BC6 /* EyeDetailContent.swift */,
+				E613FCA02F023F9D99A57738 /* EyeDetailExpandedImageView.swift */,
 				EEC88019113EA43ABA5DE63C /* EyeDetailImagePreview.swift */,
 				36D46050BF6F6A438783AE21 /* EyeDetailStatusCards.swift */,
+				67F53662BCA04E5481E9D2DA /* ZoomableSegmentationOverlay.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -225,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				044ED56833529C226543A176 /* GlaumaInferenceService.swift */,
+				736C7BBA777516C8D0AC4659 /* GlaumaLocalization.swift */,
 				DAB1AFB5D3E8B0C0C4B68324 /* GlaumaOpenCVBridge.h */,
 				2B90878559EEB8517C75DF09 /* GlaumaOpenCVBridge.mm */,
 				D675957D0C1FF48945CED0EE /* POC-Bridging-Header.h */,
@@ -268,6 +286,15 @@
 				F91A381E4726809E5443C5FB /* ReviewStatusCard.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		20EEBE8B7B916299EE5B1380 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				C4FBA6B70F73F17ACAAB66C4 /* lens */,
+				9C30B314F20EB7A5C3317FD8 /* lens_onboarding.lottie */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		2AA9AB595FCE8892EB304ADF /* GlobalComponents */ = {
@@ -371,11 +398,10 @@
 		65E7E8F3D16DA619E0D0AD2F = {
 			isa = PBXGroup;
 			children = (
-				2F013FA430AB0F9500D6D3BE /* Localizable.xcstrings */,
+				7B5342E2A4C677DAD55F7930 /* Localizable.xcstrings */,
 				6B30FB2FEF66A9AB03FA0B2F /* APIs */,
 				2D5EC636AC8C7024A867AA24 /* POC */,
 				DDBF632358F2CC7E07B11FAD /* Frameworks */,
-				2F013FA230AB0E7400D6D3BE /* Localizable.xcstrings */,
 				01DFE82F0AFE90731E50D2E5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -401,9 +427,13 @@
 			isa = PBXGroup;
 			children = (
 				370FF2D7710285C4FC20BA5C /* GlaucomaSegmentation.mlpackage */,
+				0F6F2F40097D218F871B2D7C /* GlaucomaSegV2_EffNetB4 2.mlpackage */,
+				D59967DB8745CC8BD1C41F63 /* GlaucomaSegV2_EffNetB4_NEW 2.mlpackage */,
+				F959A5CB9B056D64362E1880 /* GlaucomaSegV2_EffNetB4_NEW.mlpackage */,
+				4B431D9C1B122D67A443FB58 /* GlaucomaSegV2_EffNetB4.mlpackage */,
 				A75A479991E8D47C520D1ECF /* GlaucomaSegV2.mlpackage */,
+				48268C80650D1C44479F39F1 /* Glauma_EffNetB4.mlpackage */,
 				C26A9E86E281438EB04CD636 /* MobileNetV3Gatekeeper.mlpackage */,
-				2FBD13DA30AA0D1300A88E80 /* Glauma_EffNetB4.mlpackage */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -510,6 +540,7 @@
 			children = (
 				3E7B059EB6E17DE0596F5526 /* Assets.xcassets */,
 				1B811755831632B0FFEC1253 /* File.txt */,
+				20EEBE8B7B916299EE5B1380 /* Animation */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -561,6 +592,7 @@
 			);
 			name = POC;
 			packageProductDependencies = (
+				70384D37F4E0803D7D4109C1 /* Lottie */,
 			);
 			productName = POC;
 			productReference = 3103200C8A835A39D1C5A8BF /* POC.app */;
@@ -576,6 +608,7 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					AA29779DD6F3CA189084A3F6 = {
+						DevelopmentTeam = W9AZH37T99;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -586,11 +619,12 @@
 			knownRegions = (
 				Base,
 				en,
-				id,
-				id,
 			);
 			mainGroup = 65E7E8F3D16DA619E0D0AD2F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				76FA302C108C5EEFDD795F79 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 01DFE82F0AFE90731E50D2E5 /* Products */;
 			projectDirPath = "";
@@ -607,11 +641,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				5266A524E5A5F4A6A61F1E2D /* Assets.xcassets in Resources */,
-				2F013FA530AB0F9500D6D3BE /* Localizable.xcstrings in Resources */,
 				362C6F395211965851BD7E76 /* File.txt in Resources */,
-				2F013FA330AB0E7400D6D3BE /* Localizable.xcstrings in Resources */,
+				0A2E6446E136DC35E89462C7 /* Localizable.xcstrings in Resources */,
 				D5CADEF0B1A93D2F60242AA5 /* glauma_error_messages_id.json in Resources */,
 				4181E40BA2AB05BDE0F26007 /* glauma_preprocessing_config.json in Resources */,
+				F65F6DC1032BA4F0BACC8703 /* lens_onboarding.lottie in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,6 +665,7 @@
 				7B97AA9604DF8EE2C51BAE44 /* CameraStatusView.swift in Sources */,
 				2C3AA0645A04D07E2A57B314 /* ContentView.swift in Sources */,
 				D8F5FA1CAA42F1DAECC7E6DB /* EyeDetailContent.swift in Sources */,
+				9172D483B017C47F12907A90 /* EyeDetailExpandedImageView.swift in Sources */,
 				BB06373356162DE99DB2E66F /* EyeDetailImagePreview.swift in Sources */,
 				FC633258DBA55D195E424EA0 /* EyeDetailStatusCards.swift in Sources */,
 				3F6E3335B7AFDA3683E6D2A6 /* EyeDetailView.swift in Sources */,
@@ -641,11 +676,16 @@
 				A48BD0838727FE5DEFE45523 /* FocusSquareView.swift in Sources */,
 				FBD135398839981820362851 /* GatekeeperService.swift in Sources */,
 				47EA634B8C847E975DB275C7 /* GlaucomaSegV2.mlpackage in Sources */,
-				2FBD13DD30AA116F00A88E80 /* ZoomableSegmentationOverlay.swift in Sources */,
+				78CEA495F89FAA58629C5D9E /* GlaucomaSegV2_EffNetB4 2.mlpackage in Sources */,
+				0299255A79F426210213C5E7 /* GlaucomaSegV2_EffNetB4.mlpackage in Sources */,
+				2A83EDBED7021C6204A8DB7A /* GlaucomaSegV2_EffNetB4_NEW 2.mlpackage in Sources */,
+				6310588EB06762530F4588A3 /* GlaucomaSegV2_EffNetB4_NEW.mlpackage in Sources */,
 				5F34D8ABD620340FB33B8BF6 /* GlaucomaSegmentation.mlpackage in Sources */,
 				F1C5508B241BCFC12285B3D8 /* GlaumaDebugGridView.swift in Sources */,
 				8DFCB43E655969B6F4C2D324 /* GlaumaInferenceService.swift in Sources */,
+				0C1D170D4CB7C588F804C4EC /* GlaumaLocalization.swift in Sources */,
 				EB7F5091392D736AECF91596 /* GlaumaOpenCVBridge.mm in Sources */,
+				D7E7D4516387097E14D112F5 /* Glauma_EffNetB4.mlpackage in Sources */,
 				0E17A325EFD66A8C38C9D050 /* ImageInferenceService.swift in Sources */,
 				575F222E765838398B0BACE4 /* ImageReviewPreviewData.swift in Sources */,
 				F37A745BCEE25F91B4FE2382 /* ImageReviewView.swift in Sources */,
@@ -672,7 +712,6 @@
 				2A6B74ED295EB9ED96FBAA94 /* ReviewImageCanvas.swift in Sources */,
 				9CA5E99C1516C5F7904DA576 /* ReviewStatusCard.swift in Sources */,
 				A85C4E98D9CA6F0169D3A011 /* ScanCameraContent.swift in Sources */,
-				2FBD13DB30AA0D1300A88E80 /* Glauma_EffNetB4.mlpackage in Sources */,
 				2FA4DC5F2111AF99536FFC6B /* ScanCropMask.swift in Sources */,
 				E35FC29D335F7E81AF6D73AA /* ScanShutterButton.swift in Sources */,
 				4D0F19975EA541B367039212 /* ScanView.swift in Sources */,
@@ -684,6 +723,7 @@
 				B904D83DE89AA2D95BA0E7C4 /* SegmentationOverlay.swift in Sources */,
 				290B32E4D965917B11FB752B /* SingleReportExportPage.swift in Sources */,
 				C45DA2959115DBB8ADED5C0E /* ViewModelPlaceholder.swift in Sources */,
+				0DE363E3146A603D779712F1 /* ZoomableSegmentationOverlay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -698,19 +738,18 @@
 				CODE_SIGN_ENTITLEMENTS = POC/POC.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3R47563279;
+				DEVELOPMENT_TEAM = W9AZH37T99;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/opencv2.xcframework/ios-arm64",
 					"\".\"",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Glauma;
 				INFOPLIST_KEY_CFBundleShortVersionString = 1.0;
 				INFOPLIST_KEY_CFBundleVersion = 1;
-				INFOPLIST_KEY_NFCReaderUsageDescription = "POC uses NFC to detect the attached frame.";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is needed to capture eye images for glaucoma screening research.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Allow POC to save captured or processed eye images to your Photos library.";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "Glauma uses NFC to detect the attached frame.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is needed to capture eye images.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Allow Glauma to save captured or processed eye images to your Photos library.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -797,19 +836,18 @@
 				CODE_SIGN_ENTITLEMENTS = POC/POC.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3R47563279;
+				DEVELOPMENT_TEAM = W9AZH37T99;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/opencv2.xcframework/ios-arm64",
 					"\".\"",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Glauma;
 				INFOPLIST_KEY_CFBundleShortVersionString = 1.0;
 				INFOPLIST_KEY_CFBundleVersion = 1;
-				INFOPLIST_KEY_NFCReaderUsageDescription = "POC uses NFC to detect the attached frame.";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is needed to capture eye images for glaucoma screening research.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Allow POC to save captured or processed eye images to your Photos library.";
+				INFOPLIST_KEY_NFCReaderUsageDescription = "Glauma uses NFC to detect the attached frame.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is needed to capture eye images.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Allow Glauma to save captured or processed eye images to your Photos library.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -903,6 +941,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		76FA302C108C5EEFDD795F79 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.6.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		70384D37F4E0803D7D4109C1 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76FA302C108C5EEFDD795F79 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 47A6A2D54F0F696847DDC75A /* Project object */;
 }

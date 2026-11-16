@@ -5,6 +5,7 @@
 //  Created by Harley Ganisson on 20/10/26.
 //
 
+
 import SwiftUI
 
 struct EyeDetailView: View {
@@ -24,34 +25,18 @@ struct EyeDetailView: View {
 
     var body: some View {
         ScrollView {
-            
             EyeDetailContent(
                 eye: eye,
-                onExpandImage: { isImageExpanded = true }
+                onExpandImage: {
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        isImageExpanded = true
+                    }
+                }
             )
             .padding(.horizontal, Layout.horizontalPadding)
             .padding(.top, Layout.topPadding)
             .padding(.bottom, Layout.reviewBottomPadding)
         }
-        .background(AppColors.appBackground)
-        //.preferredColorScheme(.dark)
-        .navigationTitle("Eye Details")
-        EyeDetailContent(
-            eye: eye,
-            onExpandImage: {
-                withAnimation(.easeInOut(duration: 0.25)) {
-                    isImageExpanded = true
-                }
-            }
-        )
-        .frame(
-            maxWidth: .infinity,
-            maxHeight: .infinity,
-            alignment: .top
-        )
-        .padding(.horizontal, Layout.horizontalPadding)
-        .padding(.top, Layout.topPadding)
-        .padding(.bottom, Layout.reviewBottomPadding)
         .background(
             AppColors.appBackground
                 .ignoresSafeArea()
@@ -70,7 +55,9 @@ struct EyeDetailView: View {
                 .zIndex(10)
             }
         }
-        .navigationTitle("Detail Mata")
+        .navigationTitle(
+            LocalizedStringKey("navigation.eye_details")
+        )
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(
             AppColors.appBackground,

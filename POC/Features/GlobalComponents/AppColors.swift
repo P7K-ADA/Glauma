@@ -11,6 +11,7 @@ enum AppColors {
     
     static let appBackground = Color("AppBackground")
     
+    static let gray = Color("Gray")
     static let zoomButtons = Color("ZoomColors")
     static let white = Color("White")
     static let normal = Color("Normal")

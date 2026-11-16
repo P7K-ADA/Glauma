@@ -9,7 +9,10 @@ struct GlaumaInferenceResult {
     let confidence: Double            // model score, not clinical accuracy
     let qualityStatus: String
     let qualityMetrics: [String: Double]
-    let warnings: [String]
+    let warningCodes: [String]
+    var warnings: [String] {
+        warningCodes.map { GlaumaLocalization.warning(for: $0) }
+    }
     let debugStages: [String: UIImage]
     /// ROI rectangle in normalized coordinates of the upright original photo.
     let roiRectNormalized: CGRect
@@ -47,9 +50,13 @@ final class GlaumaInferenceService: @unchecked Sendable {
     func predict(_ source: UIImage) throws -> GlaumaInferenceResult {
         guard let upright = source.normalizedUpright(),
               let (rgb, width, height) = upright.rgbBytes() else {
-            throw GlaumaAnalysisFailure(code: "INVALID_IMAGE",
-                message: "Gambar tidak dapat dibaca. Silakan ambil foto ulang.",
-                metrics: [:], debugStages: [:])
+            let code = "INVALID_IMAGE"
+            throw GlaumaAnalysisFailure(
+                code: code,
+                message: GlaumaLocalization.message(for: code),
+                metrics: [:],
+                debugStages: [:]
+            )
         }
 
         let prep = GlaumaOpenCVBridge.prepareRGB(
@@ -67,16 +74,19 @@ final class GlaumaInferenceService: @unchecked Sendable {
         guard (prep["ok"] as? Bool) == true,
               let processed = prep["rgbData"] as? Data else {
             let code = prep["reason"] as? String ?? "PREPROCESS_FAIL"
-            let message = prep["message"] as? String ?? Self.message(for: code)
-            throw GlaumaAnalysisFailure(code: code, message: message,
-                                        metrics: metrics, debugStages: debugStages)
+            throw GlaumaAnalysisFailure(
+                code: code,
+                message: GlaumaLocalization.message(for: code),
+                metrics: metrics,
+                debugStages: debugStages
+            )
         }
 
         let roiValues = prep["roiRectNormalized"] as? [NSNumber] ?? []
         guard roiValues.count == 4 else {
             throw GlaumaAnalysisFailure(
                 code: "ROI_METADATA_MISSING",
-                message: "Koordinat optic disc ROI tidak tersedia. Silakan proses ulang foto.",
+                message: GlaumaLocalization.message(for: "ROI_METADATA_MISSING"),
                 metrics: metrics,
                 debugStages: debugStages
             )
@@ -92,7 +102,7 @@ final class GlaumaInferenceService: @unchecked Sendable {
               roiRectNormalized.maxX <= 1.0001, roiRectNormalized.maxY <= 1.0001 else {
             throw GlaumaAnalysisFailure(
                 code: "ROI_METADATA_INVALID",
-                message: "Koordinat optic disc ROI tidak valid. Silakan proses ulang foto.",
+                message: GlaumaLocalization.message(for: "ROI_METADATA_INVALID"),
                 metrics: metrics,
                 debugStages: debugStages
             )
@@ -100,9 +110,13 @@ final class GlaumaInferenceService: @unchecked Sendable {
 
 
         guard let logits0 = runModel(rgb: processed) else {
-            throw GlaumaAnalysisFailure(code: "MODEL_OUTPUT",
-                message: "Output model tidak sesuai dengan format yang diharapkan.",
-                metrics: metrics, debugStages: debugStages)
+            let code = "MODEL_OUTPUT"
+            throw GlaumaAnalysisFailure(
+                code: code,
+                message: GlaumaLocalization.message(for: code),
+                metrics: metrics,
+                debugStages: debugStages
+            )
         }
 
         var probabilities = logits0
@@ -118,17 +132,17 @@ final class GlaumaInferenceService: @unchecked Sendable {
         let cupRows = cleanMask.indices.filter { cleanMask[$0] == 2 }.map { $0 / side }
         guard !discRows.isEmpty else {
             throw GlaumaAnalysisFailure(code: "EMPTY_DISC_MASK",
-                message: Self.message(for: "EMPTY_DISC_MASK"),
+                message: GlaumaLocalization.message(for: "EMPTY_DISC_MASK"),
                 metrics: metrics, debugStages: debugStages)
         }
         guard !cupRows.isEmpty else {
             throw GlaumaAnalysisFailure(code: "EMPTY_CUP_MASK",
-                message: Self.message(for: "EMPTY_CUP_MASK"),
+                message: GlaumaLocalization.message(for: "EMPTY_CUP_MASK"),
                 metrics: metrics, debugStages: debugStages)
         }
         guard confidence >= 0.55 else {
             throw GlaumaAnalysisFailure(code: "LOW_SEGMENTATION_CONFIDENCE",
-                message: Self.message(for: "LOW_SEGMENTATION_CONFIDENCE"),
+                message: GlaumaLocalization.message(for: "LOW_SEGMENTATION_CONFIDENCE"),
                 metrics: metrics, debugStages: debugStages)
         }
 
@@ -136,7 +150,7 @@ final class GlaumaInferenceService: @unchecked Sendable {
         let cupHeight = Self.robustHeight(cupRows)
         guard discHeight > 0, cupHeight > 0 else {
             throw GlaumaAnalysisFailure(code: "INVALID_SEGMENTATION",
-                message: Self.message(for: "INVALID_SEGMENTATION"),
+                message: GlaumaLocalization.message(for: "INVALID_SEGMENTATION"),
                 metrics: metrics, debugStages: debugStages)
         }
 
@@ -154,7 +168,7 @@ final class GlaumaInferenceService: @unchecked Sendable {
             confidence: confidence,
             qualityStatus: prep["status"] as? String ?? "pass",
             qualityMetrics: metrics,
-            warnings: prepWarnings + postWarnings,
+            warningCodes: prepWarnings + postWarnings,
             debugStages: stages,
             roiRectNormalized: roiRectNormalized
         )
@@ -476,15 +490,6 @@ final class GlaumaInferenceService: @unchecked Sendable {
         return raw.mapValues { $0.doubleValue }
     }
 
-    private static func message(for code: String) -> String {
-        let messages = [
-            "EMPTY_DISC_MASK": "Model tidak menghasilkan mask optic disc yang valid. Ambil ulang foto.",
-            "EMPTY_CUP_MASK": "Model tidak menghasilkan mask optic cup yang valid. Ambil ulang foto.",
-            "LOW_SEGMENTATION_CONFIDENCE": "Hasil segmentasi belum cukup meyakinkan. Ambil ulang foto dengan posisi dan fokus yang lebih stabil.",
-            "INVALID_SEGMENTATION": "Hasil segmentasi tidak memenuhi pemeriksaan kualitas. Ambil ulang foto."
-        ]
-        return messages[code] ?? "Foto tidak dapat diproses. Silakan ambil foto fundus ulang."
-    }
 }
 
 private extension UIImage {

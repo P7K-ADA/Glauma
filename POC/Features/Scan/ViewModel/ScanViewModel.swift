@@ -319,8 +319,10 @@ final class ScanViewModel: ObservableObject {
         } catch let failure as GlaumaAnalysisFailure {
             guard self.analysisID == analysisID else { return }
 
-            analysisErrorMessage = failure.message
-            debugFailureMessage = failure.message
+            let localizedMessage = GlaumaLocalization.message(for: failure.code)
+
+            analysisErrorMessage = localizedMessage
+            debugFailureMessage = localizedMessage
             debugStages = failure.debugStages
 
             // Keep available preprocessing stages even when inference fails.

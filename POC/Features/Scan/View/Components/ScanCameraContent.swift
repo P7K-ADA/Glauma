@@ -62,42 +62,6 @@ struct ScanCameraContent: View {
                         .allowsHitTesting(false)
                 }
 
-                VStack {
-                    HStack {
-                        Spacer()
-
-                        Button(action: camera.toggleFlash) {
-                            Image(
-                                systemName: camera.isFlashEnabled
-                                    ? "bolt.fill"
-                                    : "bolt.slash.fill"
-                            )
-                            .font(.headline.weight(.semibold))
-                            .foregroundStyle(
-                                camera.isFlashEnabled
-                                    ? Color.yellow
-                                    : tint
-                            )
-                            .frame(width: 44, height: 44)
-                            .background(
-                                Color.black.opacity(0.45),
-                                in: Circle()
-                            )
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel(
-                            camera.isFlashEnabled ? "on" : "off"
-                        )
-                        .accessibilityValue(
-                            camera.isFlashEnabled ? "Aktif" : "Nonaktif"
-                        )
-                    }
-
-                    Spacer()
-                }
-                .padding(.top, geometry.safeAreaInsets.top + 20)
-                .padding(.trailing, Layout.horizontalPadding)
-
                 VStack(spacing: 0) {
                     if camera.errorMessage != nil {
                         CameraStatusView(

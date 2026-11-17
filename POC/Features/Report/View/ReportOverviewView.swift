@@ -33,7 +33,7 @@ struct ReportOverviewView: View {
                 
                 ReportEyeScansSection(report: report)
                 
-                PreprocessingDetailsSection(report: report)
+//                PreprocessingDetailsSection(report: report)
 
                 RecommendationCard(
                     title: report.recommendation.title,

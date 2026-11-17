@@ -19,7 +19,6 @@ final class CameraService: NSObject, ObservableObject,
     @Published var errorMessage: String?
     @Published var capturedImage: UIImage?
     @Published var currentZoomFactor: CGFloat = 1.0
-    @Published var isFlashEnabled = false
     @Published private(set) var maxZoom: CGFloat = 1.0
 
     let minZoom: CGFloat = 1.0
@@ -154,12 +153,12 @@ final class CameraService: NSObject, ObservableObject,
 
             let settings = AVCapturePhotoSettings()
 
-            if self.isFlashEnabled,
-               self.photoOutput.supportedFlashModes.contains(.on) {
+            if self.photoOutput.supportedFlashModes.contains(.auto) {
                 settings.flashMode = .on
             } else if self.photoOutput.supportedFlashModes.contains(.off) {
                 settings.flashMode = .off
             }
+
 
             self.photoOutput.capturePhoto(
                 with: settings,
@@ -419,12 +418,6 @@ final class CameraService: NSObject, ObservableObject,
         queue.async {
             self.previewAspectRatio = size.width / size.height
         }
-    }
-
-    // MARK: - Flash
-
-    func toggleFlash() {
-        isFlashEnabled.toggle()
     }
 
     // MARK: - Focus

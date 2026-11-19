@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import Photos
+import UIKit
 
 struct ReportOverviewView: View {
     @StateObject private var viewModel: ReportViewModel
     private let onDone: () -> Void
+    
+    @State private var showsPhotosAccessAlert = false
+    @Environment(\.openURL) private var openURL
 
     init(
         report: ReportData,
@@ -29,6 +34,7 @@ struct ReportOverviewView: View {
                 
                 Text(report.capturedLine)
                     .font(.footnote)
+                    .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                     .foregroundStyle(AppColors.labelSecondary)
                 
                 ReportEyeScansSection(report: report)
@@ -102,7 +108,7 @@ struct ReportOverviewView: View {
         }
         .alert("Results will be deleted.", isPresented: $viewModel.showingUnsavedExportAlert) {
             Button("Export Results") {
-                viewModel.exportReport()
+                handleExport()
             }
             Button("Discard", role: .destructive) {
                 finishReport()
@@ -119,17 +125,57 @@ struct ReportOverviewView: View {
         return AppButton(
             title: title,
             tint: AppColors.primaryButtons,
-            action: viewModel.exportReport
+            action: handleExport
         )
         .disabled(viewModel.isExporting)
         .accessibilityHint("Saves the report images to your Photos.")
         .padding(.horizontal, Layout.horizontalPadding)
         .padding(.vertical, Layout.reviewBottomPadding)
         .background(AppColors.appBackground)
+        .alert(
+            "Photos Access Required",
+            isPresented: $showsPhotosAccessAlert
+        ) {
+            Button("Open Settings") {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    openURL(url)
+                }
+            }
+
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Glauma needs permission to save your screening reports to Photos. You can enable access in Settings.")
+        }
     }
 
     private func finishReport() {
         onDone()
+    }
+    
+    private func handleExport() {
+        Task {
+            let status = PHPhotoLibrary.authorizationStatus(for: .addOnly)
+
+            switch status {
+            case .authorized, .limited:
+                viewModel.exportReport()
+
+            case .notDetermined:
+                let newStatus = await PHPhotoLibrary.requestAuthorization(for: .addOnly)
+
+                if newStatus == .authorized || newStatus == .limited {
+                    viewModel.exportReport()
+                } else {
+                    showsPhotosAccessAlert = true
+                }
+
+            case .denied, .restricted:
+                showsPhotosAccessAlert = true
+
+            @unknown default:
+                showsPhotosAccessAlert = true
+            }
+        }
     }
 
     private func handleDone() {

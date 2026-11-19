@@ -56,7 +56,7 @@ final class ScanViewModel: ObservableObject {
     private var inferenceService: GlaumaInferenceService?
 
     var isLastEye: Bool {
-        selectedEye == .right ? leftImage != nil : rightImage != nil
+        selectedEye == .right
     }
 
     // MARK: - Image Input

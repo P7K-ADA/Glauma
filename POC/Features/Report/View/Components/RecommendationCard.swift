@@ -18,15 +18,17 @@ struct RecommendationCard: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline, spacing: 4) {
                 Text("[AI]")
-                    .foregroundStyle(AppColors.primaryButtons)
+                    .foregroundStyle(AppColors.AILabel)
 
                 Text(title)
             }
+            .dynamicTypeSize(...DynamicTypeSize.accessibility2)
             .font(.subheadline.weight(.semibold))
             .fixedSize(horizontal: false, vertical: true)
 
             Text(message)
                 .font(.footnote)
+                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }

@@ -20,8 +20,8 @@ struct ScanView: View {
                 content
 
                 if viewModel.isAnalyzing {
-                    Color.black
-                        .opacity(0.18)
+                    AppColors.gray
+                        .opacity(0.85)
                         .ignoresSafeArea()
                         .transition(.opacity)
 
@@ -36,9 +36,12 @@ struct ScanView: View {
 
                             Text("Analyzing photo")
                                 .font(.body.weight(.semibold))
+                                .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                                 .foregroundStyle(AppColors.labelPrimary)
                                 .fixedSize()
                         }
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityHidden(true)
 
                         // Vertical layout
                         VStack(spacing: 8) {
@@ -82,7 +85,7 @@ struct ScanView: View {
                 }
 
             }
-            .toolbar(.hidden, for: .navigationBar)
+            .toolbar(viewModel.isReviewing ? .visible : .hidden, for: .navigationBar)
             .navigationDestination(isPresented: $viewModel.showReport) {
                 reportDestination
             }

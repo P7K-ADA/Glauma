@@ -9,6 +9,10 @@ struct EyeDetailImagePreview: View {
     let eye: EyeReport
     var onExpand: () -> Void
 
+    private var eyeSideName: String {
+        eye.side == .left ? "Left Eye" : "Right Eye"
+    }
+
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             SegmentationImageView(
@@ -22,6 +26,7 @@ struct EyeDetailImagePreview: View {
                 aspectRatio: Layout.reviewImageAspectRatio
             )
             .clipShape(RoundedRectangle(cornerRadius: 22))
+            .accessibilityLabel(Text("Picture of \(eyeSideName)"))
 
             Button(action: onExpand) {
                 Image(systemName: "arrow.up.left.and.arrow.down.right")
@@ -33,7 +38,10 @@ struct EyeDetailImagePreview: View {
             }
             .buttonStyle(.plain)
             .padding(14)
-            .accessibilityLabel("Expand photo")
+            .accessibilityLabel("Expand")
+            .accessibilityHint("Double-tap to expand the eye image.")
+            .zIndex(1)
         }
+        .accessibilityElement(children: .contain)
     }
 }

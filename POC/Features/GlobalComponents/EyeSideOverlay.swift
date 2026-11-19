@@ -7,6 +7,7 @@ struct EyeSideOverlay: View {
     var body: some View {
         Text(eyeSide == .left ? "Left Eye - OS" : "Right Eye - OD")
             .font(.caption.weight(.medium))
+            .dynamicTypeSize(...DynamicTypeSize.accessibility1)
             .foregroundStyle(.white)
             .lineLimit(1)
             .fixedSize(horizontal: true, vertical: false)

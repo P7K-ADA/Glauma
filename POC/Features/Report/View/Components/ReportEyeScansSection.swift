@@ -46,6 +46,6 @@ private struct ReportEyeNavigationLink: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(eye.side == .left ? "Left eye" : "Right eye")
         .accessibilityValue("Vertical cup-to-disc ratio \(spokenCDR)")
-        .accessibilityHint("Shows details for the \(eye.side == .left ? "left" : "right") eye.")
+        .accessibilityHint("Double tap to view details for the \(eye.side == .left ? "left" : "right") eye.")
     }
 }

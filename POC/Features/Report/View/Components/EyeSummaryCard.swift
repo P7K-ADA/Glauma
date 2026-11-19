@@ -19,6 +19,7 @@ struct EyeSummaryCard: View {
                     .foregroundStyle(.secondary)
             }
             .font(.headline)
+            .dynamicTypeSize(...DynamicTypeSize.accessibility2)
 
             SegmentationImageView(
                 side: eye.side,
@@ -34,12 +35,14 @@ struct EyeSummaryCard: View {
             HStack(alignment: .firstTextBaseline) {
                 Text("vCDR")
                     .font(.subheadline)
+                    .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                     .foregroundStyle(.secondary)
 
                 Spacer()
 
                 Text(eye.cdrText)
                     .font(.title2.monospacedDigit().weight(.bold))
+                    .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                     .foregroundStyle(eye.status.tint)
             }
 
@@ -53,6 +56,7 @@ struct EyeSummaryCard: View {
                     Image(systemName: "chevron.right")
                 }
                 .font(.footnote)
+                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                 .foregroundStyle(.secondary)
             }
         }

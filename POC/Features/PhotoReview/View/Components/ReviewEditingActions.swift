@@ -7,36 +7,48 @@ struct ReviewEditingActions: View {
     let onRetake: () -> Void
     let onContinue: () -> Void
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     private var primaryTitle: String {
-        if hasError {
-            return "Continue"
+        if isLastEye {
+            return "View Report"
         }
 
-        return isLastEye ? "View Report" : "Continue"
+        return "Continue"
     }
 
     var body: some View {
-        ViewThatFits(in: .horizontal) {
-
-            // Horizontal layout
-            HStack(spacing: Layout.reviewButtonSpacing) {
-                retakeButton
-                    .frame(maxWidth: .infinity)
-
-                continueButton
-                    .frame(maxWidth: .infinity)
-            }
-
-            // Vertical layout
-            VStack(spacing: Layout.reviewButtonSpacing) {
-                continueButton
-                    .frame(maxWidth: .infinity)
-
-                retakeButton
-                    .frame(maxWidth: .infinity)
+        Group {
+            if dynamicTypeSize.isAccessibilitySize {
+                verticalLayout
+            } else {
+                ViewThatFits(in: .horizontal) {
+                    horizontalLayout
+                    verticalLayout
+                }
             }
         }
         .frame(maxWidth: .infinity)
+    }
+
+    private var horizontalLayout: some View {
+        HStack(spacing: Layout.reviewButtonSpacing) {
+            retakeButton
+                .frame(maxWidth: .infinity)
+
+            continueButton
+                .frame(maxWidth: .infinity)
+        }
+    }
+
+    private var verticalLayout: some View {
+        VStack(spacing: Layout.reviewButtonSpacing) {
+            continueButton
+                .frame(maxWidth: .infinity)
+
+            retakeButton
+                .frame(maxWidth: .infinity)
+        }
     }
 
     private var retakeButton: some View {
@@ -49,6 +61,7 @@ struct ReviewEditingActions: View {
             action: onRetake
         )
         .disabled(isAnalyzing)
+        .accessibilitySortPriority(0)
     }
 
     private var continueButton: some View {
@@ -60,5 +73,6 @@ struct ReviewEditingActions: View {
             action: onContinue
         )
         .disabled(isAnalyzing)
+        .accessibilitySortPriority(1)
     }
 }

@@ -7,11 +7,11 @@ struct ScanCropMask: View {
             let bottomOverlayHeight = geometry.size.height * 0.195
 
             ZStack(alignment: .top) {
-                AppColors.gray.opacity(0.50)
+                AppColors.gray.opacity(0.75)
                     .frame(maxWidth: .infinity)
                     .frame(height: topOverlayHeight)
 
-                AppColors.gray.opacity(0.50)
+                AppColors.gray.opacity(0.75)
                     .frame(maxWidth: .infinity)
                     .frame(height: bottomOverlayHeight)
                     .frame(maxHeight: .infinity, alignment: .bottom)

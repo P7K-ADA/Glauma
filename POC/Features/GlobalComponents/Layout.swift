@@ -4,7 +4,7 @@ enum Layout {
     static let headerHeight: CGFloat = 147
     static let illustrationAreaHeight: CGFloat = 402
     static let illustrationSize: CGFloat = 320
-    static let illustrationCornerRadius: CGFloat = 16
+    static let illustrationCornerRadius: CGFloat = 0
     static let paginationAreaHeight: CGFloat = 89
     static let buttonWidth: CGFloat? = nil
     static let buttonHeight: CGFloat = 44

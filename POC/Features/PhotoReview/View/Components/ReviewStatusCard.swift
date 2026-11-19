@@ -99,10 +99,12 @@ struct ReviewStatusCard: View {
                 ) {
                     Text(title)
                         .font(.footnote.weight(.bold))
+                        .dynamicTypeSize(...DynamicTypeSize.accessibility1)
                         .foregroundStyle(AppColors.labelPrimary)
 
                     Text(subtitle)
                         .font(.footnote.weight(.regular))
+                        .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                         .foregroundStyle(AppColors.labelSecondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -110,23 +112,23 @@ struct ReviewStatusCard: View {
                 Spacer(minLength: 0)
             }
 
-            if !isAnalyzing && !isError && !localizedWarnings.isEmpty {
-                VStack(alignment: .leading, spacing: 5) {
-                    ForEach(
-                        Array(localizedWarnings.enumerated()),
-                        id: \.offset
-                    ) { _, warning in
-                        Label(
-                            warning,
-                            systemImage: "info.circle"
-                        )
-                        .font(.caption)
-                        .foregroundStyle(AppColors.labelSecondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                    }
-                }
-                .padding(.leading, 4)
-            }
+//            if !isAnalyzing && !isError && !localizedWarnings.isEmpty {
+//                VStack(alignment: .leading, spacing: 5) {
+//                    ForEach(
+//                        Array(localizedWarnings.enumerated()),
+//                        id: \.offset
+//                    ) { _, warning in
+//                        Label(
+//                            warning,
+//                            systemImage: "info.circle"
+//                        )
+//                        .font(.caption)
+//                        .foregroundStyle(AppColors.labelSecondary)
+//                        .fixedSize(horizontal: false, vertical: true)
+//                    }
+//                }
+//                .padding(.leading, 4)
+//            }
         }
         .padding(Layout.reviewStatusCardPadding)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -160,6 +162,7 @@ private struct ReviewStatusIcon: View {
         .overlay {
             Image(systemName: systemName)
                 .font(.headline.weight(.bold))
+                .dynamicTypeSize(...DynamicTypeSize.accessibility1)
                 .foregroundStyle(tint)
         }
         .accessibilityHidden(true)

@@ -17,6 +17,7 @@ enum AppColors {
     static let normal = Color("Normal")
     static let suspect = Color("Suspect")
     static let accentRed = Color("AccentRed")
+    static let AILabel = Color("AILabel")
     
     static let labelPrimary = Color("LabelPrimary")
     static let labelSecondary = Color("LabelSecondary")

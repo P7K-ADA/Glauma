@@ -199,7 +199,8 @@ struct ZoomableSegmentationOverlay: View {
                 }
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("Tutup preview")
+        .accessibilityLabel("Close")
+        .accessibilityHint("Back to eye detail")
     }
 
     // MARK: - Zoom Controls

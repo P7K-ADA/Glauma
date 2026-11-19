@@ -103,7 +103,7 @@ private struct OnboardingPageIndicator: View {
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Step \(currentIndex + 1) of \(count)")
+        .accessibilityHidden(true)
     }
 }
 

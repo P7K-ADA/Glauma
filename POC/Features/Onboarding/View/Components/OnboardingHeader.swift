@@ -14,6 +14,7 @@ struct OnboardingHeader: View {
 
             Text(title)
                 .font(.title2.weight(.bold))
+                .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                 .foregroundStyle(AppColors.labelPrimary)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
@@ -22,6 +23,7 @@ struct OnboardingHeader: View {
 
             Text(message)
                 .font(.subheadline)
+                .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                 .foregroundStyle(AppColors.labelSecondary)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)

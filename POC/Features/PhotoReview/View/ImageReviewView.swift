@@ -1,4 +1,3 @@
-
 import SwiftUI
 import UIKit
 
@@ -24,48 +23,66 @@ struct ImageReviewView: View {
     @State private var isShowingQualityAlert = false
 
     var body: some View {
+        ScrollView {
+            VStack(spacing: Layout.reviewSectionSpacing) {
 
-        ZStack {
+                ReviewImageCanvas(
+                    image: image,
+                    eyeSide: eyeSide
+                )
 
-            ScrollView {
-                VStack(spacing: Layout.reviewSectionSpacing) {
+                ReviewStatusCard(
+                    analysisErrorMessage: analysisErrorMessage,
+                    isAnalyzing: isAnalyzing,
+                    qualityWarnings: qualityWarnings
+                )
 
-                    ReviewHeader(onBack: onRetake)
-
-                    ReviewImageCanvas(
-                        image: image,
-                        eyeSide: eyeSide
-                    )
-
-                    ReviewStatusCard(
-                        analysisErrorMessage: analysisErrorMessage,
-                        isAnalyzing: isAnalyzing,
-                        qualityWarnings: qualityWarnings
-                    )
-
-                    ReviewEditingActions(
-                        isAnalyzing: isAnalyzing,
-                        hasError: analysisErrorMessage != nil,
-                        isLastEye: isLastEye,
-                        onRetake: onRetake,
-                        onContinue: {
-                            if analysisErrorMessage != nil {
-                                isShowingQualityAlert = true
-                            } else {
-                                onUseImage(image)
-                            }
+                ReviewEditingActions(
+                    isAnalyzing: isAnalyzing,
+                    hasError: analysisErrorMessage != nil,
+                    isLastEye: isLastEye,
+                    onRetake: onRetake,
+                    onContinue: {
+                        if analysisErrorMessage != nil {
+                            isShowingQualityAlert = true
+                        } else {
+                            onUseImage(image)
                         }
-                    )
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, Layout.horizontalPadding)
-                .padding(.top, Layout.topPadding)
-                .padding(.bottom, Layout.reviewBottomPadding)
+                    }
+                )
             }
-            .scrollIndicators(.hidden)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, Layout.horizontalPadding)
+            .padding(.top, Layout.topPadding)
+            .padding(.bottom, Layout.reviewBottomPadding)
         }
+        .scrollIndicators(.hidden)
         .background(AppColors.appBackground)
-        //.preferredColorScheme(.light)
+        .navigationTitle("Review")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+
+            ToolbarItem(placement: .principal) {
+                Text("Review")
+                    .font(.headline)
+                    .foregroundStyle(AppColors.labelPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+
+            ToolbarItem(placement: .topBarLeading) {
+                Button(action: onRetake) {
+                    Image(systemName: "chevron.left")
+                        .font(.body.weight(.medium))
+                        .foregroundStyle(AppColors.labelPrimary)
+                }
+                .accessibilityLabel("Back")
+                .accessibilityHint(
+                    "Returns to the camera to retake the image."
+                )
+            }
+        }
         .alert(
             "Image may be unclear",
             isPresented: $isShowingQualityAlert
@@ -85,35 +102,39 @@ struct ImageReviewView: View {
 }
 
 #Preview("Review - Ready") {
-    ImageReviewView(
-        image: ImageReviewPreviewData.image,
-        onUseImage: { _ in },
-        onRetake: {},
-        isAnalyzing: false,
-        analysisErrorMessage: nil,
-        debugStages: [:],
-        debugFailureMessage: nil,
-        debugVCDR: nil,
-        debugConfidence: nil,
-        qualityWarnings: [],
-        eyeSide: .left,
-        isLastEye: false
-    )
+    NavigationStack {
+        ImageReviewView(
+            image: ImageReviewPreviewData.image,
+            onUseImage: { _ in },
+            onRetake: {},
+            isAnalyzing: false,
+            analysisErrorMessage: nil,
+            debugStages: [:],
+            debugFailureMessage: nil,
+            debugVCDR: nil,
+            debugConfidence: nil,
+            qualityWarnings: [],
+            eyeSide: .left,
+            isLastEye: false
+        )
+    }
 }
 
 #Preview("Review - Error") {
-    ImageReviewView(
-        image: ImageReviewPreviewData.image,
-        onUseImage: { _ in },
-        onRetake: {},
-        isAnalyzing: false,
-        analysisErrorMessage: "The image is blurry. Please hold the camera steady and retake the photo.",
-        debugStages: [:],
-        debugFailureMessage: nil,
-        debugVCDR: nil,
-        debugConfidence: nil,
-        qualityWarnings: [],
-        eyeSide: .right,
-        isLastEye: true
-    )
+    NavigationStack {
+        ImageReviewView(
+            image: ImageReviewPreviewData.image,
+            onUseImage: { _ in },
+            onRetake: {},
+            isAnalyzing: false,
+            analysisErrorMessage: "The image is blurry. Please hold the camera steady and retake the photo.",
+            debugStages: [:],
+            debugFailureMessage: nil,
+            debugVCDR: nil,
+            debugConfidence: nil,
+            qualityWarnings: [],
+            eyeSide: .right,
+            isLastEye: true
+        )
+    }
 }

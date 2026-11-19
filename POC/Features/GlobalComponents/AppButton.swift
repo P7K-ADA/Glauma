@@ -3,7 +3,6 @@
 //  POC
 //
 
-
 import SwiftUI
 
 // Shared Liquid Glass button component.
@@ -39,10 +38,12 @@ struct AppButton: View {
         styledButton
     }
 
+    
     private var baseButton: some View {
         Button(action: action) {
             Text(title)
                 .font(.headline)
+                .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                 .foregroundStyle(titleColor)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
@@ -51,11 +52,12 @@ struct AppButton: View {
                     minHeight: max(height, 44)
                 )
                 .padding(.horizontal, 12)
-                .padding(.vertical, 8)
+                .padding(.vertical, 2)
                 .contentShape(RoundedRectangle(cornerRadius: 12))
         }
         .accessibilityLabel(accessibilityLabel ?? title)
     }
+
 
     @ViewBuilder
     private var styledButton: some View {

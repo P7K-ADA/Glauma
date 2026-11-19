@@ -61,7 +61,7 @@ struct ScanZoomControl: View {
                             .background {
                                 if selectedIndex == index {
                                     Circle()
-                                        .fill(AppColors.labelPrimary)
+                                        .fill(Color.black)
                                 }
                             }
                             .contentShape(Circle())
@@ -116,6 +116,8 @@ struct ScanZoomControl: View {
         }
         .frame(width: 140, height: 44)
         .accessibilityElement(children: .contain)
+        .accessibilityLabel("Zoom control")
+        .accessibilityHint("Select a zoom level or drag horizontally to adjust the camera zoom.")
     }
 
     private func buttonLabel(for index: Int) -> String {

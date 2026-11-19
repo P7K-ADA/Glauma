@@ -26,7 +26,6 @@ final class CameraService: NSObject, ObservableObject,
     private let zoomLimit: CGFloat = 5.0
 
     private var currentDevice: AVCaptureDevice?
-    private var captureZoomFactor: CGFloat = 1.0
     private var previewAspectRatio: CGFloat = 3.0 / 4.0
     private var capturePreviewAspectRatio: CGFloat = 3.0 / 4.0
 
@@ -148,7 +147,6 @@ final class CameraService: NSObject, ObservableObject,
             }
 
             self.capturing = true
-            self.captureZoomFactor = self.currentZoomFactor
             self.capturePreviewAspectRatio = self.previewAspectRatio
 
             let settings = AVCapturePhotoSettings()
@@ -188,13 +186,8 @@ final class CameraService: NSObject, ObservableObject,
         }
 
         queue.async {
-            let zoomedImage = self.imageApplyingZoom(
-                image,
-                factor: self.captureZoomFactor
-            )
-
             let processedImage = self.imageMatchingPreview(
-                zoomedImage,
+                image,
                 previewAspectRatio: self.capturePreviewAspectRatio
             )
 
@@ -204,41 +197,6 @@ final class CameraService: NSObject, ObservableObject,
                 self.capturedImage = processedImage
             }
         }
-    }
-
-    // MARK: - Image Zoom
-
-    private func imageApplyingZoom(
-        _ image: UIImage,
-        factor: CGFloat
-    ) -> UIImage {
-        guard factor > 1.0,
-              let source = image.cgImage else {
-            return image
-        }
-
-        let sourceWidth = CGFloat(source.width)
-        let sourceHeight = CGFloat(source.height)
-
-        let cropWidth = sourceWidth / factor
-        let cropHeight = sourceHeight / factor
-
-        let cropRect = CGRect(
-            x: (sourceWidth - cropWidth) / 2,
-            y: (sourceHeight - cropHeight) / 2,
-            width: cropWidth,
-            height: cropHeight
-        ).integral
-
-        guard let croppedSource = source.cropping(to: cropRect) else {
-            return image
-        }
-
-        return UIImage(
-            cgImage: croppedSource,
-            scale: image.scale,
-            orientation: image.imageOrientation
-        )
     }
 
     // MARK: - Preview Matching
@@ -393,8 +351,6 @@ final class CameraService: NSObject, ObservableObject,
                 device.videoZoomFactor = targetZoom
 
                 device.unlockForConfiguration()
-
-                self.captureZoomFactor = targetZoom
 
                 DispatchQueue.main.async {
                     self.currentZoomFactor = targetZoom

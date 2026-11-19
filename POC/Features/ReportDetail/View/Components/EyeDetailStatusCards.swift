@@ -31,6 +31,23 @@ struct EyeDetailStatusCards: View {
     }
     
     private let cardMinHeight: CGFloat = 108
+    
+    private var eyeSideName: String {
+        eye.side == .left ? "Left Eye" : "Right Eye"
+    }
+
+    private var scanStatusAccessibilityText: String {
+        switch eye.status {
+        case .normal:
+            return "Normal"
+
+        case .suspect, .highRisk:
+            return "Glaucoma Suspect"
+
+        case .unavailable:
+            return "Not available"
+        }
+    }
 
     var body: some View {
         ViewThatFits(in: .horizontal) {
@@ -54,14 +71,15 @@ struct EyeDetailStatusCards: View {
 
     private var cdrCard: some View {
         VStack(alignment: .leading, spacing: 6) {
-
             Text("Vertical CDR")
                 .font(.footnote.weight(.semibold))
+                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                 .foregroundStyle(AppColors.labelSecondary)
                 .fixedSize(horizontal: false, vertical: true)
 
             Text(eye.cdrText)
                 .font(.largeTitle.weight(.bold))
+                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                 .foregroundStyle(statusColor)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -70,23 +88,28 @@ struct EyeDetailStatusCards: View {
         .frame(minHeight: cardMinHeight, alignment: .leading)
         .background(AppColors.cardFills)
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("Vertical CDR for \(eyeSideName)"))
+        .accessibilityValue(
+            eye.cdrText == "—"
+                ? Text("Not available")
+                : Text(eye.cdrText)
+        )
+        .accessibilityHint("Shows the vertical cup-to-disc ratio.")
     }
 
     // MARK: - Assessment Card
 
     private var assessmentCard: some View {
         VStack(alignment: .leading, spacing: 6) {
-
-            // Assessment title
             Text("Screening Assessment")
                 .font(.footnote.weight(.semibold))
+                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                 .foregroundStyle(AppColors.labelSecondary)
                 .fixedSize(horizontal: false, vertical: true)
 
-            // Assessment result
             HStack(alignment: .center, spacing: 6) {
                 scanStatusIcon
-
                 scanStatusText
             }
         }
@@ -95,6 +118,10 @@ struct EyeDetailStatusCards: View {
         .frame(minHeight: cardMinHeight, alignment: .leading)
         .background(AppColors.cardFills)
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("Screening Assessment for \(eyeSideName)"))
+        .accessibilityValue(Text(scanStatusAccessibilityText))
+        .accessibilityHint("Shows the screening assessment result.")
     }
 
     // MARK: - Status Icon
@@ -127,12 +154,14 @@ struct EyeDetailStatusCards: View {
         case .normal:
             Text("Normal")
                 .font(.footnote.weight(.bold))
+                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                 .foregroundStyle(statusColor)
                 .fixedSize(horizontal: false, vertical: true)
 
         case .suspect, .highRisk:
             Text("Glaucoma\nSuspect")
                 .font(.subheadline.weight(.bold))
+                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                 .foregroundStyle(statusColor)
                 .fixedSize(horizontal: false, vertical: true)
                 .multilineTextAlignment(.leading)
@@ -140,6 +169,7 @@ struct EyeDetailStatusCards: View {
         case .unavailable:
             Text("Not available")
                 .font(.subheadline.weight(.bold))
+                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                 .foregroundStyle(statusColor)
                 .fixedSize(horizontal: false, vertical: true)
                 .multilineTextAlignment(.leading)

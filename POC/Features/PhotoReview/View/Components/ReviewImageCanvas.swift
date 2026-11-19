@@ -22,6 +22,6 @@ struct ReviewImageCanvas: View {
                     .padding(.top, Layout.reviewEyeOverlayTopPadding)
             }
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel("Captured eye image")
+            .accessibilityHidden(true)
     }
 }

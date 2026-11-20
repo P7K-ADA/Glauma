@@ -29,7 +29,6 @@
 		42537458EB46B6ACA103BD8F /* EyeExaminationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0ED62FFC2B8590D5FC41789 /* EyeExaminationRecord.swift */; };
 		43DE04A6EFB1DF6ACC531750 /* SegmentationImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA472FF1752892929EB048CD /* SegmentationImageView.swift */; };
 		4724FBC6B94C54FFAE1D5735 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BE3B82CB36E61B327CB0E4C /* AVFoundation.framework */; };
-		47F70C3D077B0B2D8AA3D40A /* gallery_onboarding.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 792647BCA9016F6547AA6A1D /* gallery_onboarding.lottie */; };
 		4AD6CC3D7447D512F6C02180 /* RecommendationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9DFBF9759827361C8F1C57 /* RecommendationCard.swift */; };
 		4B78001D1C9BCFA2A4451431 /* ReportOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05677B1688D4BA9FC3397EC /* ReportOverviewView.swift */; };
 		4D0F19975EA541B367039212 /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3342D81A31965B911F3D084A /* ScanView.swift */; };
@@ -39,6 +38,7 @@
 		52E6DAC3D26BFE21005796FF /* ReportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0992180D3C70434BFAC80F /* ReportData.swift */; };
 		575F222E765838398B0BACE4 /* ImageReviewPreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F91337DABAFDE5E3B6C58D /* ImageReviewPreviewData.swift */; };
 		599B5A7D9DB858BF37B3A532 /* OnboardingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACD361FE3B46B06F5040E5E /* OnboardingHeader.swift */; };
+		5F13AAC5507FC648C8C79B98 /* photos_onboarding.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 22697EBF666F956D334EAED7 /* photos_onboarding.lottie */; };
 		702D82E0ECC99FFCB0C04EE5 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02315A82EF70D9C52F556BD /* CameraPreview.swift */; };
 		758DBF99095351BE0FAF8E58 /* Glauma_Model.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 5958EB81396F530AA6847839 /* Glauma_Model.mlpackage */; };
 		7843019C6EA6C67F7885FAE3 /* CDRAssessment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D7A48DEA7639B1AFBB8279 /* CDRAssessment.swift */; };
@@ -90,6 +90,7 @@
 		134B7BC0034F1F78BFC12E00 /* POCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POCApp.swift; sourceTree = "<group>"; };
 		17E4D19C5DEA1744D188EFBF /* NFCFrameDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCFrameDetector.swift; sourceTree = "<group>"; };
 		1B6773C49C2204DA705E7400 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		22697EBF666F956D334EAED7 /* photos_onboarding.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = photos_onboarding.lottie; sourceTree = "<group>"; };
 		24A07D822BCFCAD65DDD8BC6 /* EyeDetailContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeDetailContent.swift; sourceTree = "<group>"; };
 		2594AFE033FABC0FAE339D14 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2B90878559EEB8517C75DF09 /* GlaumaOpenCVBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GlaumaOpenCVBridge.mm; sourceTree = "<group>"; };
@@ -118,7 +119,6 @@
 		71B69E2B960BA6BE70A15B44 /* GlaumaDebugGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlaumaDebugGridView.swift; sourceTree = "<group>"; };
 		736C7BBA777516C8D0AC4659 /* GlaumaLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlaumaLocalization.swift; sourceTree = "<group>"; };
 		73F91337DABAFDE5E3B6C58D /* ImageReviewPreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageReviewPreviewData.swift; sourceTree = "<group>"; };
-		792647BCA9016F6547AA6A1D /* gallery_onboarding.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = gallery_onboarding.lottie; sourceTree = "<group>"; };
 		79BBBC19A2A1C1FDC998F844 /* EyeSide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeSide.swift; sourceTree = "<group>"; };
 		7B5342E2A4C677DAD55F7930 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		7D588F5DAF27E5123E9C8DDD /* ScanCropMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanCropMask.swift; sourceTree = "<group>"; };
@@ -269,8 +269,8 @@
 			isa = PBXGroup;
 			children = (
 				E728B190D43E790DA3CF0F1A /* cam_onboarding.lottie */,
-				792647BCA9016F6547AA6A1D /* gallery_onboarding.lottie */,
 				9C30B314F20EB7A5C3317FD8 /* lens_onboarding.lottie */,
+				22697EBF666F956D334EAED7 /* photos_onboarding.lottie */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -611,10 +611,10 @@
 				5266A524E5A5F4A6A61F1E2D /* Assets.xcassets in Resources */,
 				0A2E6446E136DC35E89462C7 /* Localizable.xcstrings in Resources */,
 				E31584F44D56C6C19F41BAFA /* cam_onboarding.lottie in Resources */,
-				47F70C3D077B0B2D8AA3D40A /* gallery_onboarding.lottie in Resources */,
 				D5CADEF0B1A93D2F60242AA5 /* glauma_error_messages_id.json in Resources */,
 				4181E40BA2AB05BDE0F26007 /* glauma_preprocessing_config.json in Resources */,
 				F65F6DC1032BA4F0BACC8703 /* lens_onboarding.lottie in Resources */,
+				5F13AAC5507FC648C8C79B98 /* photos_onboarding.lottie in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,6 +699,7 @@
 				CODE_SIGN_ENTITLEMENTS = POC/POC.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 3R47563279;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -712,17 +713,21 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is needed to capture eye images.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Allow Glauma to save captured or processed eye images to your Photos library.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.p7kada.poc;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "POC/Core/Services/Inference/POC-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
@@ -797,6 +802,7 @@
 				CODE_SIGN_ENTITLEMENTS = POC/POC.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 3R47563279;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -810,17 +816,21 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is needed to capture eye images.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Allow Glauma to save captured or processed eye images to your Photos library.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.p7kada.poc;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "POC/Core/Services/Inference/POC-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};

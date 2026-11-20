@@ -139,7 +139,7 @@ private extension View {
         if #available(iOS 26.0, *) {
             glassEffect(
                 .regular
-                    .tint(AppColors.labelPrimary.opacity(0.34))
+                    .tint(AppColors.gray.opacity(0.7))
                     .interactive(),
                 in: Capsule()
             )
@@ -151,7 +151,7 @@ private extension View {
             .overlay {
                 Capsule()
                     .fill(
-                        AppColors.labelPrimary.opacity(0.36)
+                        AppColors.gray.opacity(0.7)
                     )
             }
             .overlay {

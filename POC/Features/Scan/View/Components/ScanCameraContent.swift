@@ -92,7 +92,7 @@ struct ScanCameraContent: View {
                     EyeSideOverlay(eyeSide: selectedEye)
                         .padding(
                             .top,
-                            geometry.size.height * 0.108 + 24
+                            geometry.size.height * 0.108 + 100
                         )
                 }
             }

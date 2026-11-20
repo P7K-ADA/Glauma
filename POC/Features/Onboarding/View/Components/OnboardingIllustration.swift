@@ -3,8 +3,6 @@
 //  POC
 //
 
-
-
 import SwiftUI
 import Lottie
 
@@ -12,17 +10,20 @@ struct OnboardingIllustration: View {
 
     let permission: OnboardingPermission
 
+    @Environment(\.accessibilityReduceMotion)
+    private var reduceMotion
+
     private var animationName: String {
         switch permission {
         case .camera:
             return "cam_onboarding"
         case .photos:
-            return "gallery_onboarding"
+            return "photos_onboarding"
         case .attachLens:
             return "lens_onboarding"
         }
     }
-    
+
     private var animationHint: String {
         switch permission {
         case .camera:
@@ -34,12 +35,13 @@ struct OnboardingIllustration: View {
         }
     }
 
-    
     var body: some View {
         LottieView {
             try await DotLottieFile.named(animationName)
         }
-        .playing(loopMode: .loop)
+        .playing(
+            loopMode: reduceMotion ? .playOnce : .loop
+        )
         .configure { animationView in
             animationView.contentMode = .scaleAspectFit
             animationView.clipsToBounds = false
@@ -53,6 +55,4 @@ struct OnboardingIllustration: View {
         .frame(maxWidth: .infinity)
         .frame(height: Layout.illustrationAreaHeight)
     }
-
 }
-

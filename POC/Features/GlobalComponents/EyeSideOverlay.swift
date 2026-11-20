@@ -1,3 +1,4 @@
+
 import SwiftUI
 
 struct EyeSideOverlay: View {
@@ -18,7 +19,7 @@ struct EyeSideOverlay: View {
                     cornerRadius: 8,
                     style: .continuous
                 )
-                .fill(.black.opacity(0.55))
+                .eyeSideGlass()
             }
             .fixedSize(horizontal: true, vertical: false)
             .accessibilityAddTraits(.isHeader)
@@ -28,4 +29,37 @@ struct EyeSideOverlay: View {
                     : "Capturing right eye"
             )
     }
+}
+
+private extension View {
+    @ViewBuilder
+    func eyeSideGlass() -> some View {
+        let shape = RoundedRectangle(
+            cornerRadius: 8,
+            style: .continuous
+        )
+
+        if #available(iOS 26.0, *) {
+            glassEffect(
+                .regular.tint(AppColors.gray.opacity(0.5)),
+                in: shape
+            )
+        } else {
+            background(.regularMaterial, in: shape)
+        }
+    }
+}
+
+
+#Preview("Eye Side Overlay") {
+    ZStack {
+        Color.gray
+            .ignoresSafeArea()
+
+        VStack(spacing: 20) {
+            EyeSideOverlay(eyeSide: .left)
+            EyeSideOverlay(eyeSide: .right)
+        }
+    }
+    .preferredColorScheme(.dark)
 }

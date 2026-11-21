@@ -12,6 +12,7 @@ struct ScanCameraContent: View {
     @State private var focusPoint: CGPoint?
     @State private var focusID = UUID()
     @State private var baseZoom: CGFloat = 1
+    @State private var shutterFlashOpacity: Double = 0
 
     var body: some View {
         GeometryReader { geometry in
@@ -50,6 +51,12 @@ struct ScanCameraContent: View {
                             baseZoom = camera.currentZoomFactor
                         }
                 )
+                
+                Rectangle()
+                    .fill(Color.black)
+                    .opacity(shutterFlashOpacity)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
 
                 ScanCropMask()
                     .ignoresSafeArea()
@@ -80,7 +87,22 @@ struct ScanCameraContent: View {
                         tint: tint,
                         isDisabled: isAnalyzing,
                         selectedEye: selectedEye,
-                        action: camera.capturePhoto
+                        action: {
+                            // Quick shutter flash
+                            withAnimation(.easeOut(duration: 0.06)) {
+                                shutterFlashOpacity = 0.55
+                            }
+
+                            DispatchQueue.main.asyncAfter(
+                                deadline: .now() + 0.06
+                            ) {
+                                withAnimation(.easeOut(duration: 0.20)) {
+                                    shutterFlashOpacity = 0
+                                }
+                            }
+
+                            camera.capturePhoto()
+                        }
                     )
                     .padding(
                         .bottom,

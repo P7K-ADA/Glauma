@@ -132,6 +132,8 @@ final class CameraService: NSObject, ObservableObject,
                 self.isReady = true
                 self.status = "Camera ready"
                 self.errorMessage = nil
+
+                self.setTorch(enabled: true)
             }
         }
     }
@@ -150,12 +152,14 @@ final class CameraService: NSObject, ObservableObject,
             self.capturePreviewAspectRatio = self.previewAspectRatio
 
             let settings = AVCapturePhotoSettings()
-
-            if self.photoOutput.supportedFlashModes.contains(.auto) {
-                settings.flashMode = .on
-            } else if self.photoOutput.supportedFlashModes.contains(.off) {
-                settings.flashMode = .off
-            }
+//
+//            if self.photoOutput.supportedFlashModes.contains(.on) {
+//                settings.flashMode = .on
+//            } else if self.photoOutput.supportedFlashModes.contains(.off) {
+//                settings.flashMode = .off
+//            }
+            
+            settings.flashMode = .off
 
 
             self.photoOutput.capturePhoto(

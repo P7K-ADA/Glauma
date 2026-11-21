@@ -30,7 +30,7 @@ struct EyeDetailImagePreview: View {
 
             Button(action: onExpand) {
                 Image(systemName: "arrow.up.left.and.arrow.down.right")
-                    .font(.callout.weight(.semibold))
+                    .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(.white)
                     .frame(width: 44, height: 44)
                     .background(Color.black.opacity(0.6))

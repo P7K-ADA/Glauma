@@ -41,7 +41,7 @@ struct ReportExportSuccessView: View {
 
                 Text("Find your exported results in the Photos app.")
                     .font(.body)
-                    .dynamicTypeSize(...DynamicTypeSize.accessibility2eg)
+                    .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                     .foregroundStyle(AppColors.labelSecondary)
             }
             .multilineTextAlignment(.center)

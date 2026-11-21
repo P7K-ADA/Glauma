@@ -90,11 +90,11 @@
 		134B7BC0034F1F78BFC12E00 /* POCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POCApp.swift; sourceTree = "<group>"; };
 		17E4D19C5DEA1744D188EFBF /* NFCFrameDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCFrameDetector.swift; sourceTree = "<group>"; };
 		1B6773C49C2204DA705E7400 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		22697EBF666F956D334EAED7 /* photos_onboarding.lottie */ = {isa = PBXFileReference; path = photos_onboarding.lottie; sourceTree = "<group>"; };
+		22697EBF666F956D334EAED7 /* photos_onboarding.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = photos_onboarding.lottie; sourceTree = "<group>"; };
 		24A07D822BCFCAD65DDD8BC6 /* EyeDetailContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeDetailContent.swift; sourceTree = "<group>"; };
 		2594AFE033FABC0FAE339D14 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2B90878559EEB8517C75DF09 /* GlaumaOpenCVBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GlaumaOpenCVBridge.mm; sourceTree = "<group>"; };
-		3103200C8A835A39D1C5A8BF /* POC.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = POC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3103200C8A835A39D1C5A8BF /* POC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = POC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3342D81A31965B911F3D084A /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
 		33E095883B56B85B3DC35AB7 /* ScanCameraContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanCameraContent.swift; sourceTree = "<group>"; };
 		34684B39D653F9AED928F9B5 /* ReportExportSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportExportSuccessView.swift; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 		4AF84A6BC1870072FD58F0AB /* FocusSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSquareView.swift; sourceTree = "<group>"; };
 		541B6155DF8CDEDBADA06D83 /* ModelPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPlaceholder.swift; sourceTree = "<group>"; };
 		55DD30007CFD277B9B5D78AE /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
-		5958EB81396F530AA6847839 /* Glauma_Model.mlpackage */ = {isa = PBXFileReference; path = Glauma_Model.mlpackage; sourceTree = "<group>"; };
+		5958EB81396F530AA6847839 /* Glauma_Model.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = Glauma_Model.mlpackage; sourceTree = "<group>"; };
 		5A74FDA3AAC3C3BE64FEA26C /* ScreeningStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreeningStatus.swift; sourceTree = "<group>"; };
 		5A760A5FB500D642F7053497 /* ImageInferenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInferenceService.swift; sourceTree = "<group>"; };
 		5ACD361FE3B46B06F5040E5E /* OnboardingHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingHeader.swift; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 		9732F31E04AB57A5A9F9A1A5 /* EyeSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeSummaryCard.swift; sourceTree = "<group>"; };
 		98D7A48DEA7639B1AFBB8279 /* CDRAssessment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDRAssessment.swift; sourceTree = "<group>"; };
 		9BE3B82CB36E61B327CB0E4C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		9C30B314F20EB7A5C3317FD8 /* lens_onboarding.lottie */ = {isa = PBXFileReference; path = lens_onboarding.lottie; sourceTree = "<group>"; };
+		9C30B314F20EB7A5C3317FD8 /* lens_onboarding.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = lens_onboarding.lottie; sourceTree = "<group>"; };
 		A1701FC0E5A5D2D473B8FF8C /* ScanZoomControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanZoomControl.swift; sourceTree = "<group>"; };
 		A72716174B78827335290B4D /* ImageReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageReviewView.swift; sourceTree = "<group>"; };
 		ACF580780796A8418A8DBE5E /* glauma_error_messages_id.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = glauma_error_messages_id.json; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 		DF97A983110B0AA056DA0C94 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		E40E5D9B617DC216013B5130 /* CameraStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraStatusView.swift; sourceTree = "<group>"; };
 		E613FCA02F023F9D99A57738 /* EyeDetailExpandedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeDetailExpandedImageView.swift; sourceTree = "<group>"; };
-		E728B190D43E790DA3CF0F1A /* cam_onboarding.lottie */ = {isa = PBXFileReference; path = cam_onboarding.lottie; sourceTree = "<group>"; };
+		E728B190D43E790DA3CF0F1A /* cam_onboarding.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = cam_onboarding.lottie; sourceTree = "<group>"; };
 		EA04302575712E0C5921E338 /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
 		ECE1459935C639ECD82265D7 /* PreprocessingDetailsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreprocessingDetailsSection.swift; sourceTree = "<group>"; };
 		EEC88019113EA43ABA5DE63C /* EyeDetailImagePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeDetailImagePreview.swift; sourceTree = "<group>"; };
@@ -577,7 +577,6 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					AA29779DD6F3CA189084A3F6 = {
-						DevelopmentTeam = W9AZH37T99;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -700,7 +699,7 @@
 				CODE_SIGN_ENTITLEMENTS = POC/POC.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W9AZH37T99;
+				DEVELOPMENT_TEAM = 3R47563279;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\".\"",
@@ -798,7 +797,7 @@
 				CODE_SIGN_ENTITLEMENTS = POC/POC.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W9AZH37T99;
+				DEVELOPMENT_TEAM = 3R47563279;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\".\"",

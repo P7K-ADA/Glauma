@@ -27,6 +27,7 @@ struct ReportExportSuccessView: View {
         VStack(spacing: 24) {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: iconSize))
+                .dynamicTypeSize(...DynamicTypeSize.accessibility1)
                 .foregroundStyle(AppColors.normal)
                 .symbolEffect(.bounce, value: didAppear)
                 .accessibilityHidden(true)
@@ -34,11 +35,13 @@ struct ReportExportSuccessView: View {
             VStack(spacing: 8) {
                 Text("Scan Saved")
                     .font(.title2.weight(.bold))
+                    .dynamicTypeSize(...DynamicTypeSize.accessibility2)
                     .foregroundStyle(AppColors.labelPrimary)
                     .accessibilityAddTraits(.isHeader)
 
                 Text("Find your exported results in the Photos app.")
                     .font(.body)
+                    .dynamicTypeSize(...DynamicTypeSize.accessibility2eg)
                     .foregroundStyle(AppColors.labelSecondary)
             }
             .multilineTextAlignment(.center)

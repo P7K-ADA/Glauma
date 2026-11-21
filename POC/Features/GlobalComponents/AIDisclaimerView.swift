@@ -16,13 +16,13 @@ struct AIDisclaimerView: View {
         HStack(alignment: .top, spacing: 8) {
             Image(systemName: "info.circle")
                 .font(.footnote)
-                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
+                .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                 .foregroundStyle(AppColors.labelSecondary)
                 .padding(.top, 1)
 
             Text(ReportCopy.disclaimer)
                 .font(.caption)
-                .dynamicTypeSize(...DynamicTypeSize.accessibility2)
+                .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                 .foregroundStyle(AppColors.labelSecondary)
                 .lineSpacing(3)
                 .fixedSize(horizontal: false, vertical: true)
